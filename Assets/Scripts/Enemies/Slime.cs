@@ -47,6 +47,12 @@ public class Slime : Enemy
     [SerializeField] private RuntimeAnimatorController mediumController;
     [SerializeField] private RuntimeAnimatorController smallController;
 
+    [Header("Tier world size (localScale per tier)")]
+    [Tooltip("Set all three equal to make every tier the same on-screen size, or shrink them for the classic split look.")]
+    [SerializeField] private float largeScale  = 1f;
+    [SerializeField] private float mediumScale = 1f;
+    [SerializeField] private float smallScale  = 1f;
+
     public SlimeTier Tier => tier;
     public bool IsPrime => isPrime;
 
@@ -111,6 +117,16 @@ public class Slime : Enemy
             };
             if (c != null) animator.runtimeAnimatorController = c;
         }
+
+        // per-tier world size (compensates for sprites authored at different resolutions)
+        float sc = tier switch
+        {
+            SlimeTier.Large  => largeScale,
+            SlimeTier.Medium => mediumScale,
+            SlimeTier.Small  => smallScale,
+            _ => 1f
+        };
+        transform.localScale = Vector3.one * sc;
     }
 
     public override void RollIntent()

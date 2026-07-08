@@ -206,6 +206,7 @@ MonoBehaviour:
   intentValue: 3
   tier: 3
   isPrime: 0
+  overrideTierHP: 0
   splitDuration: 0.35
   spriteRenderer: {fileID: 3271023581032411550}
   largeSprite: {fileID: 7962103204112202161, guid: 0ab734075bca1e549b5621a59a50d47d, type: 3}
@@ -215,6 +216,9 @@ MonoBehaviour:
   largeController: {fileID: 9100000, guid: 715545d28d9cfff4b85bd67e4dc3abcb, type: 2}
   mediumController: {fileID: 9100000, guid: 6afc406cdf388b84ab6c3bce5e8fa0f3, type: 2}
   smallController: {fileID: 9100000, guid: 2a589c856eaeccc41b76dff7ff644e81, type: 2}
+  largeScale: 2
+  mediumScale: 1
+  smallScale: 1
 --- !u!95 &5354447594837645665
 Animator:
   serializedVersion: 7

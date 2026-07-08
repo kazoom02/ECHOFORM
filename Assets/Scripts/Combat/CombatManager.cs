@@ -37,7 +37,17 @@ public class CombatManager : MonoBehaviour
     [Header("Rules")]
     [SerializeField] private int energyPerTurn = 3;
     [SerializeField] private int handSize = 5;
-    [SerializeField] private float enemyRowSpacing = 2.2f;
+    [SerializeField] private float enemyRowSpacing = 2.2f;   // horizontal gap between enemies
+
+    [Header("Formation (area)")]
+    [Tooltip("Max enemies per horizontal row before wrapping to a new row.")]
+    [SerializeField] private int enemiesPerRow = 4;
+    [Tooltip("Vertical gap between wrapped rows.")]
+    [SerializeField] private float rowSpacing = 1.8f;
+    [Tooltip("Vertical offset on alternating columns for an organic, non-straight look.")]
+    [SerializeField] private float columnStagger = 0.4f;
+    [Tooltip("Draw lower enemies in front for natural overlap. Off if it fights your sorting setup.")]
+    [SerializeField] private bool sortByDepth = true;
 
     [Header("Corruption")]
     [Tooltip("Fallback corrupted chip — used only before the player has played anything. Normally the Loom copies your last-played chip. Needs Is Glitch = true.")]
@@ -306,10 +316,38 @@ public class CombatManager : MonoBehaviour
     private void RepositionEnemies()
     {
         if (enemyRow == null) return;
+
+        int n = 0;
+        for (int i = 0; i < enemies.Count; i++) if (enemies[i] != null) n++;
+        if (n == 0) return;
+
+        int perRow = Mathf.Max(1, enemiesPerRow);
+
+        int slot = 0;
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i] == null) continue;
-            enemies[i].transform.position = enemyRow.position + Vector3.right * (i * enemyRowSpacing);
+
+            int row = slot / perRow;
+            int col = slot % perRow;
+
+            // enemies actually in this row (last row may be partial) — used to center it
+            int inThisRow = Mathf.Min(perRow, n - row * perRow);
+            float rowStartX = -(inThisRow - 1) * enemyRowSpacing * 0.5f;
+
+            float x = rowStartX + col * enemyRowSpacing;
+            float y = -row * rowSpacing + ((col % 2 == 1) ? columnStagger : 0f);
+
+            Vector3 pos = enemyRow.position + new Vector3(x, y, 0f);
+            enemies[i].transform.position = pos;
+
+            if (sortByDepth)
+            {
+                var sr = enemies[i].GetComponentInChildren<SpriteRenderer>();
+                if (sr != null) sr.sortingOrder = Mathf.RoundToInt(-pos.y * 100f);
+            }
+
+            slot++;
         }
     }
 
