@@ -39,6 +39,9 @@ public class NeuralInterfaceHUD : MonoBehaviour
     [Header("FX")]
     [SerializeField] private VisorFlash visorFlash;
     [SerializeField] private CpuCycleMeter cpuMeter;
+    [SerializeField] private OverloadReadout overloadReadout;   // "COPY #n/10" corruption counter
+    [SerializeField] private CombatTargeting targeting;         // enemy picker for single-target chips
+    [SerializeField] private VestigeCombatAnimator vestige;     // walk-in melee for attack chips
 
     [Header("Timing (seconds)")]
     [SerializeField] private float ejectHeight = 60f;
@@ -72,6 +75,9 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
         if (cpuMeter != null)
             cpuMeter.Set(combat != null ? combat.Energy : maxCycles, maxCycles);
+
+        if (overloadReadout != null)
+            overloadReadout.Set(combat != null ? combat.CorruptedInHand : 0);
     }
 
     void Spawn(CardData card, RectTransform slot)
@@ -90,10 +96,30 @@ public class NeuralInterfaceHUD : MonoBehaviour
         if (busy || view == null || view.card == null) return;
         bool tooExpensive = combat != null && view.card.energyCost > combat.Energy;
         if (view.card.isGlitch || tooExpensive) { StartCoroutine(Deny(view)); return; }
-        StartCoroutine(InstallRoutine(view));
+
+        // Single-target chips with more than one enemy: let the player pick.
+        if (targeting != null && view.card.target == CardTarget.SingleEnemy && CountLivingEnemies() > 1)
+        {
+            busy = true;                                  // lock the rack while choosing
+            targeting.Begin(
+                picked => { busy = false; StartCoroutine(InstallRoutine(view, picked)); },
+                ()     => { busy = false; }               // cancelled — nothing happens
+            );
+            return;
+        }
+
+        StartCoroutine(InstallRoutine(view, ResolveTarget(view.card)));
     }
 
-    IEnumerator InstallRoutine(ChipView view)
+    int CountLivingEnemies()
+    {
+        if (combat == null) return 0;
+        int c = 0;
+        foreach (var e in combat.Enemies) if (e != null && !e.IsDead) c++;
+        return c;
+    }
+
+    IEnumerator InstallRoutine(ChipView view, Enemy target)
     {
         busy = true;
         CardData card = view.card;               // cache — the view gets destroyed later
@@ -111,8 +137,8 @@ public class NeuralInterfaceHUD : MonoBehaviour
         yield return Move(rt, from, up, ejectTime, EaseOut);
 
         // 2) SLIDE — travel to the neural slot and scale to fit
-        Vector2 target = neuralSlot.anchoredPosition;
-        yield return Move(rt, up, target, slideTime, EaseInOut, rt.localScale, installedScale);
+        Vector2 slotPos = neuralSlot.anchoredPosition;
+        yield return Move(rt, up, slotPos, slideTime, EaseInOut, rt.localScale, installedScale);
 
         // 3) INSTALLING MEMORY... — fill the progress bar with animated dots
         if (installGroup) installGroup.alpha = 1f;
@@ -127,18 +153,31 @@ public class NeuralInterfaceHUD : MonoBehaviour
         }
         if (installBar) installBar.fillAmount = 1f;
 
-        // 4) VISOR FLASH
-        if (visorFlash) visorFlash.Flash();
-        yield return new WaitForSeconds(settleTime);
-
-        // 5) RESOLVE — clear UI, trigger Vestige's attack, then apply card effects
+        // 4) hand off the chip: hide the install UI and clear it from the slot
         if (installGroup) installGroup.alpha = 0f;
         if (view) Destroy(view.gameObject);
+        onChipInstalled?.Invoke(card);                     // SFX / extra fx hook
 
-        onChipInstalled?.Invoke(card);                                   // Vestige dashes in & strikes
-        if (combat != null) combat.TryPlayCard(card, ResolveTarget(card)); // spends energy, resolves, re-syncs rack
+        // 5) EXECUTE — attack chips send Vestige in and resolve on the hit frame; others resolve in place
+        if (vestige != null && target != null && CardDealsDamage(card))
+        {
+            yield return vestige.PlayAttack(target.transform,
+                () => { if (combat != null) combat.TryPlayCard(card, target); });
+        }
+        else
+        {
+            if (visorFlash) visorFlash.Flash();            // self-cast (block/heal) keeps the flash
+            if (combat != null) combat.TryPlayCard(card, target);
+        }
 
         busy = false;
+    }
+
+    static bool CardDealsDamage(CardData c)
+    {
+        if (c == null) return false;
+        foreach (var e in c.effects) if (e.type == CardEffectType.DealDamage) return true;
+        return false;
     }
 
     /// <summary>Which enemy a single-target card hits. Override for click-to-target.</summary>

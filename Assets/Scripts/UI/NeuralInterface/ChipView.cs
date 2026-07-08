@@ -37,18 +37,27 @@ public class ChipView : MonoBehaviour, IPointerClickHandler
 
     void Reset() { group = GetComponent<CanvasGroup>(); }
 
+    static readonly Color CorruptRed = new Color(1f, 0.45f, 0.5f);
+
     public void Bind(CardData c)
     {
         card = c;
+        bool glitch = c.isGlitch;
+        bool isCopy = glitch && c.art != null;   // a corrupted duplicate keeps the source chip's art
 
-        // Loom corruption: swap to the glitch frame and hide the readable bits.
+        // Corruption wears the glitch frame; a copy still shows the chip it was cloned from through it.
         if (baseImage && (normalFrame || glitchFrame))
-            baseImage.sprite = c.isGlitch && glitchFrame ? glitchFrame : normalFrame;
+            baseImage.sprite = glitch && glitchFrame ? glitchFrame : normalFrame;
 
-        if (artImage)  { artImage.enabled = c.art != null && !c.isGlitch; artImage.sprite = c.art; }
-        if (glowImage) { glowImage.enabled = !c.isGlitch; glowImage.color = c.tint; } // tint = per-card color
-        if (nameLabel) { nameLabel.gameObject.SetActive(!c.isGlitch); nameLabel.text = c.cardName; }
-        if (costLabel) { costLabel.gameObject.SetActive(!c.isGlitch); costLabel.text = c.energyCost.ToString(); }
+        if (artImage)
+        {
+            artImage.enabled = c.art != null;                       // copies show source art; generic glitch has none
+            artImage.sprite  = c.art;
+            artImage.color   = glitch ? CorruptRed : Color.white;   // redden a corrupted copy
+        }
+        if (glowImage) { glowImage.enabled = !glitch; glowImage.color = c.tint; }
+        if (nameLabel) { nameLabel.gameObject.SetActive(!glitch || isCopy); nameLabel.text = c.cardName; }
+        if (costLabel) { costLabel.gameObject.SetActive(!glitch); costLabel.text = c.energyCost.ToString(); }
     }
 
     public void OnPointerClick(PointerEventData eventData) => Clicked?.Invoke(this);

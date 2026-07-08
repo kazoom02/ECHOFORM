@@ -40,7 +40,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private float enemyRowSpacing = 2.2f;
 
     [Header("Corruption")]
-    [Tooltip("The Loom's corrupted chip — a CardData asset with Is Glitch = true.")]
+    [Tooltip("Fallback corrupted chip — used only before the player has played anything. Normally the Loom copies your last-played chip. Needs Is Glitch = true.")]
     [SerializeField] private CardData corruptedChip;
     [Tooltip("Inject one corrupted chip every N player turns (0 = never).")]
     [SerializeField] private int corruptEveryNTurns = 3;
@@ -50,6 +50,8 @@ public class CombatManager : MonoBehaviour
     public int Energy { get; private set; }
     public Deck Deck { get; private set; }
     public IReadOnlyList<Enemy> Enemies => enemies;
+    /// <summary>How many corrupted chips are clogging the current hand (drives the overload readout).</summary>
+    public int CorruptedInHand => Deck != null ? Deck.Hand.Count(c => c != null && c.isGlitch) : 0;
 
     private readonly List<Enemy> enemies = new List<Enemy>();
     private CardData lastPlayedCard;
@@ -94,15 +96,22 @@ public class CombatManager : MonoBehaviour
 
         player.ResetBlock();
         Energy = energyPerTurn;
-        Deck.Draw(handSize);
+        Deck.DrawUpTo(handSize);   // fills clean slots; stuck corruption stays
 
-        // The Loom copies itself into your neural memory every N turns.
+        // The Loom copies your LAST-PLAYED chip into memory as corruption, every N turns.
         turnNumber++;
-        if (corruptedChip != null && corruptEveryNTurns > 0 && turnNumber % corruptEveryNTurns == 0)
+        if (corruptEveryNTurns > 0 && turnNumber % corruptEveryNTurns == 0)
         {
-            Deck.CorruptHand(corruptedChip, handSize);
-            Log("The Loom copies itself into your memory.");
+            CardData copy = MakeCorruptedCopy();
+            if (copy != null)
+            {
+                Deck.CorruptHand(copy, handSize);
+                Log($"The Loom copies your {(lastPlayedCard != null ? lastPlayedCard.cardName : "memory")} — now corrupted.");
+            }
         }
+
+        // Corrupted chips clogging memory overload Vestige — escalating damage, 5 = death.
+        if (ApplyOverload()) { OnCombatChanged?.Invoke(); return; }
 
         UpdateMergerTelegraph();
 
@@ -302,6 +311,45 @@ public class CombatManager : MonoBehaviour
             if (enemies[i] == null) continue;
             enemies[i].transform.position = enemyRow.position + Vector3.right * (i * enemyRowSpacing);
         }
+    }
+
+    /// <summary>Build a corrupted, unplayable duplicate of the chip the player last used — the Loom copying you.</summary>
+    private CardData MakeCorruptedCopy()
+    {
+        CardData source = lastPlayedCard != null ? lastPlayedCard : corruptedChip;
+        if (source == null) return null;
+
+        CardData copy = Instantiate(source);   // runtime clone of the ScriptableObject
+        copy.isGlitch = true;                   // now unplayable corruption
+        copy.name = source.cardName + " (Corrupted)";
+        return copy;
+    }
+
+    /// <summary>
+    /// Neural memory overload: corrupted chips left clogging the hand deal escalating
+    /// damage each turn — 3 → 1, 4 → 2, 5 → Vestige is overwritten (instant loss).
+    /// Returns true if combat ended (death), so the caller stops the turn.
+    /// </summary>
+    private bool ApplyOverload()
+    {
+        int corrupted = Deck.Hand.Count(c => c != null && c.isGlitch);
+
+        if (corrupted >= 5)
+        {
+            SetState(CombatState.Lose);
+            Log("Neural memory overload — Vestige is overwritten. The Loom prints copy №10.");
+            return true;
+        }
+
+        if (corrupted >= 3)
+        {
+            int dmg = corrupted - 2;                 // 3 -> 1, 4 -> 2
+            player.TakeDamage(dmg);
+            Log($"Overload: {corrupted} corrupted chips clog memory — {dmg} damage.");
+            if (CheckEndOfCombat()) return true;      // damage could be lethal
+        }
+
+        return false;
     }
 
     private bool CheckEndOfCombat()

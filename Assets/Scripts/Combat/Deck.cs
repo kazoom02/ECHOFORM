@@ -54,32 +54,52 @@ public class Deck
 
     public void DiscardHand()
     {
-        // Corrupted chips burn away instead of recirculating, so the Loom's
-        // "1 every N turns" cadence stays exact rather than piling up in the deck.
-        foreach (var card in Hand)
+        // Corruption stays stuck in neural memory — only clean chips cycle out.
+        // This is what lets corrupted chips accumulate toward overload.
+        for (int i = Hand.Count - 1; i >= 0; i--)
         {
-            if (card != null && card.isGlitch) ExhaustPile.Add(card);
-            else DiscardPile.Add(card);
+            if (Hand[i] != null && Hand[i].isGlitch) continue;   // corrupted stays
+            DiscardPile.Add(Hand[i]);
+            Hand.RemoveAt(i);
         }
-        Hand.Clear();
         OnChanged?.Invoke();
     }
 
-    /// <summary>Loom corruption: overwrite a random hand slot with a glitch chip, keeping hand size.</summary>
+    /// <summary>Draw until the hand is refilled to the cap, leaving stuck corruption in place.</summary>
+    public void DrawUpTo(int handCap)
+    {
+        int need = handCap - Hand.Count;
+        if (need > 0) Draw(need);
+    }
+
+    /// <summary>Loom corruption: overwrite a random CLEAN slot with a glitch chip. Permanent until purged.</summary>
     public void CorruptHand(CardData glitch, int handCap)
     {
         if (glitch == null) return;
-        if (Hand.Count == 0 || Hand.Count < handCap)
-        {
-            Hand.Add(glitch);                 // free slot — just drop it in
-        }
-        else
-        {
-            int i = Random.Range(0, Hand.Count);
-            DiscardPile.Add(Hand[i]);          // displaced memory recirculates
-            Hand[i] = glitch;                  // corruption takes the slot
-        }
+
+        List<int> cleanSlots = new List<int>();
+        for (int i = 0; i < Hand.Count; i++)
+            if (Hand[i] == null || !Hand[i].isGlitch) cleanSlots.Add(i);
+
+        if (cleanSlots.Count == 0) return;                 // already fully corrupted
+        int slot = cleanSlots[Random.Range(0, cleanSlots.Count)];
+        DiscardPile.Add(Hand[slot]);                        // displaced memory recirculates
+        Hand[slot] = glitch;                                // corruption takes the slot
         OnChanged?.Invoke();
+    }
+
+    /// <summary>Counterplay: purge one corrupted chip from hand for the rest of combat. Returns true if one was removed.</summary>
+    public bool PurgeOneCorrupted()
+    {
+        for (int i = 0; i < Hand.Count; i++)
+            if (Hand[i] != null && Hand[i].isGlitch)
+            {
+                ExhaustPile.Add(Hand[i]);
+                Hand.RemoveAt(i);
+                OnChanged?.Invoke();
+                return true;
+            }
+        return false;
     }
 
     /// <summary>Echo: drop a duplicate straight into the hand.</summary>

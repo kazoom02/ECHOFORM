@@ -29,9 +29,23 @@ public class Slime : Enemy
     [SerializeField] private SlimeTier tier = SlimeTier.Large;
     [Tooltip("The Prime is the boss slime — same rules, higher stats, used in Fight III.")]
     [SerializeField] private bool isPrime = false;
+    [Tooltip("If ON, use the Max HP set in the Inspector instead of the tier's default HP.")]
+    [SerializeField] private bool overrideTierHP = false;
 
     [Header("Split animation")]
     [SerializeField] private float splitDuration = 0.35f;
+
+    [Header("Tier visuals (assign all three on the prefab)")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite largeSprite;
+    [SerializeField] private Sprite mediumSprite;
+    [SerializeField] private Sprite smallSprite;
+
+    [Header("Tier animations (optional — an Animator drives the sprite itself)")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private RuntimeAnimatorController largeController;
+    [SerializeField] private RuntimeAnimatorController mediumController;
+    [SerializeField] private RuntimeAnimatorController smallController;
 
     public SlimeTier Tier => tier;
     public bool IsPrime => isPrime;
@@ -46,12 +60,13 @@ public class Slime : Enemy
 
     protected override void Awake()
     {
-        // Derive stats from tier if not already initialised.
+        // Derive stats from tier unless the Inspector HP is being overridden.
         if (CurrentHP == 0)
         {
-            maxHP = MaxHpForTier(tier, isPrime);
+            if (!overrideTierHP) maxHP = MaxHpForTier(tier, isPrime);
             CurrentHP = maxHP;
         }
+        ApplyTierVisual();
         RollIntent();
     }
 
@@ -62,7 +77,40 @@ public class Slime : Enemy
         isPrime = prime;
         InitHealth(hp, MaxHpForTier(newTier, prime));
         SpawnedThisTurn = true;   // fresh children sit out one turn
+        ApplyTierVisual();
         RollIntent();
+    }
+
+    /// <summary>Swap sprite + animator controller to match the current tier.</summary>
+    private void ApplyTierVisual()
+    {
+        // static sprite (fallback / used when there's no Animator)
+        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            Sprite s = tier switch
+            {
+                SlimeTier.Large  => largeSprite,
+                SlimeTier.Medium => mediumSprite,
+                SlimeTier.Small  => smallSprite,
+                _ => null
+            };
+            if (s != null) spriteRenderer.sprite = s;
+        }
+
+        // per-tier idle animation (overrides the static sprite while it plays)
+        if (animator == null) animator = GetComponent<Animator>();
+        if (animator != null)
+        {
+            RuntimeAnimatorController c = tier switch
+            {
+                SlimeTier.Large  => largeController,
+                SlimeTier.Medium => mediumController,
+                SlimeTier.Small  => smallController,
+                _ => null
+            };
+            if (c != null) animator.runtimeAnimatorController = c;
+        }
     }
 
     public override void RollIntent()

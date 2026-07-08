@@ -1,0 +1,1243 @@
+fileFormatVersion: 2
+guid: bcf103ee26966cd4c853a587e30de6df
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7581260844990790426
+    second: SmallSlime_0
+  - first:
+      213: -6680661014123461599
+    second: SmallSlime_1
+  - first:
+      213: 2977022089766513496
+    second: SmallSlime_2
+  - first:
+      213: -478764011137203176
+    second: SmallSlime_3
+  - first:
+      213: 8507637495157607117
+    second: SmallSlime_4
+  - first:
+      213: 780864831595318007
+    second: SmallSlime_5
+  - first:
+      213: -2653546412102353556
+    second: SmallSlime_6
+  - first:
+      213: 7898267041021517839
+    second: SmallSlime_7
+  - first:
+      213: 1064518432359621688
+    second: SmallSlime_8
+  - first:
+      213: -6780264206858866417
+    second: SmallSlime_9
+  - first:
+      213: 1505526306310972380
+    second: SmallSlime_10
+  - first:
+      213: -3687707325970029873
+    second: SmallSlime_11
+  - first:
+      213: 3771215016566718221
+    second: SmallSlime_12
+  - first:
+      213: -6405328942336687995
+    second: SmallSlime_13
+  - first:
+      213: 344750423271337917
+    second: SmallSlime_14
+  - first:
+      213: -5032102673928597575
+    second: SmallSlime_15
+  - first:
+      213: -6371738949405827941
+    second: SmallSlime_16
+  - first:
+      213: -7347149730512150040
+    second: SmallSlime_17
+  - first:
+      213: 2852015262625224556
+    second: SmallSlime_18
+  - first:
+      213: 1360067343010561129
+    second: SmallSlime_19
+  - first:
+      213: 8361567626231598361
+    second: SmallSlime_20
+  - first:
+      213: -3331139675862704437
+    second: SmallSlime_21
+  - first:
+      213: -8070890046344285635
+    second: SmallSlime_22
+  - first:
+      213: 3914576359068802493
+    second: SmallSlime_23
+  - first:
+      213: 20301308347071676
+    second: SmallSlime_24
+  - first:
+      213: -6346420325785435043
+    second: SmallSlime_25
+  - first:
+      213: 7965629367917138878
+    second: SmallSlime_26
+  - first:
+      213: 5080546378431283718
+    second: SmallSlime_27
+  - first:
+      213: -6949079396591455519
+    second: SmallSlime_28
+  - first:
+      213: 8181206599596594395
+    second: SmallSlime_29
+  - first:
+      213: 6426845797248246517
+    second: SmallSlime_30
+  - first:
+      213: -7821629367454580370
+    second: SmallSlime_31
+  - first:
+      213: -3253240548026192490
+    second: SmallSlime_32
+  - first:
+      213: 1089701687301850686
+    second: SmallSlime_33
+  - first:
+      213: -6852233352295852557
+    second: SmallSlime_34
+  - first:
+      213: 4383905584739192050
+    second: SmallSlime_35
+  - first:
+      213: -3453475507263365782
+    second: SmallSlime_36
+  - first:
+      213: 6887306205586335452
+    second: SmallSlime_37
+  - first:
+      213: 8318302981647257506
+    second: SmallSlime_38
+  - first:
+      213: 6670425918598431223
+    second: SmallSlime_39
+  - first:
+      213: 8565359062234252553
+    second: SmallSlime_40
+  - first:
+      213: -6545664141026788787
+    second: SmallSlime_41
+  - first:
+      213: -332888126009746903
+    second: SmallSlime_42
+  - first:
+      213: 7679942652403615770
+    second: SmallSlime_43
+  - first:
+      213: -5555586702124923139
+    second: SmallSlime_44
+  - first:
+      213: 5690320999713416120
+    second: SmallSlime_45
+  - first:
+      213: -3823091540849196554
+    second: SmallSlime_46
+  - first:
+      213: 4272746594551427152
+    second: SmallSlime_47
+  - first:
+      213: 7044302977466513851
+    second: SmallSlime_48
+  - first:
+      213: 2274142094477829594
+    second: SmallSlime_49
+  - first:
+      213: -4404828842004969442
+    second: SmallSlime_50
+  - first:
+      213: -5417451817820348876
+    second: SmallSlime_51
+  - first:
+      213: 3701243764105438290
+    second: SmallSlime_52
+  - first:
+      213: -6778764750312120815
+    second: SmallSlime_53
+  - first:
+      213: -2572166089139879967
+    second: SmallSlime_54
+  - first:
+      213: -4119540865011611483
+    second: SmallSlime_55
+  - first:
+      213: 463307691092825410
+    second: SmallSlime_56
+  - first:
+      213: -8516918648002921507
+    second: SmallSlime_57
+  - first:
+      213: -8141463732101881053
+    second: SmallSlime_58
+  - first:
+      213: -329997350529391364
+    second: SmallSlime_59
+  - first:
+      213: -3370407782389651205
+    second: SmallSlime_60
+  - first:
+      213: -22822032674116391
+    second: SmallSlime_61
+  - first:
+      213: 8019910774848835022
+    second: SmallSlime_62
+  - first:
+      213: -4634172822652196537
+    second: SmallSlime_63
+  - first:
+      213: -1156184181738759279
+    second: SmallSlime_64
+  - first:
+      213: 2085221333813088439
+    second: SmallSlime_65
+  - first:
+      213: -6389879441377038885
+    second: SmallSlime_66
+  - first:
+      213: -4325421337779286467
+    second: SmallSlime_67
+  - first:
+      213: 8774020783620085407
+    second: SmallSlime_68
+  - first:
+      213: -3224142402763839544
+    second: SmallSlime_69
+  - first:
+      213: 3891586612443660377
+    second: SmallSlime_70
+  - first:
+      213: 1614282221343376096
+    second: SmallSlime_71
+  - first:
+      213: 2379682431755589424
+    second: SmallSlime_72
+  - first:
+      213: 3588782658393253078
+    second: SmallSlime_73
+  - first:
+      213: 1034325089711051815
+    second: SmallSlime_74
+  - first:
+      213: 3839773751842383788
+    second: SmallSlime_75
+  - first:
+      213: 3055580962001008952
+    second: SmallSlime_76
+  - first:
+      213: -898019955400834552
+    second: SmallSlime_77
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SmallSlime_4
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 909
+        width: 161
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcac9a8f933311670800000000000000
+      internalID: 8507637495157607117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_5
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 912
+        width: 172
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fa85d85d6036da00800000000000000
+      internalID: 780864831595318007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_6
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 909
+        width: 176
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6d70a7e895bc2bd0800000000000000
+      internalID: -2653546412102353556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_7
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 910
+        width: 177
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f006349e6084c9d60800000000000000
+      internalID: 7898267041021517839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_9
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 910
+        width: 157
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f01b1e290a9a7e1a0800000000000000
+      internalID: -6780264206858866417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_10
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 911
+        width: 161
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd3ebafe234b4e410800000000000000
+      internalID: 1505526306310972380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_20
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 740
+        width: 116
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91dc0fe54714a0470800000000000000
+      internalID: 8361567626231598361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_21
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 734
+        width: 115
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bce5efa2d1a65c1d0800000000000000
+      internalID: -3331139675862704437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_22
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 719
+        width: 157
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d32b966a3407eff80800000000000000
+      internalID: -8070890046344285635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_23
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 724
+        width: 122
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbd1070557e535630800000000000000
+      internalID: 3914576359068802493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_24
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 767
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbcb080beef184000800000000000000
+      internalID: 20301308347071676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_25
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 719
+        width: 137
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d548d36a65cfce7a0800000000000000
+      internalID: -6346420325785435043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_26
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 719
+        width: 146
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb3de17d4b99b8e60800000000000000
+      internalID: 7965629367917138878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_27
+      rect:
+        serializedVersion: 2
+        x: 1043
+        y: 719
+        width: 146
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6024b47630ab18640800000000000000
+      internalID: 5080546378431283718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_30
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 543
+        width: 153
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f2a133a33eb03950800000000000000
+      internalID: 6426845797248246517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_32
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 542
+        width: 183
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69d600e35fa2ad2d0800000000000000
+      internalID: -3253240548026192490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_33
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 542
+        width: 219
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3645ce39e56f1f00800000000000000
+      internalID: 1089701687301850686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_34
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 568
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f5525e121af7e0a0800000000000000
+      internalID: -6852233352295852557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_35
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 542
+        width: 215
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fc0b3307e2c6dc30800000000000000
+      internalID: 4383905584739192050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_36
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 542
+        width: 147
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d1e0dc25ac210d0800000000000000
+      internalID: -3453475507263365782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_37
+      rect:
+        serializedVersion: 2
+        x: 1141
+        y: 540
+        width: 144
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd62153e080a49f50800000000000000
+      internalID: 6887306205586335452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_42
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 375
+        width: 170
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92a5e3b5308516bf0800000000000000
+      internalID: -332888126009746903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_43
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 375
+        width: 269
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1883ebf623a49a60800000000000000
+      internalID: 7679942652403615770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_44
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 376
+        width: 606
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df6c5f4445796e2b0800000000000000
+      internalID: -5555586702124923139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_45
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 375
+        width: 99
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b32dd5fcc418fe40800000000000000
+      internalID: 5690320999713416120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_46
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 376
+        width: 99
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f102ebcf76a1fac0800000000000000
+      internalID: -3823091540849196554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_47
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 375
+        width: 114
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0507f77c368db4b30800000000000000
+      internalID: 4272746594551427152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_49
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 209
+        width: 160
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad52d1e9f206f8f10800000000000000
+      internalID: 2274142094477829594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_52
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 209
+        width: 144
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25462aae7957d5330800000000000000
+      internalID: 3701243764105438290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_53
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 209
+        width: 141
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11ed4b1006dfce1a0800000000000000
+      internalID: -6778764750312120815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_54
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 209
+        width: 135
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eff281e194dd4cd0800000000000000
+      internalID: -2572166089139879967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_60
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 40
+        width: 159
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf8e376aaf7e931d0800000000000000
+      internalID: -3370407782389651205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_61
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 38
+        width: 167
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dc28617b7beeaff0800000000000000
+      internalID: -22822032674116391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_63
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 39
+        width: 215
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749eb06ee5c10bfb0800000000000000
+      internalID: -4634172822652196537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_65
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 35
+        width: 228
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b0deff41c130fc10800000000000000
+      internalID: 2085221333813088439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_70
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 35
+        width: 209
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 950ce5fc761b10630800000000000000
+      internalID: 3891586612443660377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallSlime_75
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 36
+        width: 159
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca72f6022ed994530800000000000000
+      internalID: 3839773751842383788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a7e323b943590ed49aad5e0d705bbe20
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SmallSlime_0: 7581260844990790426
+      SmallSlime_1: -6680661014123461599
+      SmallSlime_10: 1505526306310972380
+      SmallSlime_11: -3687707325970029873
+      SmallSlime_12: 3771215016566718221
+      SmallSlime_13: -6405328942336687995
+      SmallSlime_14: 344750423271337917
+      SmallSlime_15: -5032102673928597575
+      SmallSlime_16: -6371738949405827941
+      SmallSlime_17: -7347149730512150040
+      SmallSlime_18: 2852015262625224556
+      SmallSlime_19: 1360067343010561129
+      SmallSlime_2: 2977022089766513496
+      SmallSlime_20: 8361567626231598361
+      SmallSlime_21: -3331139675862704437
+      SmallSlime_22: -8070890046344285635
+      SmallSlime_23: 3914576359068802493
+      SmallSlime_24: 20301308347071676
+      SmallSlime_25: -6346420325785435043
+      SmallSlime_26: 7965629367917138878
+      SmallSlime_27: 5080546378431283718
+      SmallSlime_28: -6949079396591455519
+      SmallSlime_29: 8181206599596594395
+      SmallSlime_3: -478764011137203176
+      SmallSlime_30: 6426845797248246517
+      SmallSlime_31: -7821629367454580370
+      SmallSlime_32: -3253240548026192490
+      SmallSlime_33: 1089701687301850686
+      SmallSlime_34: -6852233352295852557
+      SmallSlime_35: 4383905584739192050
+      SmallSlime_36: -3453475507263365782
+      SmallSlime_37: 6887306205586335452
+      SmallSlime_38: 8318302981647257506
+      SmallSlime_39: 6670425918598431223
+      SmallSlime_4: 8507637495157607117
+      SmallSlime_40: 8565359062234252553
+      SmallSlime_41: -6545664141026788787
+      SmallSlime_42: -332888126009746903
+      SmallSlime_43: 7679942652403615770
+      SmallSlime_44: -5555586702124923139
+      SmallSlime_45: 5690320999713416120
+      SmallSlime_46: -3823091540849196554
+      SmallSlime_47: 4272746594551427152
+      SmallSlime_48: 7044302977466513851
+      SmallSlime_49: 2274142094477829594
+      SmallSlime_5: 780864831595318007
+      SmallSlime_50: -4404828842004969442
+      SmallSlime_51: -5417451817820348876
+      SmallSlime_52: 3701243764105438290
+      SmallSlime_53: -6778764750312120815
+      SmallSlime_54: -2572166089139879967
+      SmallSlime_55: -4119540865011611483
+      SmallSlime_56: 463307691092825410
+      SmallSlime_57: -8516918648002921507
+      SmallSlime_58: -8141463732101881053
+      SmallSlime_59: -329997350529391364
+      SmallSlime_6: -2653546412102353556
+      SmallSlime_60: -3370407782389651205
+      SmallSlime_61: -22822032674116391
+      SmallSlime_62: 8019910774848835022
+      SmallSlime_63: -4634172822652196537
+      SmallSlime_64: -1156184181738759279
+      SmallSlime_65: 2085221333813088439
+      SmallSlime_66: -6389879441377038885
+      SmallSlime_67: -4325421337779286467
+      SmallSlime_68: 8774020783620085407
+      SmallSlime_69: -3224142402763839544
+      SmallSlime_7: 7898267041021517839
+      SmallSlime_70: 3891586612443660377
+      SmallSlime_71: 1614282221343376096
+      SmallSlime_72: 2379682431755589424
+      SmallSlime_73: 3588782658393253078
+      SmallSlime_74: 1034325089711051815
+      SmallSlime_75: 3839773751842383788
+      SmallSlime_76: 3055580962001008952
+      SmallSlime_77: -898019955400834552
+      SmallSlime_8: 1064518432359621688
+      SmallSlime_9: -6780264206858866417
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
