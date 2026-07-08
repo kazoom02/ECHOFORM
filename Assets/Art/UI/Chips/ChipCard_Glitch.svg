@@ -1,0 +1,91 @@
+<svg viewBox="0 0 440 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a1c1e"/><stop offset="0.4" stop-color="#170e10"/>
+      <stop offset="0.8" stop-color="#0c0708"/><stop offset="1" stop-color="#1f1416"/>
+    </linearGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a3a3e"/><stop offset="1" stop-color="#241416"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff8088" stop-opacity="0.85"/><stop offset="0.5" stop-color="#ff2a35" stop-opacity="0.3"/><stop offset="1" stop-color="#ff2a35" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="hx" width="26" height="22" patternUnits="userSpaceOnUse">
+      <path d="M6.5 0 L19.5 0 L26 11 L19.5 22 L6.5 22 L0 11 Z" fill="none" stroke="#ff2a35" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- body -->
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z"
+        fill="url(#body)" stroke="url(#bevel)" stroke-width="3"/>
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z" fill="url(#hx)"/>
+
+  <!-- chromatic-split top trim (red + cyan ghosts offset) -->
+  <path d="M117 29 L357 29" stroke="#0affff" stroke-width="2.5" opacity="0.5"/>
+  <path d="M123 31 L363 31" stroke="#ff2a35" stroke-width="2.5" opacity="0.6"/>
+
+  <!-- ===== corrupted cost badge (slashed hex) ===== -->
+  <g filter="url(#g)">
+    <path d="M72 34 L104 52 L104 92 L72 110 L40 92 L40 52 Z" fill="none" stroke="#ff2a35" stroke-width="3"/>
+    <path d="M50 56 L96 88 M96 56 L50 88" stroke="#ff2a35" stroke-width="3" opacity="0.9"/>
+  </g>
+
+  <!-- prominent warning (top-right) -->
+  <g filter="url(#g)"><path d="M384 40 L400 66 L368 66 Z" fill="none" stroke="#ffb020" stroke-width="2.4" stroke-linejoin="round"/>
+     <line x1="384" y1="49" x2="384" y2="57" stroke="#ffb020" stroke-width="2.4"/><circle cx="384" cy="61" r="1.4" fill="#ffb020"/></g>
+
+  <!-- ===== broken icon window (gapped brackets, fractured) ===== -->
+  <rect x="60" y="128" width="320" height="216" rx="6" fill="#140708" stroke="#3a1c1f" stroke-width="2"/>
+  <!-- cracked outline: broken segments -->
+  <g stroke="#ff2a35" stroke-opacity="0.6" stroke-width="2" fill="none">
+    <path d="M60 150 L60 128 L120 128 M180 128 L300 128 M340 128 L380 128 L380 180"/>
+    <path d="M380 240 L380 344 L300 344 M210 344 L120 344 M60 344 L60 260"/>
+  </g>
+  <!-- fracture lines across window -->
+  <g stroke="#ff5058" stroke-width="1.4" stroke-opacity="0.8" filter="url(#g)">
+    <path d="M110 128 L170 210 L140 260 L220 344"/>
+    <path d="M300 150 L250 230 L320 300"/>
+  </g>
+
+  <!-- corrupted emblem: fragmented hex with RGB split -->
+  <g filter="url(#g)">
+    <path d="M196 168 L280 216 L280 292 L196 340 L112 292 L112 216 Z" fill="none" stroke="#0affff" stroke-opacity="0.4" stroke-width="2.5"/>
+    <path d="M204 168 L288 216 L288 292 L204 340 L120 292 L120 216 Z" fill="none" stroke="#ff2a35" stroke-opacity="0.7" stroke-width="2.5"/>
+    <!-- shattered inner segments -->
+    <path d="M200 200 L232 218 L232 236" fill="none" stroke="#ff8088" stroke-width="2"/>
+    <path d="M168 262 L200 280 L226 264" fill="none" stroke="#ff8088" stroke-width="2"/>
+    <circle cx="200" cy="254" r="26" fill="url(#core)"/>
+  </g>
+
+  <!-- corrupted data blocks (redacted bars) -->
+  <g fill="#ff2a35" opacity="0.55">
+    <rect x="80" y="360" width="60" height="10"/><rect x="150" y="360" width="30" height="10"/>
+    <rect x="80" y="376" width="40" height="10"/><rect x="128" y="376" width="80" height="10"/>
+    <rect x="250" y="360" width="90" height="10"/><rect x="250" y="376" width="50" height="10"/>
+  </g>
+  <g fill="#0affff" opacity="0.3">
+    <rect x="188" y="360" width="24" height="10"/><rect x="310" y="376" width="30" height="10"/>
+  </g>
+
+  <!-- red hazard strip -->
+  <g><clipPath id="hz"><rect x="60" y="398" width="320" height="12"/></clipPath>
+    <g clip-path="url(#hz)" stroke="#ff2a35" stroke-width="6" stroke-opacity="0.5">
+      <line x1="56" y1="412" x2="72" y2="392"/><line x1="76" y1="412" x2="92" y2="392"/><line x1="96" y1="412" x2="112" y2="392"/><line x1="116" y1="412" x2="132" y2="392"/><line x1="136" y1="412" x2="152" y2="392"/><line x1="156" y1="412" x2="172" y2="392"/><line x1="176" y1="412" x2="192" y2="392"/><line x1="196" y1="412" x2="212" y2="392"/><line x1="216" y1="412" x2="232" y2="392"/><line x1="236" y1="412" x2="252" y2="392"/><line x1="256" y1="412" x2="272" y2="392"/><line x1="276" y1="412" x2="292" y2="392"/><line x1="296" y1="412" x2="312" y2="392"/><line x1="316" y1="412" x2="332" y2="392"/><line x1="336" y1="412" x2="352" y2="392"/><line x1="356" y1="412" x2="372" y2="392"/>
+    </g>
+  </g>
+
+  <!-- damaged gold strip (missing pins) -->
+  <g>
+    <rect x="120" y="430" width="200" height="34" rx="3" fill="#0a0708" stroke="#2a1618" stroke-width="2"/>
+    <g fill="#8a641f" opacity="0.7">
+      <rect x="130" y="436" width="16" height="22"/><rect x="174" y="436" width="16" height="22"/>
+      <rect x="196" y="436" width="16" height="22"/><rect x="262" y="436" width="16" height="22"/>
+      <rect x="284" y="436" width="16" height="22"/>
+    </g>
+    <!-- burnt gaps -->
+    <g fill="#ff2a35" opacity="0.5"><rect x="152" y="440" width="16" height="14"/><rect x="240" y="440" width="16" height="14"/></g>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg viewBox="0 0 440 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- all-white emissive lines; tint with Image.color / CardData.tint -->
+  <g stroke="#ffffff" fill="none" filter="url(#g)">
+    <path d="M120 30 L360 30" stroke-width="2.5"/>
+    <path d="M72 34 L104 52 L104 92 L72 110 L40 92 L40 52 Z" stroke-width="3"/>
+    <rect x="60" y="128" width="320" height="216" rx="8" stroke-width="1.5"/>
+    <path d="M74 144 L74 138 Q74 134 78 134 L92 134" stroke-width="3"/>
+    <path d="M348 134 L362 134 Q366 134 366 138 L366 144" stroke-width="3"/>
+    <path d="M366 328 L366 334 Q366 338 362 338 L348 338" stroke-width="3"/>
+    <path d="M92 338 L78 338 Q74 338 74 334 L74 328" stroke-width="3"/>
+    <path d="M50 362 L390 362 L390 410 L50 410 Z" stroke-width="1.5"/>
+  </g>
+  <g fill="#ffffff" opacity="0.9" filter="url(#g)">
+    <circle cx="360" cy="66" r="2"/><circle cx="368" cy="66" r="2"/><circle cx="376" cy="66" r="2"/>
+  </g>
+</svg>

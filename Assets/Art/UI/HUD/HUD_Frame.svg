@@ -1,0 +1,84 @@
+<svg viewBox="0 0 1920 440" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22262b"/>
+      <stop offset="0.12" stop-color="#15181c"/>
+      <stop offset="0.85" stop-color="#0c0e11"/>
+      <stop offset="1" stop-color="#191d21"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5058"/><stop offset="1" stop-color="#23272b"/>
+    </linearGradient>
+    <linearGradient id="bay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0affff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#0affff" stop-opacity="0.02"/>
+    </linearGradient>
+    <filter id="g" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="hx" width="30" height="26" patternUnits="userSpaceOnUse">
+      <path d="M7.5 0 L22.5 0 L30 13 L22.5 26 L7.5 26 L0 13 Z" fill="none" stroke="#0affff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <g id="warn"><path d="M0 -6 L7 6 L-7 6 Z" fill="none" stroke="#e0a020" stroke-width="1.4" stroke-linejoin="round"/><line x1="0" y1="-1" x2="0" y2="2.5" stroke="#e0a020" stroke-width="1.4"/><circle cx="0" cy="4.3" r="0.8" fill="#e0a020"/></g>
+  </defs>
+
+  <!-- main bar -->
+  <path d="M30 70 L120 40 L1800 40 L1890 70 L1890 400 L1800 430 L120 430 L30 400 Z"
+        fill="url(#bar)" stroke="url(#edge)" stroke-width="3"/>
+  <path d="M30 70 L120 40 L1800 40 L1890 70 L1890 400 L1800 430 L120 430 L30 400 Z" fill="url(#hx)"/>
+  <!-- glowing top trim -->
+  <path d="M120 46 L1800 46" stroke="#0affff" stroke-width="2.5" filter="url(#g)" opacity="0.85"/>
+  <path d="M60 80 L60 390 M1860 80 L1860 390" stroke="#0affff" stroke-opacity="0.25" stroke-width="1.5"/>
+
+  <!-- header plate (top-left) : leave blank for TMP text -->
+  <path d="M70 60 L360 60 L390 92 L360 124 L70 124 Z" fill="#0b0e11" stroke="#2c343a" stroke-width="2"/>
+  <path d="M78 92 L100 92" stroke="#0affff" stroke-width="3" filter="url(#g)"/>
+  <use href="#warn" x="352" y="92"/>
+
+  <!-- 5 chip bays -->
+  <g>
+    <g id="bays" fill="url(#bay)" stroke="#0affff" stroke-opacity="0.4" stroke-width="2">
+      <rect x="150" y="150" width="230" height="250" rx="8"/>
+      <rect x="410" y="150" width="230" height="250" rx="8"/>
+      <rect x="670" y="150" width="230" height="250" rx="8"/>
+      <rect x="930" y="150" width="230" height="250" rx="8"/>
+      <rect x="1190" y="150" width="230" height="250" rx="8"/>
+    </g>
+    <!-- bay corner brackets -->
+    <g stroke="#5efcff" stroke-width="2.5" fill="none" opacity="0.7" filter="url(#g)">
+      <path d="M164 166 l0 -0 M164 176 l0 -14 l14 0 M366 162 l14 0 l0 14 M164 388 l0 14 l14 0 M380 388 l0 14 l-14 0" transform="translate(0,0)"/>
+    </g>
+    <g fill="#0affff" filter="url(#g)">
+      <circle cx="265" cy="140" r="3"/><circle cx="525" cy="140" r="3"/><circle cx="785" cy="140" r="3"/><circle cx="1045" cy="140" r="3"/><circle cx="1305" cy="140" r="3"/>
+    </g>
+  </g>
+
+  <!-- right cluster : CPU cycles housing -->
+  <g>
+    <path d="M1470 150 L1840 150 L1840 400 L1470 400 Z" fill="#0b0e11" stroke="#2c343a" stroke-width="2"/>
+    <path d="M1470 150 L1840 150" stroke="#0affff" stroke-opacity="0.3" stroke-width="1.5"/>
+    <!-- readout lines -->
+    <g stroke="#0affff" stroke-opacity="0.35" stroke-width="2">
+      <line x1="1500" y1="200" x2="1650" y2="200"/><line x1="1500" y1="230" x2="1600" y2="230"/>
+      <line x1="1500" y1="260" x2="1690" y2="260"/>
+    </g>
+    <!-- CPU pip sockets (empty rings) -->
+    <g fill="none" stroke="#1a7f8c" stroke-width="3">
+      <circle cx="1520" cy="340" r="22"/><circle cx="1580" cy="340" r="22"/><circle cx="1640" cy="340" r="22"/>
+      <circle cx="1700" cy="340" r="22"/><circle cx="1760" cy="340" r="22"/>
+    </g>
+    <!-- lit examples -->
+    <g filter="url(#g)"><circle cx="1520" cy="340" r="13" fill="#0affff"/><circle cx="1580" cy="340" r="13" fill="#0affff"/><circle cx="1640" cy="340" r="13" fill="#0affff"/></g>
+  </g>
+
+  <!-- corner bolts + hazard accent -->
+  <g fill="#0a0c0e" stroke="#3a4046" stroke-width="1.5">
+    <path d="M92 402 l10 0 l5 8.6 l-5 8.6 l-10 0 l-5 -8.6 z"/>
+    <path d="M1820 60 l10 0 l5 8.6 l-5 8.6 l-10 0 l-5 -8.6 z"/>
+  </g>
+  <g><clipPath id="hz"><rect x="1470" y="410" width="370" height="12"/></clipPath>
+    <g clip-path="url(#hz)" stroke="#e0a020" stroke-width="6" stroke-opacity="0.5">
+      <line x1="1466" y1="424" x2="1482" y2="404"/><line x1="1486" y1="424" x2="1502" y2="404"/><line x1="1506" y1="424" x2="1522" y2="404"/><line x1="1526" y1="424" x2="1542" y2="404"/><line x1="1546" y1="424" x2="1562" y2="404"/><line x1="1566" y1="424" x2="1582" y2="404"/><line x1="1586" y1="424" x2="1602" y2="404"/><line x1="1606" y1="424" x2="1622" y2="404"/><line x1="1626" y1="424" x2="1642" y2="404"/><line x1="1646" y1="424" x2="1662" y2="404"/><line x1="1666" y1="424" x2="1682" y2="404"/><line x1="1686" y1="424" x2="1702" y2="404"/><line x1="1706" y1="424" x2="1722" y2="404"/><line x1="1726" y1="424" x2="1742" y2="404"/><line x1="1746" y1="424" x2="1762" y2="404"/><line x1="1766" y1="424" x2="1782" y2="404"/><line x1="1786" y1="424" x2="1802" y2="404"/><line x1="1806" y1="424" x2="1822" y2="404"/>
+    </g>
+  </g>
+</svg>

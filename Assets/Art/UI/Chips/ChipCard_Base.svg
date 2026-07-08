@@ -1,0 +1,81 @@
+<svg viewBox="0 0 440 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#262a2f"/><stop offset="0.4" stop-color="#15181c"/>
+      <stop offset="0.75" stop-color="#0c0e11"/><stop offset="1" stop-color="#1b1f23"/>
+    </linearGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c525a"/><stop offset="1" stop-color="#20242a"/>
+    </linearGradient>
+    <linearGradient id="win" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#06171b"/><stop offset="1" stop-color="#020a0c"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12161a"/><stop offset="1" stop-color="#0a0d10"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4dd94"/><stop offset="0.5" stop-color="#c99f45"/><stop offset="1" stop-color="#8a641f"/>
+    </linearGradient>
+    <radialGradient id="badge" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#0affff" stop-opacity="0.35"/><stop offset="1" stop-color="#0affff" stop-opacity="0.04"/>
+    </radialGradient>
+    <filter id="g" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="hx" width="26" height="22" patternUnits="userSpaceOnUse">
+      <path d="M6.5 0 L19.5 0 L26 11 L19.5 22 L6.5 22 L0 11 Z" fill="none" stroke="#0affff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- ===== card body (chamfered military corners) ===== -->
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z"
+        fill="url(#body)" stroke="url(#bevel)" stroke-width="3"/>
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z" fill="url(#hx)"/>
+  <!-- glowing top trim -->
+  <path d="M120 30 L360 30" stroke="#0affff" stroke-width="2.5" filter="url(#g)" opacity="0.8"/>
+  <!-- side rails -->
+  <path d="M30 60 L30 440 M410 60 L410 440" stroke="#0affff" stroke-opacity="0.22" stroke-width="1.5"/>
+
+  <!-- ===== cost badge (hex, top-left) — TMP number goes in center ===== -->
+  <g filter="url(#g)">
+    <path d="M72 34 L104 52 L104 92 L72 110 L40 92 L40 52 Z" fill="url(#badge)" stroke="#0affff" stroke-width="3"/>
+    <path d="M72 46 L94 58 L94 86 L72 98 L50 86 L50 58 Z" fill="none" stroke="#5efcff" stroke-opacity="0.5" stroke-width="1.2"/>
+  </g>
+
+  <!-- warning tick + micro-dots (top-right) -->
+  <g><path d="M388 44 L396 56 L380 56 Z" fill="none" stroke="#e0a020" stroke-width="1.6" stroke-linejoin="round"/>
+     <line x1="388" y1="49" x2="388" y2="52" stroke="#e0a020" stroke-width="1.6"/></g>
+  <g fill="#0affff" opacity="0.7"><circle cx="360" cy="66" r="2"/><circle cx="368" cy="66" r="2"/><circle cx="376" cy="66" r="2"/></g>
+
+  <!-- ===== icon window (card art shows here) ===== -->
+  <rect x="60" y="128" width="320" height="216" rx="8" fill="url(#win)" stroke="#243036" stroke-width="2"/>
+  <rect x="60" y="128" width="320" height="216" rx="8" fill="none" stroke="#0affff" stroke-opacity="0.3" stroke-width="1"/>
+  <!-- corner brackets -->
+  <g stroke="#5efcff" stroke-width="3" fill="none" opacity="0.85" filter="url(#g)">
+    <path d="M74 144 L74 138 Q74 134 78 134 L92 134"/>
+    <path d="M348 134 L362 134 Q366 134 366 138 L366 144"/>
+    <path d="M366 328 L366 334 Q366 338 362 338 L348 338"/>
+    <path d="M92 338 L78 338 Q74 338 74 334 L74 328"/>
+  </g>
+  <!-- faint scanlines inside window -->
+  <g stroke="#0affff" stroke-opacity="0.05" stroke-width="1">
+    <line x1="60" y1="170" x2="380" y2="170"/><line x1="60" y1="210" x2="380" y2="210"/>
+    <line x1="60" y1="250" x2="380" y2="250"/><line x1="60" y1="290" x2="380" y2="290"/>
+  </g>
+
+  <!-- ===== name plate (TMP name) ===== -->
+  <path d="M50 362 L390 362 L390 410 L50 410 Z" fill="url(#plate)" stroke="#243036" stroke-width="2"/>
+  <path d="M50 366 L390 366" stroke="#0affff" stroke-opacity="0.3" stroke-width="1.2"/>
+  <path d="M62 386 L82 386" stroke="#0affff" stroke-width="3" filter="url(#g)"/>
+
+  <!-- ===== gold connector strip (bottom) ===== -->
+  <g>
+    <rect x="120" y="430" width="200" height="34" rx="3" fill="#0a0b0d" stroke="#23282c" stroke-width="2"/>
+    <g fill="url(#gold)" stroke="#6a4c16" stroke-width="0.8">
+      <rect x="130" y="436" width="16" height="22" rx="1"/><rect x="152" y="436" width="16" height="22" rx="1"/>
+      <rect x="174" y="436" width="16" height="22" rx="1"/><rect x="196" y="436" width="16" height="22" rx="1"/>
+      <rect x="218" y="436" width="16" height="22" rx="1"/><rect x="240" y="436" width="16" height="22" rx="1"/>
+      <rect x="262" y="436" width="16" height="22" rx="1"/><rect x="284" y="436" width="16" height="22" rx="1"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,1573 @@
+fileFormatVersion: 2
+guid: 0ab734075bca1e549b5621a59a50d47d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5721871497547010234
+    second: BigSlime_0
+  - first:
+      213: -1556347328472670732
+    second: BigSlime_1
+  - first:
+      213: 135753029041877353
+    second: BigSlime_2
+  - first:
+      213: -7773024207997917427
+    second: BigSlime_3
+  - first:
+      213: 695655499556314404
+    second: BigSlime_4
+  - first:
+      213: 2706467062856819869
+    second: BigSlime_5
+  - first:
+      213: 7962103204112202161
+    second: BigSlime_6
+  - first:
+      213: -5069059232475801421
+    second: BigSlime_7
+  - first:
+      213: 3413222827966359889
+    second: BigSlime_8
+  - first:
+      213: -1418272322413924482
+    second: BigSlime_9
+  - first:
+      213: 6651106450657101262
+    second: BigSlime_10
+  - first:
+      213: 3277466493862888190
+    second: BigSlime_11
+  - first:
+      213: 9187408997343185421
+    second: BigSlime_12
+  - first:
+      213: 7949574815423450045
+    second: BigSlime_13
+  - first:
+      213: 4479815384934511970
+    second: BigSlime_14
+  - first:
+      213: 8309790996734950940
+    second: BigSlime_15
+  - first:
+      213: 2838728780123760103
+    second: BigSlime_16
+  - first:
+      213: -3627472155550396611
+    second: BigSlime_17
+  - first:
+      213: -8806598150218292723
+    second: BigSlime_18
+  - first:
+      213: -7522442631912389439
+    second: BigSlime_19
+  - first:
+      213: -1657146148871585183
+    second: BigSlime_20
+  - first:
+      213: -2038113568226616385
+    second: BigSlime_21
+  - first:
+      213: -8425604113271086132
+    second: BigSlime_22
+  - first:
+      213: 3368309207908346353
+    second: BigSlime_23
+  - first:
+      213: 5693643104282950428
+    second: BigSlime_24
+  - first:
+      213: -8720138069282399342
+    second: BigSlime_25
+  - first:
+      213: 4104382885645915300
+    second: BigSlime_26
+  - first:
+      213: -6249006217258934724
+    second: BigSlime_27
+  - first:
+      213: 1747054153980260460
+    second: BigSlime_28
+  - first:
+      213: 7880275761230181351
+    second: BigSlime_29
+  - first:
+      213: 4770005670394044567
+    second: BigSlime_30
+  - first:
+      213: -4428731239426769612
+    second: BigSlime_31
+  - first:
+      213: -8479197572742487422
+    second: BigSlime_32
+  - first:
+      213: -5697973117266567639
+    second: BigSlime_33
+  - first:
+      213: -6409723660420099932
+    second: BigSlime_34
+  - first:
+      213: 8040095608970864195
+    second: BigSlime_35
+  - first:
+      213: -3555768950902901233
+    second: BigSlime_36
+  - first:
+      213: 2545004787017945313
+    second: BigSlime_37
+  - first:
+      213: -137209899649430506
+    second: BigSlime_38
+  - first:
+      213: 4528115931793726166
+    second: BigSlime_39
+  - first:
+      213: -4764663416702566383
+    second: BigSlime_40
+  - first:
+      213: -926832319008449194
+    second: BigSlime_41
+  - first:
+      213: -6282500841155223478
+    second: BigSlime_42
+  - first:
+      213: 710004277308678176
+    second: BigSlime_43
+  - first:
+      213: -2078285882915439756
+    second: BigSlime_44
+  - first:
+      213: 4498347202141111781
+    second: BigSlime_45
+  - first:
+      213: -7302702482428384309
+    second: BigSlime_46
+  - first:
+      213: 8574644566905019726
+    second: BigSlime_47
+  - first:
+      213: -7978018471295796364
+    second: BigSlime_48
+  - first:
+      213: 2832306245146806017
+    second: BigSlime_49
+  - first:
+      213: 7777374657078511964
+    second: BigSlime_50
+  - first:
+      213: -2259725255321441435
+    second: BigSlime_51
+  - first:
+      213: 2771416413427252963
+    second: BigSlime_52
+  - first:
+      213: 1020084088171356491
+    second: BigSlime_53
+  - first:
+      213: 8459101579146669297
+    second: BigSlime_54
+  - first:
+      213: -5433149608078604204
+    second: BigSlime_55
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BigSlime_0
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 1042
+        width: 60
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab0d8bdafcb286f40800000000000000
+      internalID: 5721871497547010234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_1
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 876
+        width: 199
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd1243c95eb66ae0800000000000000
+      internalID: -1556347328472670732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_2
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 1042
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 961793129aa42e100800000000000000
+      internalID: 135753029041877353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_3
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 875
+        width: 201
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d07a5c38aaba02490800000000000000
+      internalID: -7773024207997917427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_4
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 874
+        width: 201
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42dd919bdf677a900800000000000000
+      internalID: 695655499556314404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_5
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 873
+        width: 198
+        height: 174
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9420e5447d4f8520800000000000000
+      internalID: 2706467062856819869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_6
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 873
+        width: 198
+        height: 174
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b97b1adda21f7e60800000000000000
+      internalID: 7962103204112202161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_7
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 872
+        width: 201
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b89dde2c7517a9b0800000000000000
+      internalID: -5069059232475801421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_8
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 834
+        width: 49
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1596038f3143e5f20800000000000000
+      internalID: 3413222827966359889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_9
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 833
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7fefbb46d8415ce0800000000000000
+      internalID: -1418272322413924482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_10
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 690
+        width: 146
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec5c9bae31a7d4c50800000000000000
+      internalID: 6651106450657101262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_11
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 694
+        width: 149
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef241f15966eb7d20800000000000000
+      internalID: 3277466493862888190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_12
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 686
+        width: 171
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0a4edc5ecb308f70800000000000000
+      internalID: 9187408997343185421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_13
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 688
+        width: 211
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbbc4bc0d20925e60800000000000000
+      internalID: 7949574815423450045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_14
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 688
+        width: 182
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 265f9568b508b2e30800000000000000
+      internalID: 4479815384934511970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_15
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 689
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1e302662ee425370800000000000000
+      internalID: 8309790996734950940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_16
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 689
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e564f809c0356720800000000000000
+      internalID: 2838728780123760103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_17
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 689
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f4ccf2b41a8adc0800000000000000
+      internalID: -3627472155550396611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_18
+      rect:
+        serializedVersion: 2
+        x: 1259
+        y: 682
+        width: 219
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0260a844ada8c580800000000000000
+      internalID: -8806598150218292723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_19
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 645
+        width: 93
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c48b99284aea9790800000000000000
+      internalID: -7522442631912389439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_20
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 513
+        width: 172
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1624a978b52a009e0800000000000000
+      internalID: -1657146148871585183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_21
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 645
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbbd2f1128a27b3e0800000000000000
+      internalID: -2038113568226616385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_22
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 513
+        width: 238
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc3286223bd321b80800000000000000
+      internalID: -8425604113271086132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_23
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 513
+        width: 335
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f9ed07e063aebe20800000000000000
+      internalID: 3368309207908346353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_24
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 610
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1b33a4bc32e30f40800000000000000
+      internalID: 5693643104282950428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_25
+      rect:
+        serializedVersion: 2
+        x: 996
+        y: 508
+        width: 214
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29bdf0490a8dbf680800000000000000
+      internalID: -8720138069282399342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_26
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 509
+        width: 216
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a41e111d72b5f830800000000000000
+      internalID: 4104382885645915300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_27
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 585
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3ed21d34f11749a0800000000000000
+      internalID: -6249006217258934724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_28
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 562
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c603d5b2f78ce3810800000000000000
+      internalID: 1747054153980260460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_29
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 560
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e3fe38ad0d5c5d60800000000000000
+      internalID: 7880275761230181351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_30
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 478
+        width: 74
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 790af6872e6723240800000000000000
+      internalID: 4770005670394044567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_31
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 478
+        width: 41
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43dba44f66cf982c0800000000000000
+      internalID: -4428731239426769612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_32
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 337
+        width: 171
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28264587bb6d35a80800000000000000
+      internalID: -8479197572742487422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_33
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 339
+        width: 307
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92ed99593abbce0b0800000000000000
+      internalID: -5697973117266567639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_34
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 337
+        width: 156
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a05e308a461c07a0800000000000000
+      internalID: -6409723660420099932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_35
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 344
+        width: 193
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 346e2ecab58249f60800000000000000
+      internalID: 8040095608970864195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_36
+      rect:
+        serializedVersion: 2
+        x: 1004
+        y: 344
+        width: 164
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f06b11a7afe57aec0800000000000000
+      internalID: -3555768950902901233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_37
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 344
+        width: 222
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e09fd9ae5ca15320800000000000000
+      internalID: 2545004787017945313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_38
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 345
+        width: 172
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61c8abfb258881ef0800000000000000
+      internalID: -137209899649430506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_39
+      rect:
+        serializedVersion: 2
+        x: 1576
+        y: 344
+        width: 91
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da1a50f27917de30800000000000000
+      internalID: 4528115931793726166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_40
+      rect:
+        serializedVersion: 2
+        x: 1671
+        y: 344
+        width: 93
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1100525edd380edb0800000000000000
+      internalID: -4764663416702566383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_41
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 299
+        width: 47
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d562b9aea3323f0800000000000000
+      internalID: -926832319008449194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_42
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 178
+        width: 162
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a40a9d565c210d8a0800000000000000
+      internalID: -6282500841155223478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_43
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 299
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 020edf1e0217ad900800000000000000
+      internalID: 710004277308678176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_44
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 177
+        width: 163
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47bbd1f20027823e0800000000000000
+      internalID: -2078285882915439756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_45
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 177
+        width: 148
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e54ef372f65d6e30800000000000000
+      internalID: 4498347202141111781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_46
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 291
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcb2e7a98c697aa90800000000000000
+      internalID: -7302702482428384309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_47
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 177
+        width: 157
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4d5b9d9dc14ff670800000000000000
+      internalID: 8574644566905019726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_48
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 147
+        width: 79
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47bb8ee3872684190800000000000000
+      internalID: -7978018471295796364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_49
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 24
+        width: 166
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1078815168f5e4720800000000000000
+      internalID: 2832306245146806017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_50
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 147
+        width: 33
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c594a485b09ceeb60800000000000000
+      internalID: 7777374657078511964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_51
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 23
+        width: 187
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b26925ad7d3a0e0800000000000000
+      internalID: -2259725255321441435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_52
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 21
+        width: 205
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eeb40f5b8c067620800000000000000
+      internalID: 2771416413427252963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_53
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 22
+        width: 198
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b416b74d211182e00800000000000000
+      internalID: 1020084088171356491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_54
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 22
+        width: 191
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fcabf76114c46570800000000000000
+      internalID: 8459101579146669297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigSlime_55
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 21
+        width: 215
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4580ceea7339994b0800000000000000
+      internalID: -5433149608078604204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BigSlime_0: 5721871497547010234
+      BigSlime_1: -1556347328472670732
+      BigSlime_10: 6651106450657101262
+      BigSlime_11: 3277466493862888190
+      BigSlime_12: 9187408997343185421
+      BigSlime_13: 7949574815423450045
+      BigSlime_14: 4479815384934511970
+      BigSlime_15: 8309790996734950940
+      BigSlime_16: 2838728780123760103
+      BigSlime_17: -3627472155550396611
+      BigSlime_18: -8806598150218292723
+      BigSlime_19: -7522442631912389439
+      BigSlime_2: 135753029041877353
+      BigSlime_20: -1657146148871585183
+      BigSlime_21: -2038113568226616385
+      BigSlime_22: -8425604113271086132
+      BigSlime_23: 3368309207908346353
+      BigSlime_24: 5693643104282950428
+      BigSlime_25: -8720138069282399342
+      BigSlime_26: 4104382885645915300
+      BigSlime_27: -6249006217258934724
+      BigSlime_28: 1747054153980260460
+      BigSlime_29: 7880275761230181351
+      BigSlime_3: -7773024207997917427
+      BigSlime_30: 4770005670394044567
+      BigSlime_31: -4428731239426769612
+      BigSlime_32: -8479197572742487422
+      BigSlime_33: -5697973117266567639
+      BigSlime_34: -6409723660420099932
+      BigSlime_35: 8040095608970864195
+      BigSlime_36: -3555768950902901233
+      BigSlime_37: 2545004787017945313
+      BigSlime_38: -137209899649430506
+      BigSlime_39: 4528115931793726166
+      BigSlime_4: 695655499556314404
+      BigSlime_40: -4764663416702566383
+      BigSlime_41: -926832319008449194
+      BigSlime_42: -6282500841155223478
+      BigSlime_43: 710004277308678176
+      BigSlime_44: -2078285882915439756
+      BigSlime_45: 4498347202141111781
+      BigSlime_46: -7302702482428384309
+      BigSlime_47: 8574644566905019726
+      BigSlime_48: -7978018471295796364
+      BigSlime_49: 2832306245146806017
+      BigSlime_5: 2706467062856819869
+      BigSlime_50: 7777374657078511964
+      BigSlime_51: -2259725255321441435
+      BigSlime_52: 2771416413427252963
+      BigSlime_53: 1020084088171356491
+      BigSlime_54: 8459101579146669297
+      BigSlime_55: -5433149608078604204
+      BigSlime_6: 7962103204112202161
+      BigSlime_7: -5069059232475801421
+      BigSlime_8: 3413222827966359889
+      BigSlime_9: -1418272322413924482
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,74 @@
+<svg viewBox="0 0 440 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#262a2f"/><stop offset="0.4" stop-color="#15181c"/>
+      <stop offset="0.75" stop-color="#0c0e11"/><stop offset="1" stop-color="#1b1f23"/>
+    </linearGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c525a"/><stop offset="1" stop-color="#20242a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4dd94"/><stop offset="0.5" stop-color="#c99f45"/><stop offset="1" stop-color="#8a641f"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7ffcff" stop-opacity="0.8"/><stop offset="0.45" stop-color="#12d6f0" stop-opacity="0.28"/><stop offset="1" stop-color="#0affff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+    <pattern id="hx" width="26" height="22" patternUnits="userSpaceOnUse">
+      <path d="M6.5 0 L19.5 0 L26 11 L19.5 22 L6.5 22 L0 11 Z" fill="none" stroke="#0affff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- body -->
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z"
+        fill="url(#body)" stroke="url(#bevel)" stroke-width="3"/>
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z" fill="url(#hx)"/>
+  <path d="M120 30 L360 30" stroke="#0affff" stroke-width="2.5" filter="url(#g)" opacity="0.8"/>
+  <path d="M30 60 L30 440 M410 60 L410 440" stroke="#0affff" stroke-opacity="0.22" stroke-width="1.5"/>
+
+  <!-- ambient core glow -->
+  <ellipse cx="220" cy="235" rx="150" ry="160" fill="url(#core)"/>
+
+  <!-- circuit spokes radiating out -->
+  <g stroke="#0affff" stroke-opacity="0.25" stroke-width="1.5">
+    <path d="M220 235 L220 70 M220 235 L220 400 M220 235 L70 150 M220 235 L370 150 M220 235 L70 320 M220 235 L370 320"/>
+  </g>
+  <g fill="#0affff" filter="url(#g)"><circle cx="220" cy="70" r="3"/><circle cx="220" cy="400" r="3"/><circle cx="70" cy="150" r="3"/><circle cx="370" cy="150" r="3"/><circle cx="70" cy="320" r="3"/><circle cx="370" cy="320" r="3"/></g>
+
+  <!-- ===== DUPLICATION EMBLEM (two offset hexes = the Loom's copy) ===== -->
+  <g filter="url(#g)">
+    <!-- ghost / echo hex (offset, dim) -->
+    <path d="M240 130 L326 180 L326 280 L240 330 L154 280 L154 180 Z" fill="none" stroke="#0affff" stroke-opacity="0.30" stroke-width="2.5"/>
+    <!-- primary hex -->
+    <path d="M200 140 L286 190 L286 290 L200 340 L114 290 L114 190 Z" fill="none" stroke="#5efcff" stroke-opacity="0.9" stroke-width="3.5"/>
+    <path d="M200 165 L264 202 L264 278 L200 315 L136 278 L136 202 Z" fill="none" stroke="#0affff" stroke-opacity="0.6" stroke-width="1.6"/>
+    <!-- inner core -->
+    <path d="M200 205 L228 221 L228 259 L200 275 L172 259 L172 221 Z" fill="#0affff" fill-opacity="0.25" stroke="#7ffcff" stroke-width="1.6"/>
+    <circle cx="200" cy="240" r="30" fill="url(#core)"/>
+  </g>
+
+  <!-- sealed status bars -->
+  <g stroke="#0affff" stroke-opacity="0.4" stroke-width="3" stroke-dasharray="14 8" filter="url(#g)">
+    <line x1="90" y1="372" x2="350" y2="372"/>
+  </g>
+  <!-- warning ticks -->
+  <g><path d="M60 60 L68 72 L52 72 Z" fill="none" stroke="#e0a020" stroke-width="1.6" stroke-linejoin="round"/></g>
+  <g><path d="M380 60 L388 72 L372 72 Z" fill="none" stroke="#e0a020" stroke-width="1.6" stroke-linejoin="round"/></g>
+
+  <!-- gold connector strip -->
+  <g>
+    <rect x="120" y="430" width="200" height="34" rx="3" fill="#0a0b0d" stroke="#23282c" stroke-width="2"/>
+    <g fill="url(#gold)" stroke="#6a4c16" stroke-width="0.8">
+      <rect x="130" y="436" width="16" height="22" rx="1"/><rect x="152" y="436" width="16" height="22" rx="1"/>
+      <rect x="174" y="436" width="16" height="22" rx="1"/><rect x="196" y="436" width="16" height="22" rx="1"/>
+      <rect x="218" y="436" width="16" height="22" rx="1"/><rect x="240" y="436" width="16" height="22" rx="1"/>
+      <rect x="262" y="436" width="16" height="22" rx="1"/><rect x="284" y="436" width="16" height="22" rx="1"/>
+    </g>
+  </g>
+
+  <!-- outer bloom -->
+  <path d="M40 20 L400 20 L420 44 L420 456 L400 480 L40 480 L20 456 L20 44 Z" fill="none" stroke="#0affff" stroke-width="2.5" opacity="0.3" filter="url(#soft)"/>
+</svg>
