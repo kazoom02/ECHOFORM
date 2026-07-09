@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Guard
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Guard
-  description: Gain 5 block.
-  art: {fileID: 0}
+  description: Gain 1 shield.
+  art: {fileID: -299690340437171572, guid: 8406eee6030978f469bf4dc08ba268c5, type: 3}
   tint: {r: 0.4, g: 1, b: 0.6, a: 1}
   energyCost: 1
   target: 2
   effects:
-  - type: 1
-    amount: 5
+  - type: 7
+    amount: 1
   isGlitch: 0
   exhaustOnPlay: 0

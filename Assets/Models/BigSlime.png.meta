@@ -441,50 +441,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BigSlime_8
-      rect:
-        serializedVersion: 2
-        x: 167
-        y: 834
-        width: 49
-        height: 22
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1596038f3143e5f20800000000000000
-      internalID: 3413222827966359889
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BigSlime_9
-      rect:
-        serializedVersion: 2
-        x: 220
-        y: 833
-        width: 32
-        height: 23
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e7fefbb46d8415ce0800000000000000
-      internalID: -1418272322413924482
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: BigSlime_10
       rect:
         serializedVersion: 2
@@ -532,7 +488,7 @@ TextureImporter:
       name: BigSlime_12
       rect:
         serializedVersion: 2
-        x: 1062
+        x: 1064
         y: 686
         width: 171
         height: 156

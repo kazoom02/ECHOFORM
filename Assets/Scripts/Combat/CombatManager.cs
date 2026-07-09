@@ -130,11 +130,25 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>Called by the UI when the player clicks a card (target may be null for Self/AllEnemies).</summary>
+    /// <summary>Can this card be played right now? Covers glitch, energy and the
+    /// "shields already full" rule. Targeting is checked separately at play time.
+    /// Used by the HUD to show the deny shake before the install animation runs.</summary>
+    public bool CanPlayCard(CardData card)
+    {
+        if (card == null || card.isGlitch) return false;
+        if (State != CombatState.PlayerTurn) return false;
+        if (card.energyCost > Energy) return false;
+        if (card.HasEffect(CardEffectType.GainShield) && !player.CanGainShield) return false;
+        return true;
+    }
+
     public bool TryPlayCard(CardData card, Enemy target = null)
     {
         if (State != CombatState.PlayerTurn) return false;
         if (card == null || card.isGlitch) return false;
         if (card.energyCost > Energy) { Log("Not enough energy."); return false; }
+        if (card.HasEffect(CardEffectType.GainShield) && !player.CanGainShield)
+        { Log("Shields already full."); return false; }
         if (card.target == CardTarget.SingleEnemy && (target == null || target.IsDead)) return false;
 
         Energy -= card.energyCost;
@@ -171,6 +185,7 @@ public class CombatManager : MonoBehaviour
                     break;
 
                 case CardEffectType.GainBlock: player.AddBlock(effect.amount); break;
+                case CardEffectType.GainShield: player.AddShield(effect.amount); break;
                 case CardEffectType.Heal:      player.Heal(effect.amount); break;
                 case CardEffectType.GainFocus: player.AddFocus(effect.amount); break;
                 case CardEffectType.DrawCards: Deck.Draw(effect.amount); break;
@@ -252,8 +267,22 @@ public class CombatManager : MonoBehaviour
             if (e == null || e.IsDead || e.SpawnedThisTurn) continue;
             if (e.intentType == IntentType.Attack)
             {
-                player.TakeDamage(e.intentValue);
-                Log($"{e.DisplayName} strikes for {e.intentValue}.");
+                int dmg = e.intentValue;
+                var melee = e.GetComponent<EnemyMeleeAnimator>();
+                if (melee != null)
+                {
+                    // walk across, land damage on the hit frame, walk back
+                    yield return melee.PlayAttack(player.transform, () =>
+                    {
+                        player.TakeDamage(dmg);
+                        Log($"{e.DisplayName} strikes for {dmg}.");
+                    });
+                }
+                else
+                {
+                    player.TakeDamage(dmg);
+                    Log($"{e.DisplayName} strikes for {dmg}.");
+                }
                 if (player.IsDead) break;
                 yield return new WaitForSeconds(0.15f);
             }

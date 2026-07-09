@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Recover
   description: Heal 6 HP.
-  art: {fileID: 0}
+  art: {fileID: -1290855366162983238, guid: 8406eee6030978f469bf4dc08ba268c5, type: 3}
   tint: {r: 0.35, g: 0.85, b: 1, a: 1}
   energyCost: 1
   target: 2
   effects:
   - type: 2
-    amount: 6
+    amount: 8
   isGlitch: 0
   exhaustOnPlay: 0

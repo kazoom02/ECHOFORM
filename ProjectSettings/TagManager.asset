@@ -41,6 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1677809149
+    locked: 0
+  - name: Floor
+    uniqueID: 2389757093
+    locked: 0
+  - name: Characters
+    uniqueID: 593625625
+    locked: 0
+  - name: HUD
+    uniqueID: 1428362045
+    locked: 0
+  - name: VFX
+    uniqueID: 2592562803
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []

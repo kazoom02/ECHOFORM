@@ -52,7 +52,11 @@ public class VestigeCombatAnimator : MonoBehaviour
         if (dir == 0f) dir = 1f;
         Face(dir);
 
-        Vector3 dest = new Vector3(target.position.x - dir * stopDistance, transform.position.y, transform.position.z);
+        // Walk to the target's DEPTH (its Y), not just its X. Combined with a
+        // YDepthSorter on Vestige, arriving at the slime's Y makes him weave
+        // into the row — in front of nearer slimes, behind farther ones —
+        // instead of sliding through them on a fixed layer.
+        Vector3 dest = new Vector3(target.position.x - dir * stopDistance, target.position.y, transform.position.z);
 
         // walk in
         Play(walkState);

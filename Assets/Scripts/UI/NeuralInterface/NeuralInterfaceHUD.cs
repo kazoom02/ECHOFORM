@@ -38,6 +38,11 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
     [Header("FX")]
     [SerializeField] private VisorFlash visorFlash;
+    [SerializeField] private ScreenSlash screenSlash;           // full-screen cyan slash (fallback streak)
+    [SerializeField] private ChargedSlashFX chargedSlashPrefab; // animated slash VFX prefab (preferred)
+    [SerializeField] private Transform slashSpawnPoint;         // where the slash spawns (defaults to origin)
+    [Tooltip("Only this card (by cardName) triggers the full-screen slash. Spaces/case are ignored.")]
+    [SerializeField] private string slashCardName = "Charged Slash";
     [SerializeField] private CpuCycleMeter cpuMeter;
     [SerializeField] private OverloadReadout overloadReadout;   // "COPY #n/10" corruption counter
     [SerializeField] private CombatTargeting targeting;         // enemy picker for single-target chips
@@ -94,8 +99,9 @@ public class NeuralInterfaceHUD : MonoBehaviour
     void OnChipClicked(ChipView view)
     {
         if (busy || view == null || view.card == null) return;
-        bool tooExpensive = combat != null && view.card.energyCost > combat.Energy;
-        if (view.card.isGlitch || tooExpensive) { StartCoroutine(Deny(view)); return; }
+        // deny (shake) unplayable chips up front: glitch, not enough energy, or shields full
+        bool cannotPlay = combat != null ? !combat.CanPlayCard(view.card) : view.card.isGlitch;
+        if (cannotPlay) { StartCoroutine(Deny(view)); return; }
 
         // Single-target chips with more than one enemy: let the player pick.
         if (targeting != null && view.card.target == CardTarget.SingleEnemy && CountLivingEnemies() > 1)
@@ -159,6 +165,14 @@ public class NeuralInterfaceHUD : MonoBehaviour
         onChipInstalled?.Invoke(card);                     // SFX / extra fx hook
 
         // 5) EXECUTE — attack chips send Vestige in and resolve on the hit frame; others resolve in place
+        if (card != null && IsSlashCard(card))                 // full-screen slash only for ChargedSlash
+        {
+            if (chargedSlashPrefab != null)                    // preferred: animated slash VFX
+                ChargedSlashFX.Play(chargedSlashPrefab,
+                    slashSpawnPoint != null ? slashSpawnPoint.position : Vector3.zero);
+            else if (screenSlash != null)
+                screenSlash.Slash();                           // fallback: old streak overlay
+        }
         if (vestige != null && target != null && CardDealsDamage(card))
         {
             yield return vestige.PlayAttack(target.transform,
@@ -166,7 +180,8 @@ public class NeuralInterfaceHUD : MonoBehaviour
         }
         else
         {
-            if (visorFlash) visorFlash.Flash();            // self-cast (block/heal) keeps the flash
+            // self-cast (block/heal) keeps the flash — but the slash card shows its own VFX, no flash
+            if (visorFlash && !IsSlashCard(card)) visorFlash.Flash();
             if (combat != null) combat.TryPlayCard(card, target);
         }
 
@@ -178,6 +193,17 @@ public class NeuralInterfaceHUD : MonoBehaviour
         if (c == null) return false;
         foreach (var e in c.effects) if (e.type == CardEffectType.DealDamage) return true;
         return false;
+    }
+
+    // Matches the slash card ignoring spaces and case, so the asset's
+    // display name ("Charged Slash") and the file name ("ChargedSlash")
+    // both trigger the effect.
+    bool IsSlashCard(CardData c)
+    {
+        if (c == null || string.IsNullOrEmpty(slashCardName)) return false;
+        string a = (c.cardName ?? "").Replace(" ", "").ToLowerInvariant();
+        string b = slashCardName.Replace(" ", "").ToLowerInvariant();
+        return a == b && a.Length > 0;
     }
 
     /// <summary>Which enemy a single-target card hits. Override for click-to-target.</summary>

@@ -1,0 +1,715 @@
+fileFormatVersion: 2
+guid: d10969d069d3bcc468a5ca703ae49ffd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8626823321640785533
+    second: health_battery_fill_overlay_for_unity_filled_0
+  - first:
+      213: -910396030098204524
+    second: health_battery_fill_overlay_for_unity_filled_1
+  - first:
+      213: 7306827815993140745
+    second: health_battery_fill_overlay_for_unity_filled_2
+  - first:
+      213: 3224325721349377774
+    second: health_battery_fill_overlay_for_unity_filled_3
+  - first:
+      213: 646897780185383602
+    second: health_battery_fill_overlay_for_unity_filled_4
+  - first:
+      213: 3166458330063742513
+    second: health_battery_fill_overlay_for_unity_filled_5
+  - first:
+      213: 1266225484685979064
+    second: health_battery_fill_overlay_for_unity_filled_6
+  - first:
+      213: 4191807425482933207
+    second: health_battery_fill_overlay_for_unity_filled_7
+  - first:
+      213: 1133380628452610603
+    second: health_battery_fill_overlay_for_unity_filled_8
+  - first:
+      213: 7290358076878468045
+    second: health_battery_fill_overlay_for_unity_filled_9
+  - first:
+      213: -4256702980425021973
+    second: health_battery_fill_overlay_for_unity_filled_10
+  - first:
+      213: -8845961849850252429
+    second: health_battery_fill_overlay_for_unity_filled_11
+  - first:
+      213: 1515916713773413339
+    second: health_battery_fill_overlay_for_unity_filled_12
+  - first:
+      213: 2376672655112222895
+    second: health_battery_fill_overlay_for_unity_filled_13
+  - first:
+      213: -4386298315884011477
+    second: health_battery_fill_overlay_for_unity_filled_14
+  - first:
+      213: -4957108000270068070
+    second: health_battery_fill_overlay_for_unity_filled_15
+  - first:
+      213: -1937904692656957057
+    second: health_battery_fill_overlay_for_unity_filled_16
+  - first:
+      213: -1700150776111251401
+    second: health_battery_fill_overlay_for_unity_filled_17
+  - first:
+      213: 1151388088365552840
+    second: health_battery_fill_overlay_for_unity_filled_18
+  - first:
+      213: 1706390534168921999
+    second: health_battery_fill_overlay_for_unity_filled_19
+  - first:
+      213: -8095141247615340873
+    second: health_battery_fill_overlay_for_unity_filled_20
+  - first:
+      213: 491694335041227758
+    second: health_battery_fill_overlay_for_unity_filled_21
+  - first:
+      213: 557457560681182716
+    second: health_battery_fill_overlay_for_unity_filled_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_0
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 1457
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d76547aaa12a8b770800000000000000
+      internalID: 8626823321640785533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_1
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 1352
+        width: 134
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 498121552af9d53f0800000000000000
+      internalID: -910396030098204524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_2
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 1340
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 906e6377f21176560800000000000000
+      internalID: 7306827815993140745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_3
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 1271
+        width: 187
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eee4f2d092b1fbc20800000000000000
+      internalID: 3224325721349377774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_4
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1219
+        width: 36
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b240f98a1e3af800800000000000000
+      internalID: 646897780185383602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 159
+        width: 439
+        height: 1105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 136a687131581fb20800000000000000
+      internalID: 3166458330063742513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_6
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 1231
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd214c9e59829110800000000000000
+      internalID: 1266225484685979064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_7
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 1058
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d341c2f4aa4c2a30800000000000000
+      internalID: 4191807425482933207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_8
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 1023
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b221a3a3da39abf00800000000000000
+      internalID: 1133380628452610603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_9
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 798
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc3bdb18b0e8c2560800000000000000
+      internalID: 7290358076878468045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_10
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 783
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be58b6931372de4c0800000000000000
+      internalID: -4256702980425021973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_11
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 775
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 373b403c094dc3580800000000000000
+      internalID: -8845961849850252429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_12
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 762
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd3ba81383e990510800000000000000
+      internalID: 1515916713773413339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_13
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 665
+        width: 31
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8395b0033abf020800000000000000
+      internalID: 2376672655112222895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_14
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 665
+        width: 33
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b20e6dadbecb023c0800000000000000
+      internalID: -4386298315884011477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_15
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 646
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a96d7a2a980d43bb0800000000000000
+      internalID: -4957108000270068070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_16
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 646
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f799e9113fd2b15e0800000000000000
+      internalID: -1937904692656957057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_17
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 321
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 730c84d70e9d768e0800000000000000
+      internalID: -1700150776111251401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_18
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 199
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c415a5bd5d8aff00800000000000000
+      internalID: 1151388088365552840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_19
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 178
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f874a3566215ea710800000000000000
+      internalID: 1706390534168921999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_20
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 139
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7be6649dce748af80800000000000000
+      internalID: -8095141247615340873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_21
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 147
+        width: 105
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb44328469d2d600800000000000000
+      internalID: 491694335041227758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_battery_fill_overlay_for_unity_filled_22
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 26
+        width: 257
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf5f1c9a2bc7cb700800000000000000
+      internalID: 557457560681182716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      health_battery_fill_overlay_for_unity_filled_0: 8626823321640785533
+      health_battery_fill_overlay_for_unity_filled_1: -910396030098204524
+      health_battery_fill_overlay_for_unity_filled_10: -4256702980425021973
+      health_battery_fill_overlay_for_unity_filled_11: -8845961849850252429
+      health_battery_fill_overlay_for_unity_filled_12: 1515916713773413339
+      health_battery_fill_overlay_for_unity_filled_13: 2376672655112222895
+      health_battery_fill_overlay_for_unity_filled_14: -4386298315884011477
+      health_battery_fill_overlay_for_unity_filled_15: -4957108000270068070
+      health_battery_fill_overlay_for_unity_filled_16: -1937904692656957057
+      health_battery_fill_overlay_for_unity_filled_17: -1700150776111251401
+      health_battery_fill_overlay_for_unity_filled_18: 1151388088365552840
+      health_battery_fill_overlay_for_unity_filled_19: 1706390534168921999
+      health_battery_fill_overlay_for_unity_filled_2: 7306827815993140745
+      health_battery_fill_overlay_for_unity_filled_20: -8095141247615340873
+      health_battery_fill_overlay_for_unity_filled_21: 491694335041227758
+      health_battery_fill_overlay_for_unity_filled_22: 557457560681182716
+      health_battery_fill_overlay_for_unity_filled_3: 3224325721349377774
+      health_battery_fill_overlay_for_unity_filled_4: 646897780185383602
+      health_battery_fill_overlay_for_unity_filled_5: 3166458330063742513
+      health_battery_fill_overlay_for_unity_filled_6: 1266225484685979064
+      health_battery_fill_overlay_for_unity_filled_7: 4191807425482933207
+      health_battery_fill_overlay_for_unity_filled_8: 1133380628452610603
+      health_battery_fill_overlay_for_unity_filled_9: 7290358076878468045
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -148,22 +148,14 @@ public class Slime : Enemy
         SlimeTier childTier = tier - 1;
         int childMax = MaxHpForTier(childTier, false);   // children are never Prime
 
-        int remaining = Mathf.Max(0, overkill);
+        // Overkill carry-through DISABLED: a split always yields two full-HP
+        // children, no matter how much damage the killing blow left over.
+        // (overkill is ignored on purpose — one-shotting the parent no longer
+        //  wounds or erases the children.)
         const int childCount = 2;
 
         for (int i = 0; i < childCount; i++)
-        {
-            if (remaining >= childMax)
-            {
-                // Clean cut: the overkill wipes this child before it forms.
-                remaining -= childMax;
-                continue;
-            }
-
-            int hp = childMax - remaining;   // wounded survivor (or full if no overkill left)
-            remaining = 0;
-            children.Add(new SlimeSpawn { tier = childTier, hp = hp });
-        }
+            children.Add(new SlimeSpawn { tier = childTier, hp = childMax });
 
         return children;
     }
