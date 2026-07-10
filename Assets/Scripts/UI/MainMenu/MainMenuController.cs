@@ -21,12 +21,15 @@ public class MainMenuController : MonoBehaviour
     [Tooltip("Scene loaded by New Game. Must be added to Build Settings.")]
     [SerializeField] private string area1SceneName = "FirstArea";
 
+    [Tooltip("Intro video scene shown before Area 1. Leave empty to go straight to Area 1.")]
+    [SerializeField] private string introSceneName = "Intro";
+
     [Header("Panels")]
     [SerializeField] private GameObject mainPanel;      // holds the four buttons
     [SerializeField] private GameObject loadPanel;      // has a LoadGameMenu
     [SerializeField] private GameObject settingsPanel;  // has a SettingsMenu
 
-    [Header("Buttons (optional — can also wire OnClick directly)")]
+    [Header("Buttons")]
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button loadGameButton;
     [SerializeField] private Button settingsButton;
@@ -57,12 +60,14 @@ public class MainMenuController : MonoBehaviour
 
     public void OnNewGame()
     {
-        if (string.IsNullOrEmpty(area1SceneName))
+        // Play the intro video first if set; otherwise jump straight to Area 1.
+        string target = !string.IsNullOrEmpty(introSceneName) ? introSceneName : area1SceneName;
+        if (string.IsNullOrEmpty(target))
         {
-            Debug.LogError("[Echoform] MainMenu: area1SceneName is empty.");
+            Debug.LogError("[Echoform] MainMenu: no scene set for New Game.");
             return;
         }
-        SceneManager.LoadScene(area1SceneName);
+        SceneManager.LoadScene(target);
     }
 
     public void OnLoadGame()

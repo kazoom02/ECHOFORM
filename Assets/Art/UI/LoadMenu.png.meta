@@ -137,13 +137,13 @@ TextureImporter:
       name: LoadMenu_1
       rect:
         serializedVersion: 2
-        x: 842
+        x: 843
         y: 699
-        width: 830
+        width: 800
         height: 162
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 150, y: 45, z: 150, w: 45}
       customData: 
       outline: []
       physicsShape: []
