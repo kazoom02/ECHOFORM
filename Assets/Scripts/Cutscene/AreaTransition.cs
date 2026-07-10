@@ -29,6 +29,13 @@ public class AreaTransition : MonoBehaviour
     [SerializeField] private CanvasGroup overlay;
     [SerializeField] private float fadeDuration = 0.4f;
 
+    [Tooltip("Canvas holding the overlay. Forced to Screen Space - Overlay + a high sort order so the video draws ON TOP of the scene. Auto-found from the overlay if left empty.")]
+    [SerializeField] private Canvas overlayCanvas;
+    [SerializeField] private bool forceOverlayOnTop = true;
+    [SerializeField] private int overlaySortOrder = 100;
+    [Tooltip("The RawImage that shows the video. Auto-found under the overlay if empty. Wired to the VideoPlayer's RenderTexture at runtime.")]
+    [SerializeField] private RawImage videoImage;
+
     [Header("Area swap (done while the screen is covered)")]
     [Tooltip("Deactivated at the swap point, e.g. Area1.")]
     [SerializeField] private GameObject areaToHide;
@@ -48,6 +55,72 @@ public class AreaTransition : MonoBehaviour
     public UnityEvent onTransitionFinished;
 
     private bool playing;
+
+    void Awake()
+    {
+        // Never play on scene load — otherwise the clip's audio plays in the
+        // background before the transition is triggered. Start silent + hidden.
+        if (videoPlayer != null)
+        {
+            videoPlayer.playOnAwake = false;
+            videoPlayer.Stop();
+        }
+        if (overlay != null)
+        {
+            overlay.alpha = 0f;
+            overlay.blocksRaycasts = false;
+            overlay.gameObject.SetActive(false);
+        }
+
+        // Draw the video on top WITHOUT modifying the parent/shared canvas.
+        // (Flipping a shared canvas's render mode shoves the rest of the UI —
+        // e.g. the health frame — off-screen.) A nested Canvas on the overlay's
+        // OWN object with overrideSorting lifts only the video.
+        if (forceOverlayOnTop && overlay != null)
+        {
+            Canvas oc = overlay.GetComponent<Canvas>();
+            if (oc == null) oc = overlay.gameObject.AddComponent<Canvas>();
+            oc.overrideSorting = true;
+            oc.sortingOrder = overlaySortOrder;
+        }
+
+        EnsureVideoWiring();
+    }
+
+    // Guarantees the video is actually visible: RawImage -> VideoPlayer's
+    // RenderTexture, VideoPlayer in Render-Texture mode, RawImage stretched
+    // fullscreen and opaque. Fixes the usual "transition happens but no video"
+    // wiring mistakes without touching the scene.
+    private void EnsureVideoWiring()
+    {
+        if (videoPlayer == null) return;
+
+        if (videoImage == null && overlay != null)
+            videoImage = overlay.GetComponentInChildren<RawImage>(true);
+
+        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+
+        if (videoPlayer.targetTexture == null)
+        {
+            var rt = new RenderTexture(1920, 1080, 0) { name = "AreaTransitionRT (runtime)" };
+            videoPlayer.targetTexture = rt;
+        }
+
+        if (videoImage != null)
+        {
+            videoImage.texture = videoPlayer.targetTexture;
+            videoImage.color = Color.white;                 // not tinted transparent
+            RectTransform rt = videoImage.rectTransform;    // stretch fullscreen
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+        }
+        else
+        {
+            Debug.LogWarning("[AreaTransition] No RawImage found under the overlay — assign 'Video Image'.", this);
+        }
+    }
 
     // Call this to start the transition. Safe to spam — ignores re-entry.
     public void Play()
@@ -75,6 +148,9 @@ public class AreaTransition : MonoBehaviour
         {
             bool done = false;
             void OnEnd(VideoPlayer vp) => done = true;
+
+            if (videoPlayer.clip == null && videoPlayer.source == VideoSource.VideoClip)
+                Debug.LogWarning("[AreaTransition] VideoPlayer has no clip assigned — nothing will show.", this);
 
             videoPlayer.isLooping = false;
             videoPlayer.loopPointReached += OnEnd;
