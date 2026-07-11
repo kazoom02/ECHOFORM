@@ -35,6 +35,12 @@ public abstract class Enemy : MonoBehaviour
     // A freshly spawned / freshly fused enemy sits out one enemy turn.
     public bool SpawnedThisTurn { get; set; }
 
+    [Header("Placement")]
+    [Tooltip("If ON, CombatManager leaves this enemy where you placed it in the scene instead of "
+        + "snapping it into the formation. Use for hand-placed bosses like the Clone.")]
+    [SerializeField] private bool keepScenePosition = false;
+    public bool KeepScenePosition => keepScenePosition;
+
     public bool IsDead => CurrentHP <= 0;
 
     /// <summary>Display name for logs / UI.</summary>
@@ -60,7 +66,7 @@ public abstract class Enemy : MonoBehaviour
     /// Apply damage (block first, then HP). Returns whether it died and how
     /// much damage spilled past the kill so callers can carry it through.
     /// </summary>
-    public DamageResult TakeDamage(int amount)
+    public virtual DamageResult TakeDamage(int amount)
     {
         amount = Mathf.Max(0, amount);
 

@@ -619,8 +619,9 @@ GameObject:
   - component: {fileID: 262606828}
   - component: {fileID: 262606829}
   - component: {fileID: 262606830}
+  - component: {fileID: 262606831}
   m_Layer: 0
-  m_Name: CloneIdle_1
+  m_Name: Clone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -724,6 +725,33 @@ Animator:
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &262606830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262606826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa4190d4ff013742bc915d12c63d926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerClone
+  maxHP: 90
+  intentType: 0
+  intentValue: 3
+  keepScenePosition: 1
+  energyPerTurn: 1
+  handSize: 5
+  playInterval: 0.5
+  maxShields: 4
+  deckOverride: []
+  animator: {fileID: 0}
+  idleState: Idle
+  attackState: Attack
+  walkState: Walking
+  melee: {fileID: 0}
+  attackHold: 0.45
+--- !u!114 &262606831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1229,6 +1257,7 @@ MonoBehaviour:
   startingEnemies:
   - {fileID: 1396804320}
   - {fileID: 302448784}
+  - {fileID: 262606830}
   startingDeck:
   - {fileID: 11400000, guid: 2eeb89f61dead424fbbdb3a11c89dce0, type: 2}
   - {fileID: 11400000, guid: 2eeb89f61dead424fbbdb3a11c89dce0, type: 2}
@@ -4075,19 +4104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26ed0f25743a5241815bf94d0986093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slime
---- !u!114 &1396804324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396804319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30f76eda5f9b63847a00faed04604d6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySelectable
-  highlight: {fileID: 0}
 --- !u!60 &1396804325
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -7435,9 +7451,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6652760709501253002, guid: dc104480be5c1c040a81aaeec6812d38, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1396804325}
-    - targetCorrespondingSourceObject: {fileID: 6652760709501253002, guid: dc104480be5c1c040a81aaeec6812d38, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1396804324}
     - targetCorrespondingSourceObject: {fileID: 6652760709501253002, guid: dc104480be5c1c040a81aaeec6812d38, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1396804338}

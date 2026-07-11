@@ -87,6 +87,7 @@ public class CombatManager : MonoBehaviour
 
         turnNumber = 0;
         Deck = new Deck(startingDeck);
+        foreach (var e in enemies) if (e is PlayerClone pc) pc.InitDeck(startingDeck);   // Area 3 clone mirrors your deck
         RepositionEnemies();
         UpdateMergerTelegraph();
 
@@ -277,6 +278,16 @@ public class CombatManager : MonoBehaviour
         foreach (var e in enemies.ToList())
         {
             if (e == null || e.IsDead || e.SpawnedThisTurn) continue;
+
+            if (e is PlayerClone clone)
+            {
+                yield return clone.TakeTurn(player, Log);
+                if (player.IsDead) SetState(CombatState.Lose);
+                if (State == CombatState.Lose) yield break;   // Clone killed Vestige: stop the turn
+                yield return new WaitForSeconds(0.15f);
+                continue;
+            }
+
             if (e.intentType == IntentType.Attack)
             {
                 int dmg = e.intentValue;
@@ -361,7 +372,7 @@ public class CombatManager : MonoBehaviour
         if (enemyRow == null) return;
 
         int n = 0;
-        for (int i = 0; i < enemies.Count; i++) if (enemies[i] != null) n++;
+        for (int i = 0; i < enemies.Count; i++) if (enemies[i] != null && !enemies[i].KeepScenePosition) n++;
         if (n == 0) return;
 
         int perRow = Mathf.Max(1, enemiesPerRow);
@@ -370,6 +381,7 @@ public class CombatManager : MonoBehaviour
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i] == null) continue;
+            if (enemies[i].KeepScenePosition) continue;   // hand-placed boss (e.g. the Clone) keeps its scene position
 
             int row = slot / perRow;
             int col = slot % perRow;
