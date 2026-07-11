@@ -43,6 +43,12 @@ public class EnemyMeleeAnimator : MonoBehaviour
     [Tooltip("On if the sprite art points RIGHT by default. Slimes usually face left toward the player — turn this off then.")]
     [SerializeField] private bool artFacesRight = false;
 
+    [Header("SFX")]
+    [Tooltip("SfxPlayer that plays this creature's swing (auto-found on this object if left empty).")]
+    [SerializeField] private SfxPlayer sfx;
+    [Tooltip("Attack swing sound. Leave empty for silent attackers (e.g. slimes have no swing SFX).")]
+    [SerializeField] private AudioClip attackSfx;
+
     [Header("Hit VFX")]
     [Tooltip("Electricity particle prefab, spawned on the hit frame. Leave null for no VFX.")]
     [SerializeField] private ParticleSystem hitEffectPrefab;
@@ -59,6 +65,7 @@ public class EnemyMeleeAnimator : MonoBehaviour
     {
         if (animator == null)       animator = GetComponent<Animator>();
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (sfx == null)            sfx = GetComponent<SfxPlayer>();
     }
 
     /// <summary>Walk to the target, fire onHit on the hit frame, walk back. Yield this from a coroutine.</summary>
@@ -84,6 +91,7 @@ public class EnemyMeleeAnimator : MonoBehaviour
         }
 
         if (!string.IsNullOrEmpty(attackState)) Play(attackState);
+        if (sfx != null && attackSfx != null) sfx.Play(attackSfx);
         if (hitTime > 0f) yield return new WaitForSeconds(hitTime);
         SpawnHitEffect(target);                            // electric zap on the hit frame
         onHit?.Invoke();                                   // <-- damage lands here

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 // =====================================================
 // ECHOFORM — ChargedSlashFX
@@ -35,6 +36,13 @@ public class ChargedSlashFX : MonoBehaviour
     [Tooltip("1 = exact fill. >1 overscans so edges are never visible.")]
     [SerializeField] private float fitOverscan = 1.02f;
 
+    [Header("SFX")]
+    [Tooltip("Sound played when this slash spawns (e.g. HeavySlash).")]
+    [SerializeField] private AudioClip slashSfx;
+    [Tooltip("Route to the SFX group of your AudioMixer so the SFX slider controls it.")]
+    [SerializeField] private AudioMixerGroup sfxGroup;
+    [Range(0f, 1f)] [SerializeField] private float sfxVolume = 1f;
+
     private Animator animator;
     private SpriteRenderer sr;
 
@@ -44,6 +52,9 @@ public class ChargedSlashFX : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         if (overrideSortingOrder && sr != null)
             sr.sortingOrder = sortingOrder;
+
+        // charged slash SFX — detached so it finishes even after this VFX self-destructs
+        SfxPlayer.PlayAt(slashSfx, sfxGroup, transform.position, sfxVolume);
     }
 
     void Start()

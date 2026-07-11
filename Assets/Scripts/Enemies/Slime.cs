@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 // =====================================================
 // ECHOFORM — Slime
@@ -34,6 +35,18 @@ public class Slime : Enemy
 
     [Header("Split animation")]
     [SerializeField] private float splitDuration = 0.35f;
+    [Tooltip("Plays once when this slime divides (e.g. SlimeDividing).")]
+    [SerializeField] private AudioClip divideSfx;
+    [Tooltip("Route to the SFX group of your AudioMixer so the SFX slider controls it.")]
+    [SerializeField] private AudioMixerGroup sfxGroup;
+
+    [Header("Death (small slime / clean cut)")]
+    [Tooltip("Animator Controller whose DEFAULT state is the SlimeDying clip. Swapped in when this slime dies for good, so the dying animation plays once. Leave empty to just linger then vanish.")]
+    [SerializeField] private RuntimeAnimatorController deathController;
+    [Tooltip("Sound played when this slime dies for good (e.g. slimeDying).")]
+    [SerializeField] private AudioClip deathSfx;
+    [Tooltip("Seconds the corpse lingers so the dying animation can finish before it is destroyed.")]
+    [SerializeField] private float deathDuration = 0.5f;
 
     [Header("Tier visuals (assign all three on the prefab)")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -133,6 +146,30 @@ public class Slime : Enemy
     {
         intentType = IntentType.Attack;
         intentValue = AttackForTier(tier, isPrime);
+    }
+
+    /// <summary>Play the divide sound (detached, so it survives this slime being removed).
+    /// Called by CombatManager at the actual split moment.</summary>
+    public void PlayDivideSfx()
+    {
+        SfxPlayer.PlayAt(divideSfx, sfxGroup, transform.position);
+    }
+
+    /// <summary>Play the dying animation + sound as a detached corpse, then destroy it. Called by
+    /// CombatManager when this slime dies producing no children (small slime / clean cut).</summary>
+    public void PlayDeath()
+    {
+        transform.SetParent(null, true);                 // detach so the living row is not reshuffled around it
+
+        if (animator == null) animator = GetComponent<Animator>();
+        if (animator != null && deathController != null)
+            animator.runtimeAnimatorController = deathController;   // default state = SlimeDying (non-looping)
+
+        SfxPlayer.PlayAt(deathSfx, sfxGroup, transform.position);   // detached: outlives the corpse
+
+        foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;  // no longer clickable
+
+        Destroy(gameObject, Mathf.Max(0.05f, deathDuration));
     }
 
     /// <summary>

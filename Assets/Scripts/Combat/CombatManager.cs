@@ -23,6 +23,7 @@ public class CombatManager : MonoBehaviour
 {
     [Header("Actors")]
     [SerializeField] private PlayerCombatant player;
+    [SerializeField] private VestigeCombatAnimator vestige;   // Vestige visuals, for the death animation
     [SerializeField] private Slime slimePrefab;
     [SerializeField] private Merger mergerPrefab;
     [SerializeField] private Transform enemyRow;      // parent + anchor for the enemy line
@@ -213,6 +214,8 @@ public class CombatManager : MonoBehaviour
         DamageResult result = enemy.TakeDamage(amount);
         if (!result.killed) return;
 
+        bool animatedDeath = false;
+
         if (enemy is Slime slime)
         {
             List<SlimeSpawn> children = slime.PlanChildren(result.overkill);
@@ -222,14 +225,23 @@ public class CombatManager : MonoBehaviour
             else
                 Log(result.overkill > 0 ? $"Overkill! {slime.DisplayName} splits, children wounded." : $"{slime.DisplayName} splits.");
 
-            SpawnSlimeChildren(slime, children);
+            if (children.Count > 0)
+            {
+                slime.PlayDivideSfx();                 // SlimeDividing SFX
+                SpawnSlimeChildren(slime, children);
+            }
+            else
+            {
+                slime.PlayDeath();                     // small slime dies for good: dying animation + SFX
+                animatedDeath = true;                  // ...so do not destroy it instantly below
+            }
         }
         else
         {
             Log($"{enemy.DisplayName} destroyed.");
         }
 
-        RemoveEnemy(enemy);
+        RemoveEnemy(enemy, destroy: !animatedDeath);
         UpdateMergerTelegraph();
         RepositionEnemies();
     }
@@ -276,14 +288,16 @@ public class CombatManager : MonoBehaviour
                     {
                         player.TakeDamage(dmg);
                         Log($"{e.DisplayName} strikes for {dmg}.");
+                        if (player.IsDead) SetState(CombatState.Lose);   // Vestige dies on the hit frame: play death instantly
                     });
                 }
                 else
                 {
                     player.TakeDamage(dmg);
                     Log($"{e.DisplayName} strikes for {dmg}.");
+                    if (player.IsDead) SetState(CombatState.Lose);
                 }
-                if (player.IsDead) break;
+                if (State == CombatState.Lose) yield break;   // Vestige is dead: stop the enemy turn, no other enemy attacks
                 yield return new WaitForSeconds(0.15f);
             }
         }
@@ -336,10 +350,10 @@ public class CombatManager : MonoBehaviour
         foreach (var m in mergers) m.IsFusing = willFuse && !m.SpawnedThisTurn;
     }
 
-    private void RemoveEnemy(Enemy e)
+    private void RemoveEnemy(Enemy e, bool destroy = true)
     {
         enemies.Remove(e);
-        if (e != null) Destroy(e.gameObject);
+        if (destroy && e != null) Destroy(e.gameObject);
     }
 
     private void RepositionEnemies()
@@ -428,7 +442,9 @@ public class CombatManager : MonoBehaviour
 
     private void SetState(CombatState s)
     {
+        bool enteringLose = s == CombatState.Lose && State != CombatState.Lose;
         State = s;
+        if (enteringLose && vestige != null) vestige.PlayDeath();   // Vestige death animation + SFX
         OnStateChanged?.Invoke(s);
     }
 

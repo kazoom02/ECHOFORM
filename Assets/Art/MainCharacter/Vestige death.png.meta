@@ -1,0 +1,589 @@
+fileFormatVersion: 2
+guid: 634a3dfff23047442a1fdf2563dbf479
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5521935810754054806
+    second: Vestige death_0
+  - first:
+      213: -4623025554555521764
+    second: Vestige death_1
+  - first:
+      213: 853527154287498856
+    second: Vestige death_2
+  - first:
+      213: 4539039035109970792
+    second: Vestige death_3
+  - first:
+      213: 5754965805214750797
+    second: Vestige death_4
+  - first:
+      213: -7252818019594180047
+    second: Vestige death_5
+  - first:
+      213: -6491015249001127791
+    second: Vestige death_6
+  - first:
+      213: -154957460407895226
+    second: Vestige death_7
+  - first:
+      213: 9048033485802112220
+    second: Vestige death_8
+  - first:
+      213: -859169467360801958
+    second: Vestige death_9
+  - first:
+      213: 6260867349842828429
+    second: Vestige death_10
+  - first:
+      213: 4484166490995776233
+    second: Vestige death_11
+  - first:
+      213: 2815703684730428163
+    second: Vestige death_12
+  - first:
+      213: 295072399761912321
+    second: Vestige death_13
+  - first:
+      213: 8759557754091671812
+    second: Vestige death_14
+  - first:
+      213: 599972135467639498
+    second: Vestige death_15
+  - first:
+      213: -8808501557346321702
+    second: Vestige death_16
+  - first:
+      213: -6561368655416544190
+    second: Vestige death_17
+  - first:
+      213: 6537955415340115389
+    second: Vestige death_18
+  - first:
+      213: 3043631345498862361
+    second: Vestige death_19
+  - first:
+      213: -1440555290462682237
+    second: Vestige death_20
+  - first:
+      213: -4979778800184553784
+    second: Vestige death_21
+  - first:
+      213: -2469605114410902501
+    second: Vestige death_22
+  - first:
+      213: -4481196627937848968
+    second: Vestige death_23
+  - first:
+      213: -8026960502126242189
+    second: Vestige death_24
+  - first:
+      213: -2542738595195341443
+    second: Vestige death_25
+  - first:
+      213: -5442696008452509624
+    second: Vestige death_26
+  - first:
+      213: 6832770382339372322
+    second: Vestige death_27
+  - first:
+      213: 3983908411301019966
+    second: Vestige death_28
+  - first:
+      213: 8793976975392242247
+    second: Vestige death_29
+  - first:
+      213: -1735875265966747513
+    second: Vestige death_30
+  - first:
+      213: 5043864994785665384
+    second: Vestige death_31
+  - first:
+      213: -2275817454639484038
+    second: Vestige death_32
+  - first:
+      213: 4373155208626851733
+    second: Vestige death_33
+  - first:
+      213: 7157316093645134501
+    second: Vestige death_34
+  - first:
+      213: -6701983028878842925
+    second: Vestige death_35
+  - first:
+      213: 8677352116947738050
+    second: Vestige death_36
+  - first:
+      213: 3349743727063398785
+    second: Vestige death_37
+  - first:
+      213: 133630762690253843
+    second: Vestige death_38
+  - first:
+      213: 8909356214424205392
+    second: Vestige death_39
+  - first:
+      213: 3153787454844800815
+    second: Vestige death_40
+  - first:
+      213: -6469391666460921512
+    second: Vestige death_41
+  - first:
+      213: 4480148892061402058
+    second: Vestige death_42
+  - first:
+      213: -1715567824206306861
+    second: Vestige death_43
+  - first:
+      213: 3226005616763856328
+    second: Vestige death_44
+  - first:
+      213: 8447626831472987770
+    second: Vestige death_45
+  - first:
+      213: -395332802933796274
+    second: Vestige death_46
+  - first:
+      213: 2001990376511047402
+    second: Vestige death_47
+  - first:
+      213: -6348514464760127965
+    second: Vestige death_48
+  - first:
+      213: 1684109559382305965
+    second: Vestige death_49
+  - first:
+      213: 1430997728471994559
+    second: Vestige death_50
+  - first:
+      213: -4836179483515875084
+    second: Vestige death_51
+  - first:
+      213: 5106676918991512670
+    second: Vestige death_52
+  - first:
+      213: 6985566958696680484
+    second: Vestige death_53
+  - first:
+      213: 1235659232324729451
+    second: Vestige death_54
+  - first:
+      213: -1999128483214099386
+    second: Vestige death_55
+  - first:
+      213: -1644761276724318267
+    second: Vestige death_56
+  - first:
+      213: 7840413855671915675
+    second: Vestige death_57
+  - first:
+      213: -3036990275430868730
+    second: Vestige death_58
+  - first:
+      213: 3103346852877435669
+    second: Vestige death_59
+  - first:
+      213: 4560593962098669337
+    second: Vestige death_60
+  - first:
+      213: 3941366206804367383
+    second: Vestige death_61
+  - first:
+      213: 7917507920624550641
+    second: Vestige death_62
+  - first:
+      213: 6033421522388697902
+    second: Vestige death_63
+  - first:
+      213: 4063352909861456788
+    second: Vestige death_64
+  - first:
+      213: -3354930584713517573
+    second: Vestige death_65
+  - first:
+      213: -3692667036762112385
+    second: Vestige death_66
+  - first:
+      213: -7367382248589331979
+    second: Vestige death_67
+  - first:
+      213: 5374879188449996099
+    second: Vestige death_68
+  - first:
+      213: -4610355420461782817
+    second: Vestige death_69
+  - first:
+      213: 1427839944836241153
+    second: Vestige death_70
+  - first:
+      213: 2585290549207697237
+    second: Vestige death_71
+  - first:
+      213: -4892060287115176315
+    second: Vestige death_72
+  - first:
+      213: 2016829070218583325
+    second: Vestige death_73
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Vestige death_0
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 564
+        width: 316
+        height: 444
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69a01880d5bd1ac40800000000000000
+      internalID: 5521935810754054806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_1
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 565
+        width: 323
+        height: 444
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c153a2180c6b7dfb0800000000000000
+      internalID: -4623025554555521764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_2
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 573
+        width: 317
+        height: 392
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 866d475bc6658db00800000000000000
+      internalID: 853527154287498856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_4
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 581
+        width: 340
+        height: 349
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d485852a8eebddf40800000000000000
+      internalID: 5754965805214750797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_9
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 158
+        width: 317
+        height: 324
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5b0918ebed9314f0800000000000000
+      internalID: -859169467360801958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_19
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 148
+        width: 305
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91334b735962d3a20800000000000000
+      internalID: 3043631345498862361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_38
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 134
+        width: 301
+        height: 336
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 314973d7870cad100800000000000000
+      internalID: 133630762690253843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vestige death_64
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 135
+        width: 294
+        height: 323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49b875561fde36830800000000000000
+      internalID: 4063352909861456788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9da6356c51891664d8b772c2b61cb84e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Vestige death_0: 5521935810754054806
+      Vestige death_1: -4623025554555521764
+      Vestige death_10: 6260867349842828429
+      Vestige death_11: 4484166490995776233
+      Vestige death_12: 2815703684730428163
+      Vestige death_13: 295072399761912321
+      Vestige death_14: 8759557754091671812
+      Vestige death_15: 599972135467639498
+      Vestige death_16: -8808501557346321702
+      Vestige death_17: -6561368655416544190
+      Vestige death_18: 6537955415340115389
+      Vestige death_19: 3043631345498862361
+      Vestige death_2: 853527154287498856
+      Vestige death_20: -1440555290462682237
+      Vestige death_21: -4979778800184553784
+      Vestige death_22: -2469605114410902501
+      Vestige death_23: -4481196627937848968
+      Vestige death_24: -8026960502126242189
+      Vestige death_25: -2542738595195341443
+      Vestige death_26: -5442696008452509624
+      Vestige death_27: 6832770382339372322
+      Vestige death_28: 3983908411301019966
+      Vestige death_29: 8793976975392242247
+      Vestige death_3: 4539039035109970792
+      Vestige death_30: -1735875265966747513
+      Vestige death_31: 5043864994785665384
+      Vestige death_32: -2275817454639484038
+      Vestige death_33: 4373155208626851733
+      Vestige death_34: 7157316093645134501
+      Vestige death_35: -6701983028878842925
+      Vestige death_36: 8677352116947738050
+      Vestige death_37: 3349743727063398785
+      Vestige death_38: 133630762690253843
+      Vestige death_39: 8909356214424205392
+      Vestige death_4: 5754965805214750797
+      Vestige death_40: 3153787454844800815
+      Vestige death_41: -6469391666460921512
+      Vestige death_42: 4480148892061402058
+      Vestige death_43: -1715567824206306861
+      Vestige death_44: 3226005616763856328
+      Vestige death_45: 8447626831472987770
+      Vestige death_46: -395332802933796274
+      Vestige death_47: 2001990376511047402
+      Vestige death_48: -6348514464760127965
+      Vestige death_49: 1684109559382305965
+      Vestige death_5: -7252818019594180047
+      Vestige death_50: 1430997728471994559
+      Vestige death_51: -4836179483515875084
+      Vestige death_52: 5106676918991512670
+      Vestige death_53: 6985566958696680484
+      Vestige death_54: 1235659232324729451
+      Vestige death_55: -1999128483214099386
+      Vestige death_56: -1644761276724318267
+      Vestige death_57: 7840413855671915675
+      Vestige death_58: -3036990275430868730
+      Vestige death_59: 3103346852877435669
+      Vestige death_6: -6491015249001127791
+      Vestige death_60: 4560593962098669337
+      Vestige death_61: 3941366206804367383
+      Vestige death_62: 7917507920624550641
+      Vestige death_63: 6033421522388697902
+      Vestige death_64: 4063352909861456788
+      Vestige death_65: -3354930584713517573
+      Vestige death_66: -3692667036762112385
+      Vestige death_67: -7367382248589331979
+      Vestige death_68: 5374879188449996099
+      Vestige death_69: -4610355420461782817
+      Vestige death_7: -154957460407895226
+      Vestige death_70: 1427839944836241153
+      Vestige death_71: 2585290549207697237
+      Vestige death_72: -4892060287115176315
+      Vestige death_73: 2016829070218583325
+      Vestige death_8: 9048033485802112220
+      Vestige death_9: -859169467360801958
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

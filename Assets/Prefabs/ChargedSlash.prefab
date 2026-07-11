@@ -91,7 +91,7 @@ SpriteRenderer:
   m_Size: {x: 1.89, y: 6.38}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!95 &5365418015497905878
@@ -135,3 +135,6 @@ MonoBehaviour:
   fitToCamera: 0
   fitCamera: {fileID: 0}
   fitOverscan: 1.02
+  slashSfx: {fileID: 8300000, guid: 47aa8e26ed8b0ae409313a029185bfa7, type: 3}
+  sfxGroup: {fileID: 1191001676196479227, guid: 30f1eaa8a04adfe4f93148c9008b7f65, type: 2}
+  sfxVolume: 1

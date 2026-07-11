@@ -35,10 +35,23 @@ public class VestigeCombatAnimator : MonoBehaviour
     [Tooltip("Flip via SpriteRenderer.flipX (assumes art faces right). Off = flip localScale.x.")]
     [SerializeField] private bool  faceByFlipX = true;
 
+    [Header("SFX")]
+    [Tooltip("SfxPlayer on this object (auto-found if left empty).")]
+    [SerializeField] private SfxPlayer sfx;
+    [Tooltip("Melee swing sound (e.g. SlashV2).")]
+    [SerializeField] private AudioClip attackSfx;
+
+    [Header("Death")]
+    [Tooltip("Animator state played when Vestige dies. Already exists in the MainCharacter controller as \"Death\".")]
+    [SerializeField] private string deathState = "Death";
+    [Tooltip("Sound played on death (e.g. VestigeDeath).")]
+    [SerializeField] private AudioClip deathSfx;
+
     void Awake()
     {
         if (animator == null)       animator = GetComponent<Animator>();
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (sfx == null)            sfx = GetComponent<SfxPlayer>();
     }
 
     /// <summary>Walk to target, attack, fire onHit on the hit frame, then return. Yield this from a coroutine.</summary>
@@ -68,6 +81,7 @@ public class VestigeCombatAnimator : MonoBehaviour
 
         // attack
         Play(attackState);
+        if (sfx != null) sfx.Play(attackSfx);
         if (hitTime > 0f) yield return new WaitForSeconds(hitTime);
         onHit?.Invoke();                                   // <-- damage lands here
         float rest = attackLength - hitTime;
@@ -94,6 +108,15 @@ public class VestigeCombatAnimator : MonoBehaviour
     void Play(string state)
     {
         if (animator != null && !string.IsNullOrEmpty(state)) animator.Play(state);
+    }
+
+    /// <summary>Play Vestige's death animation + sound. Called by CombatManager when the
+    /// player loses (HP hits 0 or memory overload).</summary>
+    public void PlayDeath()
+    {
+        StopAllCoroutines();                 // cancel any in-progress attack/walk choreography
+        Play(deathState);                    // "Death" state in the MainCharacter controller
+        if (sfx != null) sfx.PlayDetached(deathSfx);   // detached so it finishes across a Lose transition
     }
 
     void Face(float dir)

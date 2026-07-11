@@ -982,7 +982,7 @@ TextureImporter:
         serializedVersion: 2
         x: 33
         y: 349
-        width: 729
+        width: 154
         height: 132
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1048,7 +1048,7 @@ TextureImporter:
         serializedVersion: 2
         x: 758
         y: 349
-        width: 386
+        width: 253
         height: 131
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1060,50 +1060,6 @@ TextureImporter:
       bones: []
       spriteID: 8153c072b43876ee0800000000000000
       internalID: -1267900411280607976
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MediumSlime_42
-      rect:
-        serializedVersion: 2
-        x: 1161
-        y: 350
-        width: 128
-        height: 104
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d5ff8b5cdda2f0210800000000000000
-      internalID: 1301305949326737245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MediumSlime_43
-      rect:
-        serializedVersion: 2
-        x: 1295
-        y: 350
-        width: 129
-        height: 105
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a1a7fa118dce441e0800000000000000
-      internalID: -2214384704005637606
       vertices: []
       indices: 
       edges: []
@@ -1588,6 +1544,94 @@ TextureImporter:
       bones: []
       spriteID: 242267b1f914e5310800000000000000
       internalID: 1395625086147764802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MediumSlime_0
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 348
+        width: 152
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4372e410395869845b718a36ae99477d
+      internalID: 4697192726675831392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MediumSlime_2
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 351
+        width: 183
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83f4e279c459ddd4b9b32ad651432ed0
+      internalID: -4769820793943586128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MediumSlime_14
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 352
+        width: 221
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff05eb8875520a649baa87eceffbf741
+      internalID: -1573255989870292743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MediumSlime_15
+      rect:
+        serializedVersion: 2
+        x: 1016
+        y: 350
+        width: 275
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca868cd10a334bb44ba7c34efbd1297f
+      internalID: 1963755531294470502
       vertices: []
       indices: 
       edges: []

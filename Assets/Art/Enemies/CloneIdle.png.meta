@@ -1,0 +1,386 @@
+fileFormatVersion: 2
+guid: 0dd84b353b4dcf94385419f60678d692
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8847443625384540215
+    second: CloneIdle_0
+  - first:
+      213: -55239664834448922
+    second: CloneIdle_1
+  - first:
+      213: -7061457701250845264
+    second: CloneIdle_2
+  - first:
+      213: 3808995934891917296
+    second: CloneIdle_3
+  - first:
+      213: -3026677067165554273
+    second: CloneIdle_4
+  - first:
+      213: 3399738393686486755
+    second: CloneIdle_5
+  - first:
+      213: -1874165888335541251
+    second: CloneIdle_6
+  - first:
+      213: 6616544069226561427
+    second: CloneIdle_7
+  - first:
+      213: 8142114653995969150
+    second: CloneIdle_8
+  - first:
+      213: -8485227243522888742
+    second: CloneIdle_9
+  - first:
+      213: 8644909928051775079
+    second: CloneIdle_10
+  - first:
+      213: 3532967874793970866
+    second: CloneIdle_11
+  - first:
+      213: -311679700984000360
+    second: CloneIdle_12
+  - first:
+      213: -6307160732786447914
+    second: CloneIdle_13
+  - first:
+      213: -7839944347320502310
+    second: CloneIdle_14
+  - first:
+      213: -2589495549652327840
+    second: CloneIdle_15
+  - first:
+      213: -1639646811715642362
+    second: CloneIdle_16
+  - first:
+      213: -4824246690758172917
+    second: CloneIdle_17
+  - first:
+      213: -2060770449963925073
+    second: CloneIdle_18
+  - first:
+      213: 2141195106428556885
+    second: CloneIdle_19
+  - first:
+      213: 1824834420694504076
+    second: CloneIdle_20
+  - first:
+      213: 87222822918989677
+    second: CloneIdle_21
+  - first:
+      213: 103015014007353271
+    second: CloneIdle_22
+  - first:
+      213: -3312313492041993878
+    second: CloneIdle_23
+  - first:
+      213: 6359309313960326175
+    second: CloneIdle_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CloneIdle_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 542
+        width: 337
+        height: 460
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c709a206e0973580800000000000000
+      internalID: -8847443625384540215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_4
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 546
+        width: 319
+        height: 452
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39f77f666cfa2db50800000000000000
+      internalID: 6616544069226561427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 546
+        width: 311
+        height: 458
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bc16fb409f970130800000000000000
+      internalID: 3532967874793970866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_3
+      rect:
+        serializedVersion: 2
+        x: 723
+        y: 546
+        width: 328
+        height: 455
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 890162b96f0bcabf0800000000000000
+      internalID: -311679700984000360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_5
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 75
+        width: 316
+        height: 437
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d9a8f4fab67878a0800000000000000
+      internalID: -6307160732786447914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_6
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 74
+        width: 316
+        height: 437
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60c569679edce39e0800000000000000
+      internalID: -1639646811715642362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_7
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 75
+        width: 317
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5569a71da9d07bd10800000000000000
+      internalID: 2141195106428556885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneIdle_8
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 74
+        width: 319
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a617a1aad6c4802d0800000000000000
+      internalID: -3312313492041993878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 243cc575c74fe654e90aa3355d143476
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CloneIdle_1: -8847443625384540215
+      CloneIdle_10: 8644909928051775079
+      CloneIdle_14: -7839944347320502310
+      CloneIdle_15: -2589495549652327840
+      CloneIdle_17: -4824246690758172917
+      CloneIdle_18: -2060770449963925073
+      CloneIdle_2: 3532967874793970866
+      CloneIdle_20: 1824834420694504076
+      CloneIdle_21: 87222822918989677
+      CloneIdle_22: 103015014007353271
+      CloneIdle_24: 6359309313960326175
+      CloneIdle_3: -311679700984000360
+      CloneIdle_4: 6616544069226561427
+      CloneIdle_5: -6307160732786447914
+      CloneIdle_6: -1639646811715642362
+      CloneIdle_7: 2141195106428556885
+      CloneIdle_8: -3312313492041993878
+      CloneIdle_9: -8485227243522888742
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

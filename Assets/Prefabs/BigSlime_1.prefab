@@ -384,6 +384,8 @@ GameObject:
   - component: {fileID: 5215272340096536675}
   - component: {fileID: 2472456564990008662}
   - component: {fileID: 4118630184208660207}
+  - component: {fileID: 3430839600817680814}
+  - component: {fileID: 1968635198755180999}
   m_Layer: 0
   m_Name: BigSlime_1
   m_TagString: Untagged
@@ -487,6 +489,11 @@ MonoBehaviour:
   isPrime: 0
   overrideTierHP: 0
   splitDuration: 0.35
+  divideSfx: {fileID: 8300000, guid: ae634983a32edf8429c5f6efd20607b7, type: 3}
+  sfxGroup: {fileID: 1191001676196479227, guid: 30f1eaa8a04adfe4f93148c9008b7f65, type: 2}
+  deathController: {fileID: 9100000, guid: ce781efcc018afc46bb1e8ceb6cf5512, type: 2}
+  deathSfx: {fileID: 8300000, guid: 72d5e2702a0314e41b727809879b59dd, type: 3}
+  deathDuration: 0.8
   spriteRenderer: {fileID: 3271023581032411550}
   largeSprite: {fileID: 7962103204112202161, guid: 0ab734075bca1e549b5621a59a50d47d, type: 3}
   mediumSprite: {fileID: 2567375628786602284, guid: 20324c1088030cc40aedff70b0499d78, type: 3}
@@ -681,9 +688,13 @@ MonoBehaviour:
   attackLength: 0.4
   faceByFlipX: 1
   artFacesRight: 0
+  sfx: {fileID: 0}
+  attackSfx: {fileID: 0}
   hitEffectPrefab: {fileID: 3111727451245136830, guid: a6bea490e20efdc4081b8d4edd373ca7, type: 3}
   spawnAtTarget: 1
   hitEffectOffset: {x: 0, y: 0.8, z: 0}
+  hitEffectSortingLayer: 
+  hitEffectSortingOrder: 5000
 --- !u!114 &4118630184208660207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,3 +710,117 @@ MonoBehaviour:
   sortingMultiplier: 100
   orderBias: 20
   source: {fileID: 0}
+--- !u!82 &3430839600817680814
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652760709501253002}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 1191001676196479227, guid: 30f1eaa8a04adfe4f93148c9008b7f65, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1968635198755180999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652760709501253002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4fe9350766275489210da8f7e7c4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IdleLoopSfx
+  loopClip: {fileID: 8300000, guid: 76daeef10a98e614784a3c2b214643ad, type: 3}
+  sfxGroup: {fileID: 1191001676196479227, guid: 30f1eaa8a04adfe4f93148c9008b7f65, type: 2}
+  volume: 0.6
+  fadeInSeconds: 0.25
+  randomStartOffset: 1
