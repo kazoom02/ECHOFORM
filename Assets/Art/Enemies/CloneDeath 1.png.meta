@@ -1,0 +1,523 @@
+fileFormatVersion: 2
+guid: e2d322b2ae34e2c41ab3b5e930842294
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7412228437302984180
+    second: CloneDeath 1_0
+  - first:
+      213: -4041555402461960040
+    second: CloneDeath 1_1
+  - first:
+      213: 6784859133610472916
+    second: CloneDeath 1_2
+  - first:
+      213: 7038493450256946340
+    second: CloneDeath 1_3
+  - first:
+      213: -2479919200038109333
+    second: CloneDeath 1_4
+  - first:
+      213: 2215900366138299179
+    second: CloneDeath 1_5
+  - first:
+      213: 422221239163261819
+    second: CloneDeath 1_6
+  - first:
+      213: 539337169280305378
+    second: CloneDeath 1_7
+  - first:
+      213: 7632168753089663848
+    second: CloneDeath 1_8
+  - first:
+      213: 6123982511322900123
+    second: CloneDeath 1_9
+  - first:
+      213: -8937248299651784862
+    second: CloneDeath 1_10
+  - first:
+      213: -7217305056923476495
+    second: CloneDeath 1_11
+  - first:
+      213: -4843758032426947445
+    second: CloneDeath 1_12
+  - first:
+      213: 1015873206354113669
+    second: CloneDeath 1_13
+  - first:
+      213: 4227587583553306789
+    second: CloneDeath 1_14
+  - first:
+      213: -4109999242190771694
+    second: CloneDeath 1_15
+  - first:
+      213: -5319847951710747866
+    second: CloneDeath 1_16
+  - first:
+      213: 4881088142812996515
+    second: CloneDeath 1_17
+  - first:
+      213: 4561826775973849244
+    second: CloneDeath 1_18
+  - first:
+      213: -7900988984781402045
+    second: CloneDeath 1_19
+  - first:
+      213: -3418339840768400930
+    second: CloneDeath 1_20
+  - first:
+      213: 1130107853620408087
+    second: CloneDeath 1_21
+  - first:
+      213: 4213703393884799639
+    second: CloneDeath 1_22
+  - first:
+      213: -1549753390748213243
+    second: CloneDeath 1_23
+  - first:
+      213: -9185583251913766241
+    second: CloneDeath 1_24
+  - first:
+      213: -4551502486121695598
+    second: CloneDeath 1_25
+  - first:
+      213: 5052250615480429824
+    second: CloneDeath 1_26
+  - first:
+      213: 1781232153280622658
+    second: CloneDeath 1_27
+  - first:
+      213: -8379876996820527652
+    second: CloneDeath 1_28
+  - first:
+      213: 1930090039096892523
+    second: CloneDeath 1_29
+  - first:
+      213: 5364595726020196067
+    second: CloneDeath 1_30
+  - first:
+      213: 7420663215848093036
+    second: CloneDeath 1_31
+  - first:
+      213: 1518795469092218045
+    second: CloneDeath 1_32
+  - first:
+      213: -191429306641313044
+    second: CloneDeath 1_33
+  - first:
+      213: 2213761440037832531
+    second: CloneDeath 1_34
+  - first:
+      213: -7892097767312285072
+    second: CloneDeath 1_35
+  - first:
+      213: 1958457738478210218
+    second: CloneDeath 1_36
+  - first:
+      213: -6288274577550964820
+    second: CloneDeath 1_37
+  - first:
+      213: 3016412269333194192
+    second: CloneDeath 1_38
+  - first:
+      213: -7797301352623520954
+    second: CloneDeath 1_39
+  - first:
+      213: 1821478613247902534
+    second: CloneDeath 1_40
+  - first:
+      213: 245272429900428928
+    second: CloneDeath 1_41
+  - first:
+      213: -69307573046103723
+    second: CloneDeath 1_42
+  - first:
+      213: 7588545363924703537
+    second: CloneDeath 1_43
+  - first:
+      213: -8889147301213287489
+    second: CloneDeath 1_44
+  - first:
+      213: -8018514733691353892
+    second: CloneDeath 1_45
+  - first:
+      213: -2279172476722990083
+    second: CloneDeath 1_46
+  - first:
+      213: -324995264449110265
+    second: CloneDeath 1_47
+  - first:
+      213: -6779666685464749346
+    second: CloneDeath 1_48
+  - first:
+      213: 4660513436648843897
+    second: CloneDeath 1_49
+  - first:
+      213: 6742231942278951108
+    second: CloneDeath 1_50
+  - first:
+      213: -7704498237224208881
+    second: CloneDeath 1_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CloneDeath 1_0
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 595
+        width: 291
+        height: 412
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd3e77fd768dd660800000000000000
+      internalID: 7412228437302984180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_2
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 597
+        width: 308
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d5baed2f69a82e50800000000000000
+      internalID: 6784859133610472916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_3
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 595
+        width: 298
+        height: 393
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a49a706080cda160800000000000000
+      internalID: 7038493450256946340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_5
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 601
+        width: 276
+        height: 321
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b23d45584a570ce10800000000000000
+      internalID: 2215900366138299179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_20
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 107
+        width: 314
+        height: 375
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed12f65a60e9f80d0800000000000000
+      internalID: -3418339840768400930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_21
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 479
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71f6ce4fa13feaf00800000000000000
+      internalID: 1130107853620408087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_22
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 108
+        width: 272
+        height: 394
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7928c5d59e41a7a30800000000000000
+      internalID: 4213703393884799639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_30
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 106
+        width: 239
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e63305d36fd27a40800000000000000
+      internalID: 5364595726020196067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneDeath 1_46
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 101
+        width: 352
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df3341f35b0ce50e0800000000000000
+      internalID: -2279172476722990083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: fee1aa108ba0b264d9edf2513d75d8f6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CloneDeath 1_0: 7412228437302984180
+      CloneDeath 1_1: -4041555402461960040
+      CloneDeath 1_10: -8937248299651784862
+      CloneDeath 1_11: -7217305056923476495
+      CloneDeath 1_12: -4843758032426947445
+      CloneDeath 1_13: 1015873206354113669
+      CloneDeath 1_14: 4227587583553306789
+      CloneDeath 1_15: -4109999242190771694
+      CloneDeath 1_16: -5319847951710747866
+      CloneDeath 1_17: 4881088142812996515
+      CloneDeath 1_18: 4561826775973849244
+      CloneDeath 1_19: -7900988984781402045
+      CloneDeath 1_2: 6784859133610472916
+      CloneDeath 1_20: -3418339840768400930
+      CloneDeath 1_21: 1130107853620408087
+      CloneDeath 1_22: 4213703393884799639
+      CloneDeath 1_23: -1549753390748213243
+      CloneDeath 1_24: -9185583251913766241
+      CloneDeath 1_25: -4551502486121695598
+      CloneDeath 1_26: 5052250615480429824
+      CloneDeath 1_27: 1781232153280622658
+      CloneDeath 1_28: -8379876996820527652
+      CloneDeath 1_29: 1930090039096892523
+      CloneDeath 1_3: 7038493450256946340
+      CloneDeath 1_30: 5364595726020196067
+      CloneDeath 1_31: 7420663215848093036
+      CloneDeath 1_32: 1518795469092218045
+      CloneDeath 1_33: -191429306641313044
+      CloneDeath 1_34: 2213761440037832531
+      CloneDeath 1_35: -7892097767312285072
+      CloneDeath 1_36: 1958457738478210218
+      CloneDeath 1_37: -6288274577550964820
+      CloneDeath 1_38: 3016412269333194192
+      CloneDeath 1_39: -7797301352623520954
+      CloneDeath 1_4: -2479919200038109333
+      CloneDeath 1_40: 1821478613247902534
+      CloneDeath 1_41: 245272429900428928
+      CloneDeath 1_42: -69307573046103723
+      CloneDeath 1_43: 7588545363924703537
+      CloneDeath 1_44: -8889147301213287489
+      CloneDeath 1_45: -8018514733691353892
+      CloneDeath 1_46: -2279172476722990083
+      CloneDeath 1_47: -324995264449110265
+      CloneDeath 1_48: -6779666685464749346
+      CloneDeath 1_49: 4660513436648843897
+      CloneDeath 1_5: 2215900366138299179
+      CloneDeath 1_50: 6742231942278951108
+      CloneDeath 1_51: -7704498237224208881
+      CloneDeath 1_6: 422221239163261819
+      CloneDeath 1_7: 539337169280305378
+      CloneDeath 1_8: 7632168753089663848
+      CloneDeath 1_9: 6123982511322900123
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

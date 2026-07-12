@@ -114,6 +114,12 @@ public class ChargedSlashFX : MonoBehaviour
         Destroy(gameObject, life + extraLifetime);
     }
 
+    public IEnumerator WaitUntilFinished()
+    {
+        yield return null;
+        while (this != null) yield return null;
+    }
+
     // -----------------------------------------------------
     // Spawn a slash instance. Returns the spawned component so the
     // caller can tweak it further if needed.

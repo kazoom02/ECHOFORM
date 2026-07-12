@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Video;
 
 // =====================================================
 // ECHOFORM — CombatManager
@@ -56,6 +57,12 @@ public class CombatManager : MonoBehaviour
     [Tooltip("Inject one corrupted chip every N player turns (0 = never).")]
     [SerializeField] private int corruptEveryNTurns = 3;
 
+    [Header("Finale")]
+    [Tooltip("Optional final video transition triggered after the Clone death animation finishes.")]
+    [SerializeField] private AreaTransition finalVideoTransition;
+    [SerializeField] private VideoClip finalVideoClip;
+    [SerializeField] private bool triggerFinalVideoAfterCloneDeath = true;
+
     // ---- runtime state ----
     public CombatState State { get; private set; } = CombatState.Idle;
     public int Energy { get; private set; }
@@ -64,14 +71,34 @@ public class CombatManager : MonoBehaviour
     /// <summary>How many corrupted chips are clogging the current hand (drives the overload readout).</summary>
     public int CorruptedInHand => Deck != null ? Deck.Hand.Count(c => c != null && c.isGlitch) : 0;
 
+    /// <summary>Basic slashes (Attacks) landed this combat — charged abilities unlock at their threshold.</summary>
+    public int SlashCount => slashCount;
+    /// <summary>How many more slashes before this card unlocks (0 if already available or not gated).</summary>
+    public int SlashesRemaining(CardData card) => card == null ? 0 : Mathf.Max(0, card.slashesToUnlock - slashCount);
+    /// <summary>True once a charge-before-use card has been wound up and is ready to unleash on the next play.</summary>
+    public bool IsPrimed(CardData card) => card != null && primedCards.Contains(card);
+
     private readonly List<Enemy> enemies = new List<Enemy>();
     private CardData lastPlayedCard;
     private int turnNumber;
+    private int slashCount;                                              // basic Attacks landed this combat
+    private readonly HashSet<CardData> primedCards = new HashSet<CardData>();  // charge-before-use cards that are wound up
+    private Coroutine delayedRepositionRoutine;
+    private float holdRepositionUntil;
+    private bool endingCombat;
 
     // events for a UI layer to subscribe to
     public System.Action OnCombatChanged;
     public System.Action<CombatState> OnStateChanged;
     public System.Action<string> OnLog;
+    /// <summary>Fired after a card is accepted by combat, including charge-only plays.</summary>
+    public System.Action<CardData> OnCardPlayed;
+    /// <summary>Fired when the Loom corrupts a hand slot. Args are hand slot index and corrupted chip.</summary>
+    public System.Action<int, CardData> OnHandCorrupted;
+    /// <summary>Fired when the slash counter changes (HUD can show progress toward Charged Slash).</summary>
+    public System.Action<int> OnSlashCountChanged;
+    /// <summary>Fired when a blade is charged and ready to unleash on the next play.</summary>
+    public System.Action<CardData> OnBladeCharged;
 
     private void Start()
     {
@@ -86,6 +113,10 @@ public class CombatManager : MonoBehaviour
         enemies.AddRange(startingEnemies.Where(e => e != null));
 
         turnNumber = 0;
+        slashCount = 0;
+        endingCombat = false;
+        primedCards.Clear();
+        OnSlashCountChanged?.Invoke(slashCount);
         Deck = new Deck(startingDeck);
         foreach (var e in enemies) if (e is PlayerClone pc) pc.InitDeck(startingDeck);   // Area 3 clone mirrors your deck
         RepositionEnemies();
@@ -117,8 +148,12 @@ public class CombatManager : MonoBehaviour
             CardData copy = MakeCorruptedCopy();
             if (copy != null)
             {
-                Deck.CorruptHand(copy, handSize);
-                Log($"The Loom copies your {(lastPlayedCard != null ? lastPlayedCard.cardName : "memory")} — now corrupted.");
+                int corruptedSlot = Deck.CorruptHand(copy, handSize);
+                if (corruptedSlot >= 0)
+                {
+                    Log($"The Loom copies your {(lastPlayedCard != null ? lastPlayedCard.cardName : "memory")} — now corrupted.");
+                    OnHandCorrupted?.Invoke(corruptedSlot, copy);
+                }
             }
         }
 
@@ -138,7 +173,9 @@ public class CombatManager : MonoBehaviour
     public bool CanPlayCard(CardData card)
     {
         if (card == null || card.isGlitch) return false;
+        if (endingCombat) return false;
         if (State != CombatState.PlayerTurn) return false;
+        if (card.slashesToUnlock > 0 && slashCount < card.slashesToUnlock) return false;  // blade not yet unlocked
         if (card.energyCost > Energy) return false;
         if (card.HasEffect(CardEffectType.GainShield) && !player.CanGainShield) return false;
         return true;
@@ -147,19 +184,45 @@ public class CombatManager : MonoBehaviour
     public bool TryPlayCard(CardData card, Enemy target = null)
     {
         if (State != CombatState.PlayerTurn) return false;
+        if (endingCombat) return false;
         if (card == null || card.isGlitch) return false;
+        if (card.slashesToUnlock > 0 && slashCount < card.slashesToUnlock)
+        { Log($"{card.cardName} is inert — land {card.slashesToUnlock} slashes first ({slashCount}/{card.slashesToUnlock})."); return false; }
         if (card.energyCost > Energy) { Log("Not enough energy."); return false; }
         if (card.HasEffect(CardEffectType.GainShield) && !player.CanGainShield)
         { Log("Shields already full."); return false; }
+
+        // Charge-before-use: the FIRST play winds the blade up — it costs energy,
+        // deals nothing, and the card stays in hand. Playing it again unleashes it.
+        // The charge sticks to the card until released, so it survives a discard/redraw.
+        if (card.chargeBeforeUse && !primedCards.Contains(card))
+        {
+            Energy -= card.energyCost;
+            primedCards.Add(card);
+            Log($"{card.cardName}: the blade charges. Play it again to unleash.");
+            OnBladeCharged?.Invoke(card);
+            OnCardPlayed?.Invoke(card);
+            OnCombatChanged?.Invoke();
+            return true;   // card intentionally NOT discarded — it lingers, primed
+        }
+
         if (card.target == CardTarget.SingleEnemy && (target == null || target.IsDead)) return false;
 
         Energy -= card.energyCost;
         ResolveCard(card, target);
 
+        if (card.countsAsSlash)                             // a basic slash landed
+        {
+            slashCount++;
+            OnSlashCountChanged?.Invoke(slashCount);
+        }
+        primedCards.Remove(card);                           // consume any charge on release
+
         // Echo should copy the card played BEFORE it, so update this after resolving.
         if (!card.HasEffect(CardEffectType.DuplicateCard)) lastPlayedCard = card;
 
         Deck.ResolvePlayed(card);
+        OnCardPlayed?.Invoke(card);
 
         CheckEndOfCombat();
         OnCombatChanged?.Invoke();
@@ -216,6 +279,7 @@ public class CombatManager : MonoBehaviour
         if (!result.killed) return;
 
         bool animatedDeath = false;
+        float repositionDelay = 0f;
 
         if (enemy is Slime slime)
         {
@@ -235,16 +299,27 @@ public class CombatManager : MonoBehaviour
             {
                 slime.PlayDeath();                     // small slime dies for good: dying animation + SFX
                 animatedDeath = true;                  // ...so do not destroy it instantly below
+                repositionDelay = slime.DeathDuration;
             }
         }
         else
         {
+            if (enemy is PlayerClone clone)
+            {
+                Log($"{enemy.DisplayName} unravels.");
+                endingCombat = true;
+                StartCoroutine(FinishCloneDeath(clone));
+                UpdateMergerTelegraph();
+                OnCombatChanged?.Invoke();
+                return;
+            }
+
             Log($"{enemy.DisplayName} destroyed.");
         }
 
         RemoveEnemy(enemy, destroy: !animatedDeath);
         UpdateMergerTelegraph();
-        RepositionEnemies();
+        RequestReposition(repositionDelay);
     }
 
     private void SpawnSlimeChildren(Slime parent, List<SlimeSpawn> children)
@@ -261,9 +336,25 @@ public class CombatManager : MonoBehaviour
 
     public void EndTurn()
     {
+        if (endingCombat) return;
         if (State != CombatState.PlayerTurn) return;
         Deck.DiscardHand();
         StartCoroutine(EnemyTurn());
+    }
+
+    private IEnumerator FinishCloneDeath(PlayerClone clone)
+    {
+        if (clone != null)
+            yield return clone.PlayDeathAndWait();
+
+        RemoveEnemy(clone, destroy: false);
+        endingCombat = false;
+        SetState(CombatState.Win);
+        Log("The thread is cut — for now.");
+        OnCombatChanged?.Invoke();
+
+        if (triggerFinalVideoAfterCloneDeath && finalVideoTransition != null)
+            finalVideoTransition.PlayClipWithoutSwap(finalVideoClip);
     }
 
     private IEnumerator EnemyTurn()
@@ -406,6 +497,30 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    private void RequestReposition(float delay = 0f)
+    {
+        if (delay > 0f)
+            holdRepositionUntil = Mathf.Max(holdRepositionUntil, Time.time + delay);
+
+        if (Time.time < holdRepositionUntil)
+        {
+            if (delayedRepositionRoutine == null)
+                delayedRepositionRoutine = StartCoroutine(DelayedReposition());
+            return;
+        }
+
+        RepositionEnemies();
+    }
+
+    private IEnumerator DelayedReposition()
+    {
+        while (Time.time < holdRepositionUntil)
+            yield return null;
+
+        delayedRepositionRoutine = null;
+        RepositionEnemies();
+    }
+
     /// <summary>Build a corrupted, unplayable duplicate of the chip the player last used — the Loom copying you.</summary>
     private CardData MakeCorruptedCopy()
     {
@@ -447,6 +562,8 @@ public class CombatManager : MonoBehaviour
 
     private bool CheckEndOfCombat()
     {
+        if (endingCombat) return true;
+
         if (player != null && player.IsDead) { SetState(CombatState.Lose); Log("Vestige falls. The Loom prints copy №10."); return true; }
         if (enemies.All(e => e == null || e.IsDead)) { SetState(CombatState.Win); Log("The thread is cut — for now."); return true; }
         return false;

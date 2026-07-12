@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 // =====================================================
 // ECHOFORM — SettingsMenu
@@ -47,6 +50,8 @@ public class SettingsMenu : MonoBehaviour
             fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
         }
         if (backButton != null) backButton.onClick.AddListener(OnBack);
+
+        UiSelectionHelper.SelectFirst(gameObject, volumeSlider != null ? volumeSlider.gameObject : null);
     }
 
     void OnDisable()
@@ -54,6 +59,12 @@ public class SettingsMenu : MonoBehaviour
         if (volumeSlider != null) volumeSlider.onValueChanged.RemoveListener(OnVolumeChanged);
         if (fullscreenToggle != null) fullscreenToggle.onValueChanged.RemoveListener(OnFullscreenChanged);
         if (backButton != null) backButton.onClick.RemoveListener(OnBack);
+    }
+
+    void Update()
+    {
+        UiSelectionHelper.RestoreIfMissing(gameObject, volumeSlider != null ? volumeSlider.gameObject : null);
+        if (CancelPressed()) OnBack();
     }
 
     private void OnVolumeChanged(float v)
@@ -75,5 +86,17 @@ public class SettingsMenu : MonoBehaviour
     {
         PlayerPrefs.Save();
         if (menu != null) menu.ShowMain();
+    }
+
+    private static bool CancelPressed()
+    {
+#if ENABLE_INPUT_SYSTEM
+        Gamepad pad = Gamepad.current;
+        Keyboard keyboard = Keyboard.current;
+        return (pad != null && pad.buttonEast.wasPressedThisFrame)
+            || (keyboard != null && keyboard.escapeKey.wasPressedThisFrame);
+#else
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1);
+#endif
     }
 }

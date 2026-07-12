@@ -17,6 +17,8 @@ public class VisorFlash : MonoBehaviour
     [SerializeField] private float flashIn  = 0.05f;
     [SerializeField] private float flashOut = 0.28f;
 
+    public float Duration => flashIn + flashOut;
+
     void Awake()
     {
         if (visor) { var c = flashColor; c.a = 0f; visor.color = c; }
@@ -27,6 +29,12 @@ public class VisorFlash : MonoBehaviour
         if (!visor) return;
         StopAllCoroutines();
         StartCoroutine(FlashRoutine());
+    }
+
+    public IEnumerator FlashAndWait()
+    {
+        Flash();
+        yield return new WaitForSeconds(Duration);
     }
 
     IEnumerator FlashRoutine()

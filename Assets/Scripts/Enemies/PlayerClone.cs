@@ -22,6 +22,8 @@ using UnityEngine;
 
 public class PlayerClone : Enemy
 {
+    private const float MinimumDeathWait = 0.75f;
+
     [Header("Clone turn")]
     [SerializeField] private int energyPerTurn = 3;
     [SerializeField] private int handSize = 5;
@@ -46,12 +48,19 @@ public class PlayerClone : Enemy
     [Tooltip("Seconds the Attack state is held before returning to Idle after a damage card.")]
     [SerializeField] private float attackHold = 0.45f;
 
+    [Header("Death")]
+    [Tooltip("Animator state played when the Clone reaches 0 HP.")]
+    [SerializeField] private string deathState = "CloneDeath";
+    [Tooltip("Fallback wait if the death clip cannot be found in the controller.")]
+    [SerializeField] private float deathDuration = 0.75f;
+
     public int Shields { get; private set; }
     public int Focus { get; private set; }
     public int Energy { get; private set; }
 
     private Deck deck;
     private CardData lastPlayed;
+    private bool deathPlayed;
 
     public override string DisplayName => "Echo of Vestige";
 
@@ -94,6 +103,7 @@ public class PlayerClone : Enemy
     /// <summary>Run the Clone's whole turn: reset block, draw a hand, play cards vs the player.</summary>
     public IEnumerator TakeTurn(PlayerCombatant player, System.Action<string> log)
     {
+        if (IsDead) yield break;
         if (deck == null) { log?.Invoke($"{DisplayName} has no deck."); yield break; }
 
         Block = 0;                    // block is fresh each of the Clone's own turns
@@ -137,10 +147,51 @@ public class PlayerClone : Enemy
         OnStateChanged?.Invoke();
     }
 
+    public IEnumerator PlayDeathAndWait()
+    {
+        if (deathPlayed) yield break;
+        deathPlayed = true;
+
+        if (animator == null) animator = GetComponent<Animator>();
+
+        if (animator != null && !string.IsNullOrEmpty(deathState))
+        {
+            animator.Play(deathState, 0, 0f);
+            animator.Update(0f);
+        }
+        else
+        {
+            Play(deathState);
+        }
+        OnStateChanged?.Invoke();
+
+        float wait = Mathf.Max(MinimumDeathWait, deathDuration, ResolveClipLength(deathState, MinimumDeathWait));
+        float elapsed = 0f;
+        while (elapsed < wait)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
     // Same approach as VestigeCombatAnimator: play a state directly by name.
     private void Play(string state)
     {
         if (animator != null && !string.IsNullOrEmpty(state)) animator.Play(state);
+    }
+
+    private float ResolveClipLength(string stateName, float fallback)
+    {
+        if (animator != null && animator.runtimeAnimatorController != null)
+        {
+            foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip != null && clip.name == stateName)
+                    return clip.length;
+            }
+        }
+
+        return Mathf.Max(0.05f, fallback);
     }
 
     // Pick a random affordable, non-glitch card; never gain shields when already capped.

@@ -126,7 +126,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 80
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -178,12 +178,12 @@ TextureImporter:
       name: CloneAttack_1
       rect:
         serializedVersion: 2
-        x: 56
-        y: 572
-        width: 255
-        height: 379
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 165
+        y: 947
+        width: 9
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -200,12 +200,12 @@ TextureImporter:
       name: CloneAttack_2
       rect:
         serializedVersion: 2
-        x: 358
-        y: 578
-        width: 319
-        height: 370
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 177
+        y: 949
+        width: 12
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -219,15 +219,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CloneAttack_4
+      name: Attack2
       rect:
         serializedVersion: 2
-        x: 1013
-        y: 576
-        width: 422
-        height: 348
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 359
+        y: 579
+        width: 317
+        height: 368
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -241,15 +241,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CloneAttack_3
+      name: Attack4
       rect:
         serializedVersion: 2
-        x: 712
-        y: 579
-        width: 280
-        height: 356
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1014
+        y: 578
+        width: 434
+        height: 508
+      alignment: 9
+      pivot: {x: 0.5, y: 0.353}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -263,15 +263,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CloneAttack_5
+      name: Attack3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 155
-        width: 458
-        height: 338
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 713
+        y: 580
+        width: 278
+        height: 354
+      alignment: 9
+      pivot: {x: 0.5, y: 0.509}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -288,12 +288,12 @@ TextureImporter:
       name: CloneAttack_7
       rect:
         serializedVersion: 2
-        x: 772
-        y: 139
-        width: 284
-        height: 354
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 865
+        y: 934
+        width: 8
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -310,12 +310,12 @@ TextureImporter:
       name: CloneAttack_8
       rect:
         serializedVersion: 2
-        x: 1126
-        y: 115
-        width: 255
-        height: 378
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1199
+        y: 917
+        width: 9
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -332,12 +332,12 @@ TextureImporter:
       name: CloneAttack_6
       rect:
         serializedVersion: 2
-        x: 472
-        y: 144
-        width: 282
-        height: 338
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 850
+        y: 932
+        width: 9
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -346,6 +346,402 @@ TextureImporter:
       bones: []
       spriteID: a619e719091ec7540800000000000000
       internalID: 5007124896761680234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 573
+        width: 310
+        height: 513
+      alignment: 9
+      pivot: {x: 0.5, y: 0.351}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7feef1a9e94b4164d8469ef91737211a
+      internalID: -78327139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_9
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 918
+        width: 12
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cff853a8a9d8a4a45afb00c363f7bf85
+      internalID: -1376392183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_10
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 499
+        width: 11
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ac0c65e1259bb44fa2e490d1159e54b
+      internalID: -362983231680144921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_11
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 495
+        width: 16
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06daaf7d58620f840a222612dc1f8338
+      internalID: -8531139153695410834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_12
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 489
+        width: 16
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ee0b965d01c8c14e9442a4dad8e990a
+      internalID: 2426732942879730927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_13
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 490
+        width: 9
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfb68931433d91049aa075975cc71b5c
+      internalID: 3648354252620231152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_14
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 493
+        width: 8
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50ee74a31047e154bbe044d1ccbad63e
+      internalID: -2140717958628065875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_15
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 493
+        width: 10
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 200be3342e04f9a4f843a265b9cd0fd4
+      internalID: -646662608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_16
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 489
+        width: 10
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d5ada1c2e522f649b7d5bef1936b0ae
+      internalID: 7682175770243710710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_17
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 492
+        width: 11
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 744243e98a14e984d91484c14b86fe53
+      internalID: 6776791613235345233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 149
+        width: 457
+        height: 408
+      alignment: 9
+      pivot: {x: 0.5, y: 0.451}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3bc290dce325c64580a4c310db32815
+      internalID: 1621509751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_19
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 334
+        width: 6
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eec150f5d18103d4fa27a7f154c40f2a
+      internalID: 2069632101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack6
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 145
+        width: 280
+        height: 336
+      alignment: 9
+      pivot: {x: 0.5, y: 0.536}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb1281f538e8f64cb2845baefff37f2
+      internalID: 6759720773454397608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack7
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 140
+        width: 282
+        height: 352
+      alignment: 9
+      pivot: {x: 0.5, y: 0.509}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29371b335daf2ac4bbfefeb817832d9d
+      internalID: -7673288124606878895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack8
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 116
+        width: 253
+        height: 376
+      alignment: 9
+      pivot: {x: 0.5, y: 0.477}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8183f389d8dec0144a2da8fae4a4ba11
+      internalID: -524199713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_23
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 309
+        width: 5
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fa7608dd98e888459d02b569c602743
+      internalID: 8857515561352670092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_24
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 297
+        width: 4
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05dd139927f36774a89735bf0f17d762
+      internalID: 1280454885215929487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneAttack_25
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 283
+        width: 6
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8d45fd7bf0be1543844080ca19cbd32
+      internalID: -6487830207430484472
       vertices: []
       indices: 
       edges: []
@@ -362,28 +758,36 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
+      Attack1: -78327139
+      Attack2: 2160112294980184210
+      Attack3: -4291674733424072551
+      Attack4: 2529627993308470204
+      Attack5: 1621509751
+      Attack6: 6759720773454397608
+      Attack7: -7673288124606878895
+      Attack8: -524199713
       CloneAttack_1: 5299074445456388078
       CloneAttack_10: -362983231680144921
       CloneAttack_11: -8531139153695410834
       CloneAttack_12: 2426732942879730927
       CloneAttack_13: 3648354252620231152
       CloneAttack_14: -2140717958628065875
+      CloneAttack_15: -646662608
       CloneAttack_16: 7682175770243710710
       CloneAttack_17: 6776791613235345233
+      CloneAttack_19: 2069632101
       CloneAttack_2: 3689417605852419697
-      CloneAttack_20: 6759720773454397608
-      CloneAttack_21: -7673288124606878895
       CloneAttack_23: 8857515561352670092
       CloneAttack_24: 1280454885215929487
       CloneAttack_25: -6487830207430484472
-      CloneAttack_3: 2529627993308470204
-      CloneAttack_4: 2160112294980184210
-      CloneAttack_5: -4291674733424072551
       CloneAttack_6: 5007124896761680234
       CloneAttack_7: -4167996922921078589
       CloneAttack_8: 7604105346711900530
+      CloneAttack_9: -1376392183
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

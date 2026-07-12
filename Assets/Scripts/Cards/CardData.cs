@@ -58,6 +58,14 @@ public class CardData : ScriptableObject
     [Tooltip("If true the card is removed from the deck for the rest of combat once played (e.g. Echo copies).")]
     public bool exhaustOnPlay = false;
 
+    [Header("Charged Slash mechanic")]
+    [Tooltip("Playing this card lands a 'slash' — it ticks the counter that unlocks charged abilities (set on the basic Attack).")]
+    public bool countsAsSlash = false;
+    [Tooltip("Slashes that must be landed this combat before this card can be played at all (0 = always available).")]
+    [Min(0)] public int slashesToUnlock = 0;
+    [Tooltip("Two-step weapon: the first play charges the blade (no effect, card stays in hand); playing it again unleashes its effects.")]
+    public bool chargeBeforeUse = false;
+
     public bool HasEffect(CardEffectType t)
     {
         foreach (var e in effects)

@@ -31,6 +31,8 @@ public class EnemyMeleeAnimator : MonoBehaviour
     [SerializeField] private float moveSpeed    = 4f;
     [SerializeField] private float stopDistance = 1.2f;   // how far short of the player to stop
     [SerializeField] private bool  returnToStart = true;
+    [Tooltip("If on, the enemy walks to the target's Y for depth sorting. Turn off for enemies that should stay on their lane.")]
+    [SerializeField] private bool matchTargetY = true;
 
     [Header("Timing")]
     [Tooltip("Seconds after arriving before damage lands.")]
@@ -79,9 +81,9 @@ public class EnemyMeleeAnimator : MonoBehaviour
         if (dir == 0f) dir = 1f;
         Face(dir);
 
-        // Walk to the player's X (short of it) AND depth (Y), so the YDepthSorter
-        // places the walker correctly among Vestige and the other slimes.
-        Vector3 dest = new Vector3(target.position.x - dir * stopDistance, target.position.y, transform.position.z);
+        // Some enemies move to the player's depth for sorting; lane-based enemies keep their own Y.
+        float destY = matchTargetY ? target.position.y : start.y;
+        Vector3 dest = new Vector3(target.position.x - dir * stopDistance, destY, transform.position.z);
 
         Play(walkState);
         while ((transform.position - dest).sqrMagnitude > 0.0025f)

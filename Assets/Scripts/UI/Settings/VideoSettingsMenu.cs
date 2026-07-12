@@ -128,6 +128,7 @@ public class VideoSettingsMenu : MonoBehaviour
             }
 
         root.SetActive(true);
+        UiSelectionHelper.SelectFirst(root);
     }
 
     public void Hide()

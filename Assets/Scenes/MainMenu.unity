@@ -343,7 +343,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 3100856887975758742, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_PressedSprite: {fileID: 4520375771122408675, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 3100856887975758742, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2960,7 +2960,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -3188,7 +3188,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 7664807735657788756, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_PressedSprite: {fileID: -5402412272178277761, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 7664807735657788756, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -7577,7 +7577,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -10270,7 +10270,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -12052,7 +12052,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -14421,7 +14421,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -18323,7 +18323,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -20556,7 +20556,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_PressedSprite: {fileID: 2367720903250473794, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -20746,7 +20746,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 3760674464881954987, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_PressedSprite: {fileID: -7811504096720598664, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 3760674464881954987, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -20890,7 +20890,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -3243065930256096816, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_PressedSprite: {fileID: -5316896731886317114, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: -3243065930256096816, guid: bf9fa8b0abf90d04b820c9ad47c6629c, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -21077,6 +21077,9 @@ MonoBehaviour:
   settingsButton: {fileID: 0}
   quitButton: {fileID: 0}
   loadGameMenu: {fileID: 0}
+  firstMainSelection: {fileID: 0}
+  firstLoadSelection: {fileID: 0}
+  firstSettingsSelection: {fileID: 0}
 --- !u!1001 &730302386954110692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21089,6 +21092,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VideoSettingsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3785727969881219900, guid: adfd8fa4fddb0384891167ed1e2b5b20, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -5045155525265593590, guid: 80b60b0d5efb90748af39a0744dbef2f, type: 3}
     - target: {fileID: 3785727969881219900, guid: adfd8fa4fddb0384891167ed1e2b5b20, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 // =====================================================
 // ECHOFORM — NeuralInterfaceHUD
@@ -20,6 +23,8 @@ using TMPro;
 
 public class NeuralInterfaceHUD : MonoBehaviour
 {
+    public enum ControllerFamily { None, Xbox, PlayStation, Nintendo, Generic }
+
     [Header("Combat")]
     [SerializeField] private CombatManager combat;
     [SerializeField] private int maxCycles = 3;   // matches CombatManager.energyPerTurn
@@ -55,17 +60,54 @@ public class NeuralInterfaceHUD : MonoBehaviour
     [SerializeField] private float installTime = 0.80f;
     [SerializeField] private float settleTime  = 0.15f;
 
+    [Header("Controller")]
+    [SerializeField] private bool controllerChipSelection = true;
+    [SerializeField] private float navigationRepeatDelay = 0.18f;
+
     [Header("Events")]
     [Tooltip("Fires the moment the memory is installed — hook Vestige's dash+attack, SFX, screen shake.")]
     public CardEvent onChipInstalled;
 
     readonly List<ChipView> rack = new List<ChipView>();
     bool busy;
+    ChipView pendingTargetView;   // chip waiting for an enemy pick (null when not targeting)
+    int selectedChipIndex = -1;
+    float nextNavigationTime;
+    bool showControllerSelection;
+
+    public bool IsBusy => busy;
+    public bool IsControllerSelectionVisible => showControllerSelection;
+    public ControllerFamily CurrentController => DetectControllerFamily();
+    public string ConfirmButtonName => GetConfirmButtonName(CurrentController);
+    public System.Action<bool> OnBusyChanged;
 
     // ---------------------------------------------------------------- lifecycle
     void OnEnable()  { if (combat != null) combat.OnCombatChanged += Refresh; }
-    void OnDisable() { if (combat != null) combat.OnCombatChanged -= Refresh; }
+    void OnDisable()
+    {
+        if (combat != null) combat.OnCombatChanged -= Refresh;
+        SetBusy(false);
+    }
     void Start()     { if (installGroup) installGroup.alpha = 0f; Refresh(); }
+
+    void Update()
+    {
+        if (!controllerChipSelection || busy || rack.Count == 0 || Time.timeScale == 0f) return;
+        if (targeting != null && targeting.IsTargeting) return;
+
+        int direction = ReadNavigationDirection();
+        if (direction != 0)
+        {
+            showControllerSelection = true;
+            SelectChip(selectedChipIndex + direction);
+        }
+
+        if (ConfirmPressed() && selectedChipIndex >= 0 && selectedChipIndex < rack.Count)
+        {
+            showControllerSelection = true;
+            OnChipClicked(rack[selectedChipIndex]);
+        }
+    }
 
     // ---------------------------------------------------------------- rack sync
     public void Refresh()
@@ -77,6 +119,13 @@ public class NeuralInterfaceHUD : MonoBehaviour
         if (hand != null)
             for (int i = 0; i < rackSlots.Length && i < hand.Count; i++)
                 Spawn(hand[i], rackSlots[i]);
+
+        if (rack.Count == 0)
+        {
+            selectedChipIndex = -1;
+            showControllerSelection = false;
+        }
+        else SelectChip(Mathf.Clamp(selectedChipIndex < 0 ? 0 : selectedChipIndex, 0, rack.Count - 1));
 
         if (cpuMeter != null)
             cpuMeter.Set(combat != null ? combat.Energy : maxCycles, maxCycles);
@@ -92,13 +141,38 @@ public class NeuralInterfaceHUD : MonoBehaviour
         v.Rect.localScale = Vector3.one;
         v.Bind(card);
         v.Clicked += OnChipClicked;
+        v.Hovered += OnChipHovered;
         rack.Add(v);
     }
 
     // ---------------------------------------------------------------- play flow
+    void OnChipHovered(ChipView view)
+    {
+        int chipIndex = rack.IndexOf(view);
+        if (chipIndex < 0) return;
+
+        showControllerSelection = false;
+        SelectChip(chipIndex);
+    }
+
     void OnChipClicked(ChipView view)
     {
-        if (busy || view == null || view.card == null) return;
+        if (view == null || view.card == null) return;
+        int chipIndex = rack.IndexOf(view);
+        if (chipIndex >= 0) SelectChip(chipIndex);
+
+        // Already waiting to pick an enemy for a card? Any chip click backs out of that
+        // selection first, so a mis-tapped Attack never traps the player. Clicking the
+        // SAME chip just deselects; clicking a different one switches to it.
+        if (targeting != null && targeting.IsTargeting)
+        {
+            ChipView previous = pendingTargetView;
+            targeting.Cancel();               // clears busy + pendingTargetView via the cancel callback
+            if (previous == view) return;     // tapped the pending chip again -> deselect only
+        }
+
+        if (busy) return;                     // still locked by an install animation in progress
+
         // deny (shake) unplayable chips up front: glitch, not enough energy, or shields full
         bool cannotPlay = combat != null ? !combat.CanPlayCard(view.card) : view.card.isGlitch;
         if (cannotPlay) { StartCoroutine(Deny(view)); return; }
@@ -106,10 +180,11 @@ public class NeuralInterfaceHUD : MonoBehaviour
         // Single-target chips with more than one enemy: let the player pick.
         if (targeting != null && view.card.target == CardTarget.SingleEnemy && CountLivingEnemies() > 1)
         {
-            busy = true;                                  // lock the rack while choosing
+            SetBusy(true);                                // lock the rack while choosing
+            pendingTargetView = view;
             targeting.Begin(
-                picked => { busy = false; StartCoroutine(InstallRoutine(view, picked)); },
-                ()     => { busy = false; }               // cancelled — nothing happens
+                picked => { pendingTargetView = null; StartCoroutine(InstallRoutine(view, picked)); },
+                ()     => { pendingTargetView = null; SetBusy(false); }   // cancelled — nothing happens
             );
             return;
         }
@@ -127,7 +202,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
     IEnumerator InstallRoutine(ChipView view, Enemy target)
     {
-        busy = true;
+        SetBusy(true);
         CardData card = view.card;               // cache — the view gets destroyed later
         rack.Remove(view);
 
@@ -165,10 +240,11 @@ public class NeuralInterfaceHUD : MonoBehaviour
         onChipInstalled?.Invoke(card);                     // SFX / extra fx hook
 
         // 5) EXECUTE — attack chips send Vestige in and resolve on the hit frame; others resolve in place
+        ChargedSlashFX slashFx = null;
         if (card != null && IsSlashCard(card))                 // full-screen slash only for ChargedSlash
         {
             if (chargedSlashPrefab != null)                    // preferred: animated slash VFX
-                ChargedSlashFX.Play(chargedSlashPrefab,
+                slashFx = ChargedSlashFX.Play(chargedSlashPrefab,
                     slashSpawnPoint != null ? slashSpawnPoint.position : Vector3.zero);
             else if (screenSlash != null)
                 screenSlash.Slash();                           // fallback: old streak overlay
@@ -181,11 +257,141 @@ public class NeuralInterfaceHUD : MonoBehaviour
         else
         {
             // self-cast (block/heal) keeps the flash — but the slash card shows its own VFX, no flash
-            if (visorFlash && !IsSlashCard(card)) visorFlash.Flash();
+            if (visorFlash && !IsSlashCard(card))
+                yield return visorFlash.FlashAndWait();
             if (combat != null) combat.TryPlayCard(card, target);
         }
 
-        busy = false;
+        if (slashFx != null)
+            yield return slashFx.WaitUntilFinished();
+
+        SetBusy(false);
+    }
+
+    void SetBusy(bool value)
+    {
+        if (busy == value) return;
+        busy = value;
+        OnBusyChanged?.Invoke(busy);
+    }
+
+    void SelectChip(int index)
+    {
+        if (rack.Count == 0)
+        {
+            selectedChipIndex = -1;
+            return;
+        }
+
+        selectedChipIndex = Mod(index, rack.Count);
+        for (int i = 0; i < rack.Count; i++)
+            if (rack[i] != null) rack[i].SetControllerSelected(showControllerSelection && i == selectedChipIndex);
+
+        if (showControllerSelection && selectedChipIndex >= 0 && selectedChipIndex < rack.Count)
+        {
+            ChipView selected = rack[selectedChipIndex];
+            if (selected != null && selected.card != null)
+                CardTooltip.ShowAt(selected.card, TooltipScreenPosition(selected));
+        }
+    }
+
+    Vector2 TooltipScreenPosition(ChipView view)
+    {
+        if (view == null) return Vector2.zero;
+
+        RectTransform rect = view.Rect;
+        Vector3[] corners = new Vector3[4];
+        rect.GetWorldCorners(corners);
+        Vector3 topRight = corners[2];
+
+        Canvas canvas = GetComponentInParent<Canvas>();
+        Camera cam = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
+        return RectTransformUtility.WorldToScreenPoint(cam, topRight);
+    }
+
+    static int Mod(int value, int count)
+    {
+        if (count <= 0) return 0;
+        int result = value % count;
+        return result < 0 ? result + count : result;
+    }
+
+    int ReadNavigationDirection()
+    {
+#if ENABLE_INPUT_SYSTEM
+        Gamepad pad = Gamepad.current;
+        if (pad == null) return 0;
+
+        if (pad.dpad.left.wasPressedThisFrame) return -1;
+        if (pad.dpad.right.wasPressedThisFrame) return 1;
+
+        float x = pad.leftStick.x.ReadValue();
+        if (Mathf.Abs(x) < 0.5f)
+        {
+            nextNavigationTime = 0f;
+            return 0;
+        }
+
+        if (Time.unscaledTime < nextNavigationTime) return 0;
+        nextNavigationTime = Time.unscaledTime + navigationRepeatDelay;
+        return x < 0f ? -1 : 1;
+#else
+        if (Input.GetAxisRaw("Horizontal") < -0.5f && Time.unscaledTime >= nextNavigationTime)
+        {
+            nextNavigationTime = Time.unscaledTime + navigationRepeatDelay;
+            return -1;
+        }
+        if (Input.GetAxisRaw("Horizontal") > 0.5f && Time.unscaledTime >= nextNavigationTime)
+        {
+            nextNavigationTime = Time.unscaledTime + navigationRepeatDelay;
+            return 1;
+        }
+        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) < 0.5f) nextNavigationTime = 0f;
+        return 0;
+#endif
+    }
+
+    static bool ConfirmPressed()
+    {
+#if ENABLE_INPUT_SYSTEM
+        Gamepad pad = Gamepad.current;
+        if (pad != null && pad.buttonSouth.wasPressedThisFrame) return true;
+
+        return false;
+#else
+        return Input.GetKeyDown(KeyCode.JoystickButton0);
+#endif
+    }
+
+    static ControllerFamily DetectControllerFamily()
+    {
+#if ENABLE_INPUT_SYSTEM
+        Gamepad pad = Gamepad.current;
+        if (pad == null) return ControllerFamily.None;
+
+        string description = $"{pad.layout} {pad.name} {pad.displayName} {pad.description.manufacturer} {pad.description.product} {pad.description.interfaceName}".ToLowerInvariant();
+        if (description.Contains("dualsense") || description.Contains("dualshock") || description.Contains("playstation") || description.Contains("sony"))
+            return ControllerFamily.PlayStation;
+        if (description.Contains("xbox") || description.Contains("xinput") || description.Contains("microsoft"))
+            return ControllerFamily.Xbox;
+        if (description.Contains("switch") || description.Contains("nintendo"))
+            return ControllerFamily.Nintendo;
+        return ControllerFamily.Generic;
+#else
+        return ControllerFamily.Generic;
+#endif
+    }
+
+    static string GetConfirmButtonName(ControllerFamily family)
+    {
+        switch (family)
+        {
+            case ControllerFamily.Xbox: return "A";
+            case ControllerFamily.PlayStation: return "X";
+            case ControllerFamily.Nintendo: return "B";
+            case ControllerFamily.Generic: return "South";
+            default: return "Enter";
+        }
     }
 
     static bool CardDealsDamage(CardData c)

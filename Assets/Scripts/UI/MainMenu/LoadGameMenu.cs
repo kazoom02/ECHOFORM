@@ -47,7 +47,11 @@ public class LoadGameMenu : MonoBehaviour
         if (noSavesLabel != null) noSavesLabel.SetActive(!hasSaves);
         if (listContent != null) listContent.gameObject.SetActive(hasSaves);
 
-        if (!hasSaves) return;
+        if (!hasSaves)
+        {
+            UiSelectionHelper.SelectFirst(gameObject);
+            return;
+        }
 
         foreach (SaveSlot slot in saves)
         {
@@ -59,6 +63,7 @@ public class LoadGameMenu : MonoBehaviour
         }
 
         ScrollToTop();
+        UiSelectionHelper.SelectFirst(listContent != null ? listContent.gameObject : gameObject);
     }
 
     /// <summary>Snap the list back to the top after it's rebuilt.</summary>

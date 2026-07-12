@@ -68,6 +68,7 @@ public class Slime : Enemy
 
     public SlimeTier Tier => tier;
     public bool IsPrime => isPrime;
+    public float DeathDuration => Mathf.Max(0.05f, deathDuration);
 
     public override string DisplayName =>
         isPrime ? "The Prime" : tier switch
@@ -169,7 +170,7 @@ public class Slime : Enemy
 
         foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;  // no longer clickable
 
-        Destroy(gameObject, Mathf.Max(0.05f, deathDuration));
+        Destroy(gameObject, DeathDuration);
     }
 
     /// <summary>

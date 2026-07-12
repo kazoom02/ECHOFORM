@@ -180,7 +180,8 @@ MonoBehaviour:
       kill a slime is to make two more.
   - clip: {fileID: 32900000, guid: a04a134398959b6429c2907633eeb600, type: 3}
     pages:
-    - Every death is a birth.
+    - To end the copying you must reach the Loom's core and cut the thread. But to
+      kill a slime is to make two more.
   nextScene: FirstArea
   videoPlayer: {fileID: 145192952}
   captionText: {fileID: 1081529174}
@@ -561,7 +562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Caption goes here...
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1ac7095a8adf0da448813a308b8abb19, type: 2}
   m_sharedMaterial: {fileID: 9154121463884859115, guid: 1ac7095a8adf0da448813a308b8abb19, type: 2}

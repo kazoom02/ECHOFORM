@@ -72,20 +72,21 @@ public class Deck
         if (need > 0) Draw(need);
     }
 
-    /// <summary>Loom corruption: overwrite a random CLEAN slot with a glitch chip. Permanent until purged.</summary>
-    public void CorruptHand(CardData glitch, int handCap)
+    /// <summary>Loom corruption: overwrite a random CLEAN slot with a glitch chip. Permanent until purged. Returns the hand slot, or -1 if nothing changed.</summary>
+    public int CorruptHand(CardData glitch, int handCap)
     {
-        if (glitch == null) return;
+        if (glitch == null) return -1;
 
         List<int> cleanSlots = new List<int>();
         for (int i = 0; i < Hand.Count; i++)
             if (Hand[i] == null || !Hand[i].isGlitch) cleanSlots.Add(i);
 
-        if (cleanSlots.Count == 0) return;                 // already fully corrupted
+        if (cleanSlots.Count == 0) return -1;              // already fully corrupted
         int slot = cleanSlots[Random.Range(0, cleanSlots.Count)];
         DiscardPile.Add(Hand[slot]);                        // displaced memory recirculates
         Hand[slot] = glitch;                                // corruption takes the slot
         OnChanged?.Invoke();
+        return slot;
     }
 
     /// <summary>Counterplay: purge one corrupted chip from hand for the rest of combat. Returns true if one was removed.</summary>

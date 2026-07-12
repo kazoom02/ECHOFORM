@@ -23,3 +23,6 @@ MonoBehaviour:
     amount: 6
   isGlitch: 0
   exhaustOnPlay: 0
+  countsAsSlash: 1
+  slashesToUnlock: 0
+  chargeBeforeUse: 0

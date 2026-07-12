@@ -55,6 +55,7 @@ public class AreaTransition : MonoBehaviour
     public UnityEvent onTransitionFinished;
 
     private bool playing;
+    private bool skipSwapThisRun;
 
     void Awake()
     {
@@ -125,8 +126,21 @@ public class AreaTransition : MonoBehaviour
     // Call this to start the transition. Safe to spam — ignores re-entry.
     public void Play()
     {
+        Begin(null, true);
+    }
+
+    public void PlayClipWithoutSwap(VideoClip clip)
+    {
+        Begin(clip, false);
+    }
+
+    private void Begin(VideoClip overrideClip, bool swapAreas)
+    {
         if (playing) return;
         playing = true;
+        skipSwapThisRun = !swapAreas;
+        if (videoPlayer != null && overrideClip != null)
+            videoPlayer.clip = overrideClip;
         gameObject.SetActive(true);
         StartCoroutine(Run());
     }
@@ -176,11 +190,14 @@ public class AreaTransition : MonoBehaviour
         }
 
         onTransitionFinished?.Invoke();
+        skipSwapThisRun = false;
         playing = false;
     }
 
     private void DoSwap()
     {
+        if (skipSwapThisRun) return;
+
         if (areaToHide != null) areaToHide.SetActive(false);
         if (areaToShow != null) areaToShow.SetActive(true);
         if (objectToTeleport != null && teleportTarget != null)

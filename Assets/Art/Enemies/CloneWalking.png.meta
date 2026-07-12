@@ -120,7 +120,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 92
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -172,12 +172,12 @@ TextureImporter:
       name: CloneWalking_1
       rect:
         serializedVersion: 2
-        x: 31
-        y: 591
-        width: 336
-        height: 418
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 193
+        y: 1007
+        width: 9
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -194,12 +194,12 @@ TextureImporter:
       name: CloneWalking_4
       rect:
         serializedVersion: 2
-        x: 1112
-        y: 597
-        width: 297
-        height: 409
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 543
+        y: 1008
+        width: 11
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -216,12 +216,12 @@ TextureImporter:
       name: CloneWalking_2
       rect:
         serializedVersion: 2
-        x: 394
-        y: 593
-        width: 299
-        height: 414
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 209
+        y: 1010
+        width: 10
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -238,12 +238,12 @@ TextureImporter:
       name: CloneWalking_3
       rect:
         serializedVersion: 2
-        x: 752
-        y: 593
-        width: 305
-        height: 415
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 527
+        y: 1006
+        width: 8
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -260,12 +260,12 @@ TextureImporter:
       name: CloneWalking_5
       rect:
         serializedVersion: 2
-        x: 52
-        y: 89
-        width: 297
-        height: 411
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 895
+        y: 1006
+        width: 9
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -282,12 +282,12 @@ TextureImporter:
       name: CloneWalking_6
       rect:
         serializedVersion: 2
-        x: 389
-        y: 91
-        width: 301
-        height: 408
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 910
+        y: 1008
+        width: 12
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -301,15 +301,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CloneWalking_7
+      name: Walk4
       rect:
         serializedVersion: 2
-        x: 765
-        y: 90
-        width: 295
-        height: 409
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1113
+        y: 598
+        width: 335
+        height: 488
+      alignment: 9
+      pivot: {x: 0.5, y: 0.424}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -326,12 +326,12 @@ TextureImporter:
       name: CloneWalking_8
       rect:
         serializedVersion: 2
-        x: 1113
-        y: 92
-        width: 297
-        height: 408
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1252
+        y: 1006
+        width: 8
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -340,6 +340,358 @@ TextureImporter:
       bones: []
       spriteID: 19d7c916b594718b0800000000000000
       internalID: -5181592189437969007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 592
+        width: 366
+        height: 494
+      alignment: 9
+      pivot: {x: 0.5, y: 0.419}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e68716dfeeaa1684ea53a24dcf0211de
+      internalID: 1756972482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_9
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 1008
+        width: 12
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b913ce27e16fff14cb437d9eb770978c
+      internalID: -990299343590351338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk2
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 594
+        width: 297
+        height: 412
+      alignment: 9
+      pivot: {x: 0.5, y: 0.503}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a4379c8d0537b4cb3c220fe68e78df
+      internalID: -934439327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk3
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 594
+        width: 303
+        height: 413
+      alignment: 9
+      pivot: {x: 0.5, y: 0.501}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4aff5f1511714140b6f41cb1251d329
+      internalID: 1748278240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 85
+        width: 348
+        height: 499
+      alignment: 9
+      pivot: {x: 0.5, y: 0.429}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6461d3d1b224b0478c4fab688e04e54
+      internalID: 428801605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_13
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 497
+        width: 8
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02aa1bd9507baf24e96bcdacf85c7b91
+      internalID: 252378542341857755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_14
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 499
+        width: 10
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d0ad21e6da393b4f8e1fafaeb5f79a3
+      internalID: 1914423031330390965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_15
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 497
+        width: 6
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e6698da0452b7540974911a2724c789
+      internalID: -659774677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_16
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 499
+        width: 10
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 187dccd23a63fed43a0b88c55c72c8bc
+      internalID: 5021217737645596814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_17
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 497
+        width: 8
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5b32a935220ba348845ae595c6a9a4d
+      internalID: -8350556623147768505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_18
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 499
+        width: 12
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60bcc5209cf3e1547ab9ab1ae5bdbbc8
+      internalID: 458713746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_19
+      rect:
+        serializedVersion: 2
+        x: 1114
+        y: 86
+        width: 334
+        height: 499
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 594c2bf84de1fde4989269bc2e9024cd
+      internalID: 87464226791998082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_20
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 497
+        width: 9
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ff139c3e7a9c1945a39d5088a8ba453
+      internalID: 7685481683537898779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloneWalking_21
+      rect:
+        serializedVersion: 2
+        x: 1262
+        y: 499
+        width: 12
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfd58a4201d739041bd78c88cac6bdee
+      internalID: -339512875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk6
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 92
+        width: 299
+        height: 406
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c4c7b11527e4c740afddfd3250c2872
+      internalID: -938185692215362008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk7
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 91
+        width: 293
+        height: 407
+      alignment: 9
+      pivot: {x: 0.5, y: 0.509}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6313c5af79847d74a87b165a2e91d8e4
+      internalID: -510949675418355838
       vertices: []
       indices: 
       edges: []
@@ -356,25 +708,34 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       CloneWalking_1: -5520766454923531286
       CloneWalking_13: 252378542341857755
       CloneWalking_14: 1914423031330390965
+      CloneWalking_15: -659774677
       CloneWalking_16: 5021217737645596814
       CloneWalking_17: -8350556623147768505
+      CloneWalking_18: 458713746
       CloneWalking_19: 87464226791998082
       CloneWalking_2: 7079895409864361328
       CloneWalking_20: 7685481683537898779
-      CloneWalking_22: -938185692215362008
-      CloneWalking_23: -510949675418355838
+      CloneWalking_21: -339512875
       CloneWalking_3: 4117840471117473291
       CloneWalking_4: -4279629825181953741
       CloneWalking_5: 2813320303772221765
       CloneWalking_6: 1748856196110680375
-      CloneWalking_7: -771445974168281693
       CloneWalking_8: -5181592189437969007
       CloneWalking_9: -990299343590351338
+      Walk1: 1756972482
+      Walk2: -934439327
+      Walk3: 1748278240
+      Walk4: -771445974168281693
+      Walk5: 428801605
+      Walk6: -938185692215362008
+      Walk7: -510949675418355838
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

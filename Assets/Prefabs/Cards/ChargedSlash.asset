@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChargedSlash
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Charged Slash
-  description: Deal 24 damage to all enemies.
+  description: Unlocks after 3 strikes. Deal 24 damage to all enemies.
   art: {fileID: 6621252853494989987, guid: 8406eee6030978f469bf4dc08ba268c5, type: 3}
   tint: {r: 1, g: 1, b: 1, a: 1}
   energyCost: 1
@@ -23,3 +23,6 @@ MonoBehaviour:
     amount: 24
   isGlitch: 0
   exhaustOnPlay: 0
+  countsAsSlash: 0
+  slashesToUnlock: 3
+  chargeBeforeUse: 0
