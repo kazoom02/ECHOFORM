@@ -21,6 +21,8 @@ public class ExitTrigger : MonoBehaviour
     [SerializeField] private CombatManager combat;
     [Tooltip("If on, the exit only arms once combat reaches Win.")]
     [SerializeField] private bool requireCombatWon = true;
+    [Tooltip("Optional area owner. When assigned, this exit can only fire while that area is active.")]
+    [SerializeField] private GameObject activeAreaGate;
 
     [Header("Action")]
     [SerializeField] private AreaTransition transition;
@@ -28,6 +30,24 @@ public class ExitTrigger : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
 
     private bool fired;
+
+    public void Configure(CombatManager combatManager, AreaTransition areaTransition, string requiredPlayerTag = "Player", GameObject areaGate = null)
+    {
+        combat = combatManager;
+        transition = areaTransition;
+        playerTag = requiredPlayerTag;
+        activeAreaGate = areaGate;
+        requireCombatWon = true;
+        fired = false;
+
+        Collider2D trigger = GetComponent<Collider2D>();
+        if (trigger != null) trigger.isTrigger = true;
+    }
+
+    public void SetActiveAreaGate(GameObject areaGate)
+    {
+        activeAreaGate = areaGate;
+    }
 
     void Reset()
     {
@@ -37,7 +57,8 @@ public class ExitTrigger : MonoBehaviour
     }
 
     private bool Armed =>
-        !requireCombatWon || (combat != null && combat.State == CombatState.Win);
+        (activeAreaGate == null || activeAreaGate.activeInHierarchy) &&
+        (!requireCombatWon || (combat != null && combat.State == CombatState.Win));
 
     void OnTriggerEnter2D(Collider2D other)
     {

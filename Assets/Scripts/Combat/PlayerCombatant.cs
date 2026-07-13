@@ -38,6 +38,15 @@ public class PlayerCombatant : MonoBehaviour
         CurrentHP = maxHP;
     }
 
+    public void RestoreCheckpoint(int hp, int shields, int focus)
+    {
+        CurrentHP = Mathf.Clamp(hp, 1, maxHP);
+        Shields = Mathf.Clamp(shields, 0, maxShields);
+        Focus = Mathf.Max(0, focus);
+        Block = 0;
+        OnStateChanged?.Invoke();
+    }
+
     /// <summary>Block is temporary — cleared at the start of each player turn.</summary>
     public void ResetBlock()
     {

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6415a533d0269654880f8a2b41f04c9e, type: 3}
-  m_Name: ChargedSlash
+  m_Name: Charged
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Charged Slash
-  description: Unlocks after 3 strikes. Deal 24 damage to all enemies.
+  cardName: Charged
+  description: Generated after 3 Strikes. Ready next turn. Deal 24 damage to all enemies.
   art: {fileID: 6621252853494989987, guid: 8406eee6030978f469bf4dc08ba268c5, type: 3}
   tint: {r: 1, g: 1, b: 1, a: 1}
   energyCost: 1

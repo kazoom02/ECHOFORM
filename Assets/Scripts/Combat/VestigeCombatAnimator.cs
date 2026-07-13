@@ -13,6 +13,8 @@ using UnityEngine;
 
 public class VestigeCombatAnimator : MonoBehaviour
 {
+    public bool IsAnimating { get; private set; }
+
     [Header("Refs")]
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;   // used for facing (optional)
@@ -59,6 +61,8 @@ public class VestigeCombatAnimator : MonoBehaviour
     {
         if (target == null) { onHit?.Invoke(); yield break; }
 
+        IsAnimating = true;
+
         Vector3 start = transform.position;
 
         float dir = Mathf.Sign(target.position.x - transform.position.x);
@@ -103,6 +107,7 @@ public class VestigeCombatAnimator : MonoBehaviour
         }
 
         Play(idleState);
+        IsAnimating = false;
     }
 
     void Play(string state)
@@ -114,9 +119,15 @@ public class VestigeCombatAnimator : MonoBehaviour
     /// player loses (HP hits 0 or memory overload).</summary>
     public void PlayDeath()
     {
+        IsAnimating = false;
         StopAllCoroutines();                 // cancel any in-progress attack/walk choreography
         Play(deathState);                    // "Death" state in the MainCharacter controller
         if (sfx != null) sfx.PlayDetached(deathSfx);   // detached so it finishes across a Lose transition
+    }
+
+    private void OnDisable()
+    {
+        IsAnimating = false;
     }
 
     void Face(float dir)

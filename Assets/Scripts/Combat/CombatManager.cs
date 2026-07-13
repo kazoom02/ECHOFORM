@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 // =====================================================
@@ -29,15 +30,20 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Merger mergerPrefab;
     [SerializeField] private Transform enemyRow;      // parent + anchor for the enemy line
 
-    [Header("Encounter")]
-    [Tooltip("Enemies present in the scene at combat start (drag existing ones here).")]
+    [Header("Fallback Encounter")]
+    [Tooltip("Used only in scenes without an active AreaEncounter. Area 1/2/3 enemy counts are configured on their AreaEncounter components.")]
     [SerializeField] private List<Enemy> startingEnemies = new List<Enemy>();
 
     [Header("Deck")]
     [SerializeField] private List<CardData> startingDeck = new List<CardData>();
+    [Tooltip("Generated into the rack after the player lands the required number of Strikes. Keep it out of Starting Deck.")]
+    [SerializeField] private CardData heavySlashChip;
 
     [Header("Rules")]
+    [Tooltip("CPU restored automatically at the beginning of every player turn.")]
     [SerializeField] private int energyPerTurn = 3;
+    [Tooltip("Maximum CPU that restoration chips can build up to during a turn.")]
+    [SerializeField] private int maxEnergy = 5;
     [SerializeField] private int handSize = 5;
     [SerializeField] private float enemyRowSpacing = 2.2f;   // horizontal gap between enemies
 
@@ -62,10 +68,13 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private AreaTransition finalVideoTransition;
     [SerializeField] private VideoClip finalVideoClip;
     [SerializeField] private bool triggerFinalVideoAfterCloneDeath = true;
+    [Tooltip("Scene loaded after the ending video. Leave empty to remain in the combat scene.")]
+    [SerializeField] private string creditsSceneName = "Credits";
 
     // ---- runtime state ----
     public CombatState State { get; private set; } = CombatState.Idle;
     public int Energy { get; private set; }
+    public int MaxEnergy => maxEnergy;
     public Deck Deck { get; private set; }
     public IReadOnlyList<Enemy> Enemies => enemies;
     /// <summary>How many corrupted chips are clogging the current hand (drives the overload readout).</summary>
@@ -77,15 +86,34 @@ public class CombatManager : MonoBehaviour
     public int SlashesRemaining(CardData card) => card == null ? 0 : Mathf.Max(0, card.slashesToUnlock - slashCount);
     /// <summary>True once a charge-before-use card has been wound up and is ready to unleash on the next play.</summary>
     public bool IsPrimed(CardData card) => card != null && primedCards.Contains(card);
+    /// <summary>The card whose effects will execute. Echo resolves to the previous non-Echo chip.</summary>
+    public CardData GetEffectSource(CardData card) =>
+        card != null && card.HasEffect(CardEffectType.DuplicateCard) ? lastPlayedCard : card;
+    public CardTarget GetEffectiveTarget(CardData card)
+    {
+        CardData source = GetEffectSource(card);
+        return source != null ? source.target : (card != null ? card.target : CardTarget.Self);
+    }
+    public bool WillDealDamage(CardData card)
+    {
+        CardData source = GetEffectSource(card);
+        return source != null && source.HasEffect(CardEffectType.DealDamage);
+    }
 
     private readonly List<Enemy> enemies = new List<Enemy>();
+    private readonly HashSet<Enemy> runtimeEncounterEnemies = new HashSet<Enemy>();
+    private Transform encounterEnemyRow;
     private CardData lastPlayedCard;
     private int turnNumber;
     private int slashCount;                                              // basic Attacks landed this combat
+    private bool heavySlashGenerated;
+    private int heavySlashUsableTurn = int.MaxValue;
     private readonly HashSet<CardData> primedCards = new HashSet<CardData>();  // charge-before-use cards that are wound up
     private Coroutine delayedRepositionRoutine;
     private float holdRepositionUntil;
     private bool endingCombat;
+    private bool encounterStarted;
+    private SaveData currentCheckpoint;
 
     // events for a UI layer to subscribe to
     public System.Action OnCombatChanged;
@@ -102,23 +130,161 @@ public class CombatManager : MonoBehaviour
 
     private void Start()
     {
-        StartCombat();
+        if (encounterStarted) return;
+
+        RestorePendingCheckpoint();
+
+        // Start whichever in-scene area is currently active. By Start(), all
+        // of that area's child enemies have completed Awake safely.
+        AreaEncounter activeEncounter = FindAnyObjectByType<AreaEncounter>();
+        if (activeEncounter != null) activeEncounter.BeginEncounter();
+
+        // Compatibility fallback for scenes that do not use AreaEncounter.
+        if (!encounterStarted) StartCombat();
+    }
+
+    public void SaveCheckpoint(int checkpointIndex, string checkpointName)
+    {
+        if (player == null) return;
+
+        PlayTimeTracker tracker = PlayTimeTracker.EnsureInstance();
+        Vector3 position = player.transform.position;
+        int safeIndex = Mathf.Max(0, checkpointIndex);
+
+        SaveData data = new SaveData
+        {
+            slotName = $"Area {safeIndex + 1}",
+            sceneName = gameObject.scene.name,
+            playSeconds = tracker != null ? tracker.TotalSeconds : 0f,
+            fightIndex = safeIndex,
+            hasPlayerState = true,
+            playerHP = player.CurrentHP,
+            playerShields = player.Shields,
+            playerFocus = player.Focus,
+            hasPlayerPosition = true,
+            playerX = position.x,
+            playerY = position.y,
+            playerZ = position.z
+        };
+
+        currentCheckpoint = data;
+        SaveSystem.SaveCurrentRun(data);
+    }
+
+    /// <summary>
+    /// Refresh the current Area checkpoint before leaving gameplay. Combat is
+    /// intentionally resumed from the Area entrance rather than mid-turn.
+    /// </summary>
+    public bool SaveCurrentProgress()
+    {
+        if (currentCheckpoint == null)
+        {
+            AreaEncounter activeEncounter = FindAnyObjectByType<AreaEncounter>();
+            if (activeEncounter == null) return false;
+
+            SaveCheckpoint(activeEncounter.CheckpointIndex, activeEncounter.CheckpointName);
+            return currentCheckpoint != null;
+        }
+
+        PlayTimeTracker tracker = PlayTimeTracker.EnsureInstance();
+        currentCheckpoint.playSeconds = tracker != null ? tracker.TotalSeconds : currentCheckpoint.playSeconds;
+        SaveSystem.SaveCurrentRun(currentCheckpoint);
+        return true;
+    }
+
+    private void RestorePendingCheckpoint()
+    {
+        SaveData data = LoadGameMenu.ConsumePendingLoad();
+        if (data == null) return;
+
+        PlayTimeTracker.EnsureInstance().ResumeFrom(data.playSeconds);
+
+        AreaEncounter[] encounters = Resources.FindObjectsOfTypeAll<AreaEncounter>()
+            .Where(e => e != null && e.gameObject.scene == gameObject.scene)
+            .OrderBy(e => e.CheckpointIndex)
+            .ToArray();
+
+        AreaEncounter selected = null;
+        if (encounters.Length > 0)
+        {
+            int targetIndex = Mathf.Clamp(data.fightIndex, 0, encounters.Length - 1);
+            selected = encounters.FirstOrDefault(e => e.CheckpointIndex == targetIndex) ?? encounters[targetIndex];
+
+            foreach (AreaEncounter encounter in encounters)
+                if (encounter != selected && encounter.gameObject.activeSelf)
+                    encounter.gameObject.SetActive(false);
+
+            if (!selected.gameObject.activeSelf)
+                selected.gameObject.SetActive(true);
+        }
+
+        if (player != null)
+        {
+            bool restoreLegacyState = !data.hasPlayerState && data.playerHP > 0;
+            if (data.hasPlayerState || restoreLegacyState)
+                player.RestoreCheckpoint(data.playerHP, data.playerShields, data.playerFocus);
+
+            Vector3 position = selected != null ? selected.CheckpointSpawnPosition : player.transform.position;
+            if (data.hasPlayerPosition)
+                position = new Vector3(data.playerX, data.playerY, data.playerZ);
+            player.transform.position = position;
+        }
+
+        Debug.Log($"[Echoform] Restored checkpoint '{data.slotName}' (Area {data.fightIndex + 1}).");
     }
 
     // ------------------------------------------------------------------ setup
 
     public void StartCombat()
     {
+        StartCombat(startingEnemies, null);
+    }
+
+    /// <summary>Starts a fresh encounter using an area's configured enemies.</summary>
+    public void StartCombat(IEnumerable<Enemy> configuredEnemies)
+    {
+        StartCombat(configuredEnemies, null);
+    }
+
+    /// <summary>Starts a fresh encounter using an area's enemies and optional formation anchor.</summary>
+    public void StartCombat(IEnumerable<Enemy> configuredEnemies, Transform enemyRowOverride)
+    {
+        encounterStarted = true;
+        encounterEnemyRow = enemyRowOverride != null ? enemyRowOverride : enemyRow;
+
+        // Remove prefab/spawned actors left by a manually forced area switch.
+        // Scene-owned actors (the Area 1 slimes and Area 3 Clone) are preserved.
+        foreach (Enemy runtimeEnemy in runtimeEncounterEnemies)
+            if (runtimeEnemy != null) Destroy(runtimeEnemy.gameObject);
+        runtimeEncounterEnemies.Clear();
         enemies.Clear();
-        enemies.AddRange(startingEnemies.Where(e => e != null));
+        IEnumerable<Enemy> encounterConfig = configuredEnemies ?? Enumerable.Empty<Enemy>();
+        foreach (Enemy configuredEnemy in encounterConfig.Where(e => e != null))
+        {
+            // Existing scene enemies are used in place. Prefab assets do not
+            // belong to a valid scene, so create an encounter instance for them.
+            Enemy encounterEnemy = configuredEnemy.gameObject.scene.IsValid()
+                ? configuredEnemy
+                : Instantiate(configuredEnemy, encounterEnemyRow);
+
+            enemies.Add(encounterEnemy);
+            if (encounterEnemy != configuredEnemy)
+                runtimeEncounterEnemies.Add(encounterEnemy);
+        }
 
         turnNumber = 0;
         slashCount = 0;
+        lastPlayedCard = null;
+        heavySlashGenerated = false;
+        heavySlashUsableTurn = int.MaxValue;
         endingCombat = false;
         primedCards.Clear();
         OnSlashCountChanged?.Invoke(slashCount);
-        Deck = new Deck(startingDeck);
-        foreach (var e in enemies) if (e is PlayerClone pc) pc.InitDeck(startingDeck);   // Area 3 clone mirrors your deck
+        List<CardData> reusableDeck = startingDeck
+            .Where(card => card != null && card != heavySlashChip)
+            .ToList();
+        Deck = new Deck(reusableDeck);
+        foreach (var e in enemies) if (e is PlayerClone pc) pc.InitDeck(reusableDeck);   // Area 3 clone mirrors the reusable deck
         RepositionEnemies();
         UpdateMergerTelegraph();
 
@@ -148,7 +314,10 @@ public class CombatManager : MonoBehaviour
             CardData copy = MakeCorruptedCopy();
             if (copy != null)
             {
-                int corruptedSlot = Deck.CorruptHand(copy, handSize);
+                int corruptedSlot = Deck.CorruptHand(
+                    copy,
+                    handSize,
+                    heavySlashGenerated ? heavySlashChip : null);
                 if (corruptedSlot >= 0)
                 {
                     Log($"The Loom copies your {(lastPlayedCard != null ? lastPlayedCard.cardName : "memory")} — now corrupted.");
@@ -175,9 +344,12 @@ public class CombatManager : MonoBehaviour
         if (card == null || card.isGlitch) return false;
         if (endingCombat) return false;
         if (State != CombatState.PlayerTurn) return false;
+        if (IsHeavySlash(card) && (!heavySlashGenerated || turnNumber < heavySlashUsableTurn)) return false;
+        if (card.HasEffect(CardEffectType.DuplicateCard) && lastPlayedCard == null) return false;
         if (card.slashesToUnlock > 0 && slashCount < card.slashesToUnlock) return false;  // blade not yet unlocked
         if (card.energyCost > Energy) return false;
-        if (card.HasEffect(CardEffectType.GainShield) && !player.CanGainShield) return false;
+        CardData effectSource = GetEffectSource(card);
+        if (effectSource != null && effectSource.HasEffect(CardEffectType.GainShield) && !player.CanGainShield) return false;
         return true;
     }
 
@@ -186,10 +358,15 @@ public class CombatManager : MonoBehaviour
         if (State != CombatState.PlayerTurn) return false;
         if (endingCombat) return false;
         if (card == null || card.isGlitch) return false;
+        if (IsHeavySlash(card) && (!heavySlashGenerated || turnNumber < heavySlashUsableTurn))
+        { Log($"{card.cardName} is loaded, but it will be ready next turn."); return false; }
+        if (card.HasEffect(CardEffectType.DuplicateCard) && lastPlayedCard == null)
+        { Log("Echo has no previous chip to repeat."); return false; }
         if (card.slashesToUnlock > 0 && slashCount < card.slashesToUnlock)
         { Log($"{card.cardName} is inert — land {card.slashesToUnlock} slashes first ({slashCount}/{card.slashesToUnlock})."); return false; }
         if (card.energyCost > Energy) { Log("Not enough energy."); return false; }
-        if (card.HasEffect(CardEffectType.GainShield) && !player.CanGainShield)
+        CardData effectSource = GetEffectSource(card);
+        if (effectSource != null && effectSource.HasEffect(CardEffectType.GainShield) && !player.CanGainShield)
         { Log("Shields already full."); return false; }
 
         // Charge-before-use: the FIRST play winds the blade up — it costs energy,
@@ -206,22 +383,36 @@ public class CombatManager : MonoBehaviour
             return true;   // card intentionally NOT discarded — it lingers, primed
         }
 
-        if (card.target == CardTarget.SingleEnemy && (target == null || target.IsDead)) return false;
+        if (GetEffectiveTarget(card) == CardTarget.SingleEnemy && (target == null || target.IsDead)) return false;
 
         Energy -= card.energyCost;
         ResolveCard(card, target);
 
-        if (card.countsAsSlash)                             // a basic slash landed
+        // Generated Heavy Slash is consumed outside the reusable deck. Its
+        // Strike counter resets only when the generated chip is actually used.
+        if (IsHeavySlash(card))
         {
-            slashCount++;
+            slashCount = 0;
+            heavySlashGenerated = false;
+            heavySlashUsableTurn = int.MaxValue;
             OnSlashCountChanged?.Invoke(slashCount);
+        }
+        else if (card.slashesToUnlock > 0)
+        {
+            slashCount = 0;
+            OnSlashCountChanged?.Invoke(slashCount);
+        }
+        else if (card.countsAsSlash)                        // a basic slash landed
+        {
+            RegisterBasicSlash();
         }
         primedCards.Remove(card);                           // consume any charge on release
 
         // Echo should copy the card played BEFORE it, so update this after resolving.
         if (!card.HasEffect(CardEffectType.DuplicateCard)) lastPlayedCard = card;
 
-        Deck.ResolvePlayed(card);
+        if (IsHeavySlash(card)) Deck.ConsumeGenerated(card);
+        else Deck.ResolvePlayed(card);
         OnCardPlayed?.Invoke(card);
 
         CheckEndOfCombat();
@@ -254,18 +445,44 @@ public class CombatManager : MonoBehaviour
                 case CardEffectType.Heal:      player.Heal(effect.amount); break;
                 case CardEffectType.GainFocus: player.AddFocus(effect.amount); break;
                 case CardEffectType.DrawCards: Deck.Draw(effect.amount); break;
-                case CardEffectType.GainEnergy: Energy += effect.amount; break;
+                case CardEffectType.GainEnergy:
+                    Energy = Mathf.Clamp(Energy + effect.amount, 0, maxEnergy);
+                    break;
 
                 case CardEffectType.DuplicateCard:
                     if (lastPlayedCard != null)
                     {
-                        Deck.AddToHand(lastPlayedCard);
-                        Log($"Echo: {lastPlayedCard.cardName} copied.");
+                        CardData echoedCard = lastPlayedCard;
+                        Log($"Echo instantly repeats {echoedCard.cardName}.");
+                        ResolveCard(echoedCard, target);
                     }
                     break;
             }
         }
     }
+
+    private void RegisterBasicSlash()
+    {
+        if (heavySlashGenerated) return;
+
+        slashCount++;
+        int threshold = heavySlashChip != null && heavySlashChip.slashesToUnlock > 0
+            ? heavySlashChip.slashesToUnlock
+            : 3;
+        slashCount = Mathf.Min(slashCount, threshold);
+        OnSlashCountChanged?.Invoke(slashCount);
+
+        if (heavySlashChip == null || slashCount < threshold) return;
+
+        heavySlashGenerated = true;
+        heavySlashUsableTurn = turnNumber + 1;
+        Deck.AddToHand(heavySlashChip);
+        Log($"{heavySlashChip.cardName} loaded into the Neural Rack. Ready next turn.");
+        OnBladeCharged?.Invoke(heavySlashChip);
+    }
+
+    private bool IsHeavySlash(CardData card) =>
+        card != null && heavySlashChip != null && card == heavySlashChip;
 
     // --------------------------------------------------- damage & slime splits
 
@@ -314,6 +531,9 @@ public class CombatManager : MonoBehaviour
                 return;
             }
 
+            if (enemy is Merger merger)
+                merger.PlayDeathSfx();
+
             Log($"{enemy.DisplayName} destroyed.");
         }
 
@@ -326,9 +546,10 @@ public class CombatManager : MonoBehaviour
     {
         foreach (var spec in children)
         {
-            Slime child = Instantiate(slimePrefab, parent.transform.position, Quaternion.identity, enemyRow);
+            Slime child = Instantiate(slimePrefab, parent.transform.position, Quaternion.identity, encounterEnemyRow);
             child.Configure(spec.tier, spec.hp);
             enemies.Add(child);
+            runtimeEncounterEnemies.Add(child);
         }
     }
 
@@ -338,7 +559,7 @@ public class CombatManager : MonoBehaviour
     {
         if (endingCombat) return;
         if (State != CombatState.PlayerTurn) return;
-        Deck.DiscardHand();
+        Deck.DiscardHand(heavySlashGenerated ? heavySlashChip : null);
         StartCoroutine(EnemyTurn());
     }
 
@@ -353,8 +574,10 @@ public class CombatManager : MonoBehaviour
         Log("The thread is cut — for now.");
         OnCombatChanged?.Invoke();
 
-        if (triggerFinalVideoAfterCloneDeath && finalVideoTransition != null)
-            finalVideoTransition.PlayClipWithoutSwap(finalVideoClip);
+        if (triggerFinalVideoAfterCloneDeath && finalVideoTransition != null && finalVideoClip != null)
+            finalVideoTransition.PlayClipWithoutSwap(finalVideoClip, creditsSceneName);
+        else if (!string.IsNullOrWhiteSpace(creditsSceneName))
+            SceneManager.LoadScene(creditsSceneName);
     }
 
     private IEnumerator EnemyTurn()
@@ -415,7 +638,7 @@ public class CombatManager : MonoBehaviour
     private IEnumerator RunMergePhase()
     {
         var eligible = enemies.OfType<Merger>()
-                              .Where(m => !m.IsDead && !m.SpawnedThisTurn)
+                              .Where(m => !m.IsDead && !m.SpawnedThisTurn && m.CanFuse)
                               .OrderBy(m => (int)m.Tier)
                               .ToList();
 
@@ -425,17 +648,23 @@ public class CombatManager : MonoBehaviour
             Merger b = eligible[i + 1];
 
             MergerTier fused = Merger.FusedTier(a.Tier, b.Tier);
-            int hp = a.CurrentHP + b.CurrentHP;                 // HP carries — chipping is never wasted
+            int carriedHP = a.CurrentHP + b.CurrentHP;
             Vector3 pos = (a.transform.position + b.transform.position) * 0.5f;
+
+            a.PlayFusionSfx(pos);
 
             RemoveEnemy(a);
             RemoveEnemy(b);
 
-            Merger merged = Instantiate(mergerPrefab, pos, Quaternion.identity, enemyRow);
-            merged.Configure(fused, hp);
+            Merger merged = Instantiate(mergerPrefab, pos, Quaternion.identity, encounterEnemyRow);
+            merged.Configure(fused, carriedHP);
             enemies.Add(merged);
+            runtimeEncounterEnemies.Add(merged);
 
-            Log($"Two mergers fuse into a {merged.DisplayName} ({hp} HP).");
+            if (merged.CurrentHP > carriedHP)
+                Log($"Two mergers fuse into a {merged.DisplayName}. Its core stabilizes at {merged.CurrentHP}/{merged.MaxHP} HP.");
+            else
+                Log($"Two mergers fuse into a {merged.DisplayName} ({merged.CurrentHP}/{merged.MaxHP} HP).");
             yield return new WaitForSeconds(0.2f);
         }
 
@@ -447,20 +676,31 @@ public class CombatManager : MonoBehaviour
 
     private void UpdateMergerTelegraph()
     {
-        var mergers = enemies.OfType<Merger>().Where(m => !m.IsDead).ToList();
-        bool willFuse = mergers.Count(m => !m.SpawnedThisTurn) >= 2;
-        foreach (var m in mergers) m.IsFusing = willFuse && !m.SpawnedThisTurn;
+        var allMergers = enemies.OfType<Merger>().Where(m => !m.IsDead).ToList();
+        foreach (Merger merger in allMergers)
+            merger.IsFusing = false;
+
+        var eligible = allMergers.Where(m => m.CanFuse && !m.SpawnedThisTurn)
+                                 .OrderBy(m => (int)m.Tier)
+                                 .ToList();
+
+        // Only complete pairs receive the fuse telegraph. An odd merger out
+        // remains unmarked, and final-form T3 mergers never show it.
+        int pairedCount = eligible.Count - eligible.Count % 2;
+        for (int i = 0; i < pairedCount; i++)
+            eligible[i].IsFusing = true;
     }
 
     private void RemoveEnemy(Enemy e, bool destroy = true)
     {
         enemies.Remove(e);
+        runtimeEncounterEnemies.Remove(e);
         if (destroy && e != null) Destroy(e.gameObject);
     }
 
     private void RepositionEnemies()
     {
-        if (enemyRow == null) return;
+        if (encounterEnemyRow == null) return;
 
         int n = 0;
         for (int i = 0; i < enemies.Count; i++) if (enemies[i] != null && !enemies[i].KeepScenePosition) n++;
@@ -484,7 +724,10 @@ public class CombatManager : MonoBehaviour
             float x = rowStartX + col * enemyRowSpacing;
             float y = -row * rowSpacing + ((col % 2 == 1) ? columnStagger : 0f);
 
-            Vector3 pos = enemyRow.position + new Vector3(x, y, 0f);
+            Vector3 tierOffset = enemies[i] is Merger merger
+                ? merger.FormationOffset
+                : Vector3.zero;
+            Vector3 pos = encounterEnemyRow.position + new Vector3(x, y, 0f) + tierOffset;
             enemies[i].transform.position = pos;
 
             if (sortByDepth)

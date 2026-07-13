@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 // =====================================================
 // ECHOFORM — AreaTransition
@@ -22,6 +23,9 @@ using UnityEngine.Events;
 
 public class AreaTransition : MonoBehaviour
 {
+    private static AreaTransition activeTransition;
+    public static bool IsPlaying => activeTransition != null && activeTransition.playing;
+
     [Header("Video overlay")]
     [Tooltip("VideoPlayer with the transition clip. isLooping is forced off.")]
     [SerializeField] private VideoPlayer videoPlayer;
@@ -45,6 +49,11 @@ public class AreaTransition : MonoBehaviour
     [SerializeField] private Transform objectToTeleport;
     [Tooltip("Optional: where objectToTeleport should land in Area2.")]
     [SerializeField] private Transform teleportTarget;
+    [Tooltip("Use a world-space destination without needing a separate teleport target GameObject.")]
+    [SerializeField] private bool useDirectTeleportPosition;
+    [SerializeField] private Vector3 directTeleportPosition;
+    [Tooltip("Keep the incoming area's MusicPlayer silent until the transition video and reveal fade finish.")]
+    [SerializeField] private bool delayIncomingMusicUntilFinished;
 
     [Header("Events")]
     [Tooltip("Fired when the transition begins (e.g. disable player input).")]
@@ -56,6 +65,8 @@ public class AreaTransition : MonoBehaviour
 
     private bool playing;
     private bool skipSwapThisRun;
+    private string sceneToLoadAfterPlayback;
+    private MusicPlayer deferredIncomingMusic;
 
     void Awake()
     {
@@ -134,10 +145,21 @@ public class AreaTransition : MonoBehaviour
         Begin(clip, false);
     }
 
+    /// <summary>Play a full-screen clip without swapping areas, then load another scene.</summary>
+    public void PlayClipWithoutSwap(VideoClip clip, string nextScene)
+    {
+        sceneToLoadAfterPlayback = nextScene;
+        Begin(clip, false);
+    }
+
     private void Begin(VideoClip overrideClip, bool swapAreas)
     {
-        if (playing) return;
+        if (playing || (activeTransition != null && activeTransition != this)) return;
+        activeTransition = this;
         playing = true;
+        CardTooltip.Hide();
+        NeuralInterfaceHUD neuralHud = FindAnyObjectByType<NeuralInterfaceHUD>();
+        if (neuralHud != null) neuralHud.ClearControllerSelection();
         skipSwapThisRun = !swapAreas;
         if (videoPlayer != null && overrideClip != null)
             videoPlayer.clip = overrideClip;
@@ -189,9 +211,26 @@ public class AreaTransition : MonoBehaviour
             overlay.gameObject.SetActive(false);
         }
 
+        if (deferredIncomingMusic != null)
+        {
+            deferredIncomingMusic.PlayDeferred();
+            deferredIncomingMusic = null;
+        }
+
         onTransitionFinished?.Invoke();
+        string nextScene = sceneToLoadAfterPlayback;
+        sceneToLoadAfterPlayback = null;
         skipSwapThisRun = false;
         playing = false;
+        if (activeTransition == this) activeTransition = null;
+
+        if (!string.IsNullOrWhiteSpace(nextScene))
+            SceneManager.LoadScene(nextScene);
+    }
+
+    private void OnDisable()
+    {
+        if (activeTransition == this) activeTransition = null;
     }
 
     private void DoSwap()
@@ -199,9 +238,33 @@ public class AreaTransition : MonoBehaviour
         if (skipSwapThisRun) return;
 
         if (areaToHide != null) areaToHide.SetActive(false);
+
+        deferredIncomingMusic = null;
+        bool isArea3 = areaToShow != null &&
+                       string.Equals(areaToShow.name.Trim(), "Area3", System.StringComparison.OrdinalIgnoreCase);
+        if (areaToShow != null && (delayIncomingMusicUntilFinished || isArea3))
+        {
+            deferredIncomingMusic = areaToShow.GetComponent<MusicPlayer>();
+            if (deferredIncomingMusic != null) deferredIncomingMusic.DeferPlayback();
+        }
+
         if (areaToShow != null) areaToShow.SetActive(true);
-        if (objectToTeleport != null && teleportTarget != null)
-            objectToTeleport.position = teleportTarget.position;
+        if (objectToTeleport != null)
+        {
+            if (teleportTarget != null)
+                objectToTeleport.position = teleportTarget.position;
+            else if (useDirectTeleportPosition)
+                objectToTeleport.position = directTeleportPosition;
+        }
+
+        // SetActive completes the new area's Awake/OnEnable callbacks before
+        // returning, so its scene-owned enemies are ready to enter combat now.
+        if (areaToShow != null)
+        {
+            AreaEncounter nextEncounter = areaToShow.GetComponent<AreaEncounter>();
+            if (nextEncounter != null) nextEncounter.BeginEncounter();
+        }
+
         onSwap?.Invoke();
     }
 

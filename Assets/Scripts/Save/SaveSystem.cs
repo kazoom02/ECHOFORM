@@ -18,13 +18,21 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
+    public int saveVersion = 1;
     public string slotName = "New Run";   // shown in the Load menu
     public string sceneName = "FirstArea"; // scene to resume into
     public string createdAtIso = "";       // when the run was first created (ISO 8601)
     public string savedAtIso = "";         // when it was last saved (ISO 8601)
     public float playSeconds = 0f;         // total time played, in seconds
     public int fightIndex = 0;             // example run state — expand freely
+    public bool hasPlayerState = false;
     public int playerHP = 0;
+    public int playerShields = 0;
+    public int playerFocus = 0;
+    public bool hasPlayerPosition = false;
+    public float playerX = 0f;
+    public float playerY = 0f;
+    public float playerZ = 0f;
 
     public DateTime CreatedAt =>
         DateTime.TryParse(createdAtIso, out var dt) ? dt : DateTime.MinValue;
@@ -58,6 +66,7 @@ public static class SaveSystem
 {
     private const string Folder = "saves";
     private const string Extension = ".json";
+    private const string CurrentRunId = "current-run";
 
     private static string SaveDir => Path.Combine(Application.persistentDataPath, Folder);
 
@@ -74,6 +83,7 @@ public static class SaveSystem
                 string json = File.ReadAllText(file);
                 SaveData data = JsonUtility.FromJson<SaveData>(json);
                 if (data == null) continue;
+                data.slotName = $"Area {Mathf.Max(0, data.fightIndex) + 1}";
                 slots.Add(new SaveSlot { filePath = file, data = data });
             }
             catch (Exception e)
@@ -91,16 +101,40 @@ public static class SaveSystem
     /// <summary>Write a save. Pass a stable id (e.g. "slot1" or a run guid) to overwrite a slot.</summary>
     public static void Save(SaveData data, string saveId = null)
     {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+
         Directory.CreateDirectory(SaveDir);
         if (string.IsNullOrEmpty(saveId)) saveId = Guid.NewGuid().ToString("N");
 
+        string path = Path.Combine(SaveDir, saveId + Extension);
         string now = DateTime.Now.ToString("o");
+
+        if (string.IsNullOrEmpty(data.createdAtIso) && File.Exists(path))
+        {
+            SaveData previous = Load(path);
+            if (previous != null) data.createdAtIso = previous.createdAtIso;
+        }
+
         if (string.IsNullOrEmpty(data.createdAtIso)) data.createdAtIso = now; // set once, on first save
         data.savedAtIso = now;
 
-        string path = Path.Combine(SaveDir, saveId + Extension);
         File.WriteAllText(path, JsonUtility.ToJson(data, true));
         Debug.Log($"[Echoform] Saved '{data.slotName}' to {path}");
+    }
+
+    /// <summary>
+    /// ECHOFORM has one active run. Every Area overwrites this same file, and
+    /// legacy/test slots are removed so Load Game always shows one row.
+    /// </summary>
+    public static void SaveCurrentRun(SaveData data)
+    {
+        data.slotName = $"Area {Mathf.Max(0, data.fightIndex) + 1}";
+        Save(data, CurrentRunId);
+
+        string currentPath = Path.Combine(SaveDir, CurrentRunId + Extension);
+        foreach (string file in Directory.GetFiles(SaveDir, "*" + Extension))
+            if (!string.Equals(file, currentPath, StringComparison.OrdinalIgnoreCase))
+                Delete(file);
     }
 
     /// <summary>Read a save back from its file path (from a SaveSlot). Null if it fails.</summary>
@@ -121,5 +155,13 @@ public static class SaveSystem
     {
         try { if (File.Exists(filePath)) File.Delete(filePath); }
         catch (Exception e) { Debug.LogWarning($"[Echoform] Could not delete save '{filePath}': {e.Message}"); }
+    }
+
+    public static void DeleteAll()
+    {
+        if (!Directory.Exists(SaveDir)) return;
+
+        foreach (string file in Directory.GetFiles(SaveDir, "*" + Extension))
+            Delete(file);
     }
 }

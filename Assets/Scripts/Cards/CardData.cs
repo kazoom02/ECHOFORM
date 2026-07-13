@@ -24,7 +24,7 @@ public enum CardEffectType
     GainFocus,      // +Focus (Strength) — adds to every future attack
     DrawCards,      // draw N extra cards
     GainEnergy,     // refund / add energy this turn
-    DuplicateCard,  // Echo — copy the last card played back into hand
+    DuplicateCard,  // Echo — immediately repeat the last card's effects
     GainShield      // +N discrete shields; each negates one full enemy hit
 }
 

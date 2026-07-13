@@ -1,131 +1,265 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
-// =====================================================
-// ECHOFORM — RainController
-// Configures and drives a 2D rain Particle System so you
-// don't have to hand-tune 20 particle fields. Drops fall as
-// stretched streaks over a box area; intensity (0..1) scales
-// the emission and is read by WaterAccumulator to fill the
-// ground. Optionally sprays splash particles at the water
-// surface.
-//
-// SETUP:
-//   1. Create an empty GameObject "Rain", place it above the
-//      arena (its X centre = arena centre).
-//   2. Add a Particle System to it, then add this component
-//      (it auto-configures the system on Awake).
-//   3. (Optional) make a second small Particle System for
-//      splashes and drag it into "Splash System".
-// Tune the fields, then right-click the component ▸
-// "Apply Rain Settings" to preview in the editor.
-// =====================================================
-
-[RequireComponent(typeof(ParticleSystem))]
+/// <summary>
+/// Creates a lightweight 2D rain effect at runtime. The emitter is placed on the
+/// ground line and spawns drops above itself across a configurable box area.
+/// Keeping the Particle System runtime-generated makes the effect easy to attach
+/// to an area without storing a large Particle System block in the scene file.
+/// </summary>
+[DisallowMultipleComponent]
 public class RainController : MonoBehaviour
 {
     [Header("Rain area (relative to this object)")]
-    [SerializeField] private float width = 30f;
-    [SerializeField] private float spawnHeight = 12f;     // how far above this object drops appear
+    [SerializeField] private float width = 20f;
+    [SerializeField] private float spawnHeight = 11.5f;
 
     [Header("Fall")]
-    [SerializeField] private float fallSpeed = 22f;
-    [SerializeField] private float wind = -3f;             // horizontal drift
-    [SerializeField, Range(0f, 1f)] private float intensity = 0.6f;
-    [SerializeField] private float maxEmission = 600f;     // drops/sec at intensity 1
+    [SerializeField] private float fallSpeed = 14f;
+    [SerializeField] private float wind = -2f;
+    [SerializeField, Range(0f, 1f)] private float intensity = 0.7f;
+    [SerializeField] private float maxEmission = 520f;
 
     [Header("Look")]
-    [SerializeField] private Color rainColor = new Color(0.6f, 0.85f, 1f, 0.5f);
-    [SerializeField] private float dropStretch = 2.2f;     // streak length
-    [SerializeField] private float dropSize = 0.06f;
+    [SerializeField] private Color rainColor = new(0.55f, 0.78f, 1f, 0.34f);
+    [SerializeField] private float dropStretch = 3f;
+    [SerializeField] private float dropSize = 0.045f;
+    [SerializeField] private string sortingLayerName = "Characters";
+    [SerializeField] private int sortingOrder = 10;
+
+    [Header("Rain ambience (optional)")]
+    [SerializeField] private AudioClip rainLoop;
+    [SerializeField] private AudioMixerGroup outputGroup;
+    [SerializeField, Range(0f, 1f)] private float ambientVolume = 0.45f;
 
     [Header("Splashes (optional)")]
     [SerializeField] private ParticleSystem splashSystem;
     [SerializeField] private float splashesPerSecond = 40f;
 
-    // World Y where splashes spawn — WaterAccumulator raises this as water pools.
+    /// <summary>World-space height where optional splash particles land.</summary>
     public float SurfaceY { get; set; }
 
     public float Intensity => isActiveAndEnabled ? intensity : 0f;
 
-    private ParticleSystem ps;
-    private ParticleSystemRenderer psr;
+    private ParticleSystem rainSystem;
+    private ParticleSystemRenderer rainRenderer;
+    private AudioSource ambienceSource;
+    private Material runtimeMaterial;
     private float splashCarry;
+    private bool initialized;
 
     private void Awake()
     {
-        ps = GetComponent<ParticleSystem>();
-        psr = GetComponent<ParticleSystemRenderer>();
-        SurfaceY = transform.position.y - spawnHeight;   // sensible default = below the emitter
-        Configure();
-
-        if (psr.sharedMaterial == null)
-            psr.material = new Material(Shader.Find("Sprites/Default"));
+        Initialize();
     }
 
-    /// <summary>Set rain strength at runtime (0 = clear, 1 = downpour).</summary>
-    public void SetIntensity(float t)
+    private void OnEnable()
     {
-        intensity = Mathf.Clamp01(t);
-        if (ps == null) ps = GetComponent<ParticleSystem>();
-        var em = ps.emission;
-        em.rateOverTime = intensity * maxEmission;
+        if (!initialized)
+            Initialize();
+
+        if (rainSystem != null && intensity > 0.001f && !rainSystem.isPlaying)
+            rainSystem.Play();
+
+        if (ambienceSource != null && rainLoop != null && !ambienceSource.isPlaying)
+            ambienceSource.Play();
+    }
+
+    private void OnDisable()
+    {
+        if (rainSystem != null)
+            rainSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        if (ambienceSource != null)
+            ambienceSource.Stop();
+    }
+
+    private void OnDestroy()
+    {
+        if (runtimeMaterial != null)
+            Destroy(runtimeMaterial);
+    }
+
+    /// <summary>Sets rain strength at runtime (0 = clear, 1 = downpour).</summary>
+    public void SetIntensity(float value)
+    {
+        intensity = Mathf.Clamp01(value);
+
+        if (!initialized)
+            Initialize();
+
+        var emission = rainSystem.emission;
+        emission.rateOverTime = intensity * maxEmission;
+
+        if (ambienceSource != null)
+            ambienceSource.volume = ambientVolume * intensity;
+
+        if (intensity > 0.001f)
+        {
+            if (!rainSystem.isPlaying)
+                rainSystem.Play();
+        }
+        else
+        {
+            rainSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
     }
 
     private void Update()
     {
-        if (splashSystem == null || intensity <= 0.01f) return;
+        if (splashSystem == null || intensity <= 0.01f)
+            return;
 
-        // Emit splash puffs along the surface, scaled by rain intensity.
         splashCarry += splashesPerSecond * intensity * Time.deltaTime;
-        int n = Mathf.FloorToInt(splashCarry);
-        splashCarry -= n;
+        int splashCount = Mathf.FloorToInt(splashCarry);
+        splashCarry -= splashCount;
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < splashCount; i++)
         {
-            var ep = new ParticleSystem.EmitParams
+            var emitParams = new ParticleSystem.EmitParams
             {
                 position = new Vector3(
                     transform.position.x + Random.Range(-width * 0.5f, width * 0.5f),
                     SurfaceY,
-                    0f)
+                    transform.position.z)
             };
-            splashSystem.Emit(ep, 1);
+
+            splashSystem.Emit(emitParams, 1);
         }
     }
 
     [ContextMenu("Apply Rain Settings")]
-    private void Configure()
+    private void ApplyRainSettings()
     {
-        if (ps == null) ps = GetComponent<ParticleSystem>();
-        if (psr == null) psr = GetComponent<ParticleSystemRenderer>();
+        EnsureParticleSystem();
+        ConfigureParticleSystem();
+    }
 
-        var main = ps.main;
-        main.startSpeed = 0f;                              // motion comes from velocityOverLifetime
+    private void Initialize()
+    {
+        EnsureParticleSystem();
+        ConfigureParticleSystem();
+        ConfigureAmbience();
+        SurfaceY = transform.position.y;
+        initialized = true;
+    }
+
+    private void EnsureParticleSystem()
+    {
+        rainSystem = GetComponent<ParticleSystem>();
+        if (rainSystem == null)
+            rainSystem = gameObject.AddComponent<ParticleSystem>();
+
+        rainRenderer = GetComponent<ParticleSystemRenderer>();
+    }
+
+    private void ConfigureParticleSystem()
+    {
+        bool restartAfterConfiguration = rainSystem.isPlaying;
+        rainSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        var main = rainSystem.main;
+        main.loop = true;
+        main.prewarm = true;
+        main.playOnAwake = false;
+        main.startSpeed = 0f;
         main.startSize = dropSize;
         main.startColor = rainColor;
-        main.startLifetime = (spawnHeight + 6f) / Mathf.Max(1f, fallSpeed);
+        main.startLifetime = (spawnHeight + 1.5f) / Mathf.Max(1f, fallSpeed);
         main.gravityModifier = 0f;
         main.maxParticles = 4000;
         main.simulationSpace = ParticleSystemSimulationSpace.World;
 
-        var em = ps.emission;
-        em.rateOverTime = intensity * maxEmission;
+        var emission = rainSystem.emission;
+        emission.enabled = true;
+        emission.rateOverTime = intensity * maxEmission;
 
-        var shape = ps.shape;
+        var shape = rainSystem.shape;
         shape.enabled = true;
         shape.shapeType = ParticleSystemShapeType.Box;
-        shape.scale = new Vector3(width, 0.1f, 1f);
+        shape.scale = new Vector3(width, 0.1f, 0.1f);
         shape.position = new Vector3(0f, spawnHeight, 0f);
         shape.rotation = Vector3.zero;
 
-        var vel = ps.velocityOverLifetime;
-        vel.enabled = true;
-        vel.space = ParticleSystemSimulationSpace.World;
-        vel.x = new ParticleSystem.MinMaxCurve(wind);
-        vel.y = new ParticleSystem.MinMaxCurve(-fallSpeed);
+        var velocity = rainSystem.velocityOverLifetime;
+        velocity.enabled = true;
+        velocity.space = ParticleSystemSimulationSpace.World;
+        // Unity requires X, Y, and Z velocity curves to use one shared mode.
+        // Keep all three in Constant mode to avoid an invalid intermediate state
+        // while the module is configured one axis at a time.
+        velocity.x = new ParticleSystem.MinMaxCurve(wind);
+        velocity.y = new ParticleSystem.MinMaxCurve(-fallSpeed);
+        velocity.z = new ParticleSystem.MinMaxCurve(0f);
 
-        psr.renderMode = ParticleSystemRenderMode.Stretch;
-        psr.lengthScale = dropStretch;
-        psr.velocityScale = 0.08f;
+        var colorOverLifetime = rainSystem.colorOverLifetime;
+        colorOverLifetime.enabled = true;
+        var fade = new Gradient();
+        fade.SetKeys(
+            new[]
+            {
+                new GradientColorKey(Color.white, 0f),
+                new GradientColorKey(Color.white, 1f)
+            },
+            new[]
+            {
+                new GradientAlphaKey(0f, 0f),
+                new GradientAlphaKey(1f, 0.08f),
+                new GradientAlphaKey(0.9f, 0.88f),
+                new GradientAlphaKey(0f, 1f)
+            });
+        colorOverLifetime.color = fade;
+
+        if (rainRenderer != null)
+        {
+            rainRenderer.renderMode = ParticleSystemRenderMode.Stretch;
+            rainRenderer.lengthScale = dropStretch;
+            rainRenderer.velocityScale = 0.08f;
+            rainRenderer.sortingLayerName = sortingLayerName;
+            rainRenderer.sortingOrder = sortingOrder;
+            EnsureRainMaterial();
+        }
+
+        if (restartAfterConfiguration)
+            rainSystem.Play();
+    }
+
+    private void EnsureRainMaterial()
+    {
+        if (runtimeMaterial != null)
+        {
+            rainRenderer.sharedMaterial = runtimeMaterial;
+            return;
+        }
+
+        Shader shader = Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default");
+        if (shader == null)
+            shader = Shader.Find("Sprites/Default");
+
+        if (shader == null)
+            return;
+
+        runtimeMaterial = new Material(shader)
+        {
+            name = "Area 2 Rain (Runtime)",
+            hideFlags = HideFlags.HideAndDontSave
+        };
+        rainRenderer.sharedMaterial = runtimeMaterial;
+    }
+
+    private void ConfigureAmbience()
+    {
+        if (rainLoop == null)
+            return;
+
+        ambienceSource = GetComponent<AudioSource>();
+        if (ambienceSource == null)
+            ambienceSource = gameObject.AddComponent<AudioSource>();
+
+        ambienceSource.clip = rainLoop;
+        ambienceSource.outputAudioMixerGroup = outputGroup;
+        ambienceSource.loop = true;
+        ambienceSource.playOnAwake = false;
+        ambienceSource.spatialBlend = 0f;
+        ambienceSource.volume = ambientVolume * intensity;
     }
 }

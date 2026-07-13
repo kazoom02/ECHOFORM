@@ -35,6 +35,15 @@ public class LoadGameMenu : MonoBehaviour
     /// <summary>Set by a save row just before the scene loads, so gameplay can restore it.</summary>
     public static SaveData PendingLoad { get; private set; }
 
+    public static SaveData ConsumePendingLoad()
+    {
+        SaveData data = PendingLoad;
+        PendingLoad = null;
+        return data;
+    }
+
+    public static void ClearPendingLoad() => PendingLoad = null;
+
     void OnEnable() => Refresh();
 
     public void Refresh()
@@ -78,6 +87,7 @@ public class LoadGameMenu : MonoBehaviour
     {
         if (slot?.data == null) return;
         PendingLoad = slot.data;
+        PlayTimeTracker.EnsureInstance().ResumeFrom(slot.data.playSeconds);
 
         string scene = string.IsNullOrEmpty(slot.data.sceneName) ? "FirstArea" : slot.data.sceneName;
         Debug.Log($"[Echoform] Loading save '{slot.SlotName}' into {scene}.");

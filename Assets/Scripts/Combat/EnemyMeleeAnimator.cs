@@ -33,6 +33,10 @@ public class EnemyMeleeAnimator : MonoBehaviour
     [SerializeField] private bool  returnToStart = true;
     [Tooltip("If on, the enemy walks to the target's Y for depth sorting. Turn off for enemies that should stay on their lane.")]
     [SerializeField] private bool matchTargetY = true;
+    [Tooltip("Expands Stop Distance using both sprites' visible widths. Useful for enemies that grow between tiers.")]
+    [SerializeField] private bool useRendererBoundsForStopDistance;
+    [Tooltip("Small visible gap between the enemy and target when renderer-bounds spacing is enabled.")]
+    [SerializeField] private float contactPadding = 0.15f;
 
     [Header("Timing")]
     [Tooltip("Seconds after arriving before damage lands.")]
@@ -44,6 +48,8 @@ public class EnemyMeleeAnimator : MonoBehaviour
     [SerializeField] private bool faceByFlipX   = true;
     [Tooltip("On if the sprite art points RIGHT by default. Slimes usually face left toward the player — turn this off then.")]
     [SerializeField] private bool artFacesRight = false;
+    [Tooltip("Invert facing only while Attack plays. Use when the attack sheet faces opposite to the idle/walk sheets.")]
+    [SerializeField] private bool invertAttackFacing;
 
     [Header("SFX")]
     [Tooltip("SfxPlayer that plays this creature's swing (auto-found on this object if left empty).")]
@@ -83,13 +89,28 @@ public class EnemyMeleeAnimator : MonoBehaviour
 
         // Some enemies move to the player's depth for sorting; lane-based enemies keep their own Y.
         float destY = matchTargetY ? target.position.y : start.y;
-        Vector3 dest = new Vector3(target.position.x - dir * stopDistance, destY, transform.position.z);
+        float effectiveStopDistance = GetStopDistance(target);
+        Vector3 dest = new Vector3(target.position.x - dir * effectiveStopDistance, destY, transform.position.z);
 
         Play(walkState);
         while ((transform.position - dest).sqrMagnitude > 0.0025f)
         {
             transform.position = Vector3.MoveTowards(transform.position, dest, moveSpeed * Time.deltaTime);
             yield return null;
+        }
+
+        bool flipBeforeAttack = spriteRenderer != null && spriteRenderer.flipX;
+        Vector3 scaleBeforeAttack = transform.localScale;
+        if (invertAttackFacing)
+        {
+            if (faceByFlipX && spriteRenderer != null)
+                spriteRenderer.flipX = !spriteRenderer.flipX;
+            else
+            {
+                Vector3 invertedScale = transform.localScale;
+                invertedScale.x *= -1f;
+                transform.localScale = invertedScale;
+            }
         }
 
         if (!string.IsNullOrEmpty(attackState)) Play(attackState);
@@ -99,6 +120,14 @@ public class EnemyMeleeAnimator : MonoBehaviour
         onHit?.Invoke();                                   // <-- damage lands here
         float rest = attackLength - hitTime;
         if (rest > 0f) yield return new WaitForSeconds(rest);
+
+        if (invertAttackFacing)
+        {
+            if (faceByFlipX && spriteRenderer != null)
+                spriteRenderer.flipX = flipBeforeAttack;
+            else
+                transform.localScale = scaleBeforeAttack;
+        }
 
         if (returnToStart)
         {
@@ -142,6 +171,21 @@ public class EnemyMeleeAnimator : MonoBehaviour
         // self-clean once it has finished, even if Stop Action isn't set to Destroy
         float life = fx.main.duration + fx.main.startLifetime.constantMax;
         Destroy(fx.gameObject, life);
+    }
+
+    float GetStopDistance(Transform target)
+    {
+        float result = stopDistance;
+        if (!useRendererBoundsForStopDistance || spriteRenderer == null || target == null)
+            return result;
+
+        SpriteRenderer targetRenderer = target.GetComponentInChildren<SpriteRenderer>();
+        if (targetRenderer == null) return result;
+
+        float visibleSpacing = spriteRenderer.bounds.extents.x
+                             + targetRenderer.bounds.extents.x
+                             + Mathf.Max(0f, contactPadding);
+        return Mathf.Max(result, visibleSpacing);
     }
 
     void Play(string state)

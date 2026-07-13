@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Echo
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Echo
-  description: Copy the last card you played into your hand. Exhaust.
+  description: Instantly repeat the last chip's effects. Choose an enemy first for single-target attacks. Exhaust.
   art: {fileID: -5166432130525955749, guid: 8406eee6030978f469bf4dc08ba268c5, type: 3}
   tint: {r: 0.7, g: 0.5, b: 1, a: 1}
   energyCost: 1

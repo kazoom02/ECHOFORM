@@ -5,8 +5,8 @@ using UnityEngine;
 // ECHOFORM — Deck
 // Plain C# helper (not a MonoBehaviour) that manages the
 // draw pile, hand, discard and exhaust piles. Auto-reshuffles
-// discard into draw when empty. Supports Echo duplication
-// (AddToHand) and future Loom "Glitch" corruption (AddToDiscard).
+// discard into draw when empty. Supports generated mechanic chips
+// (AddToHand) and Loom "Glitch" corruption (AddToDiscard).
 // =====================================================
 
 public class Deck
@@ -52,13 +52,14 @@ public class Deck
         OnChanged?.Invoke();
     }
 
-    public void DiscardHand()
+    public void DiscardHand(CardData retainedCard = null)
     {
-        // Corruption stays stuck in neural memory — only clean chips cycle out.
-        // This is what lets corrupted chips accumulate toward overload.
+        // Corruption stays stuck in neural memory. A generated mechanic chip can
+        // also remain installed so it is available on the following turn.
         for (int i = Hand.Count - 1; i >= 0; i--)
         {
             if (Hand[i] != null && Hand[i].isGlitch) continue;   // corrupted stays
+            if (retainedCard != null && Hand[i] == retainedCard) continue;
             DiscardPile.Add(Hand[i]);
             Hand.RemoveAt(i);
         }
@@ -73,13 +74,14 @@ public class Deck
     }
 
     /// <summary>Loom corruption: overwrite a random CLEAN slot with a glitch chip. Permanent until purged. Returns the hand slot, or -1 if nothing changed.</summary>
-    public int CorruptHand(CardData glitch, int handCap)
+    public int CorruptHand(CardData glitch, int handCap, CardData protectedCard = null)
     {
         if (glitch == null) return -1;
 
         List<int> cleanSlots = new List<int>();
         for (int i = 0; i < Hand.Count; i++)
-            if (Hand[i] == null || !Hand[i].isGlitch) cleanSlots.Add(i);
+            if ((Hand[i] == null || !Hand[i].isGlitch) && Hand[i] != protectedCard)
+                cleanSlots.Add(i);
 
         if (cleanSlots.Count == 0) return -1;              // already fully corrupted
         int slot = cleanSlots[Random.Range(0, cleanSlots.Count)];
@@ -103,10 +105,17 @@ public class Deck
         return false;
     }
 
-    /// <summary>Echo: drop a duplicate straight into the hand.</summary>
+    /// <summary>Drop a generated mechanic chip straight into the hand.</summary>
     public void AddToHand(CardData card)
     {
         Hand.Add(card);
+        OnChanged?.Invoke();
+    }
+
+    /// <summary>Consume a generated mechanic chip without putting it into the reusable deck.</summary>
+    public void ConsumeGenerated(CardData card)
+    {
+        Hand.Remove(card);
         OnChanged?.Invoke();
     }
 

@@ -27,7 +27,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
     [Header("Combat")]
     [SerializeField] private CombatManager combat;
-    [SerializeField] private int maxCycles = 3;   // matches CombatManager.energyPerTurn
+    [SerializeField] private int maxCycles = 5;   // fallback when no CombatManager is assigned
 
     [Header("Rack")]
     [Tooltip("Empty RectTransforms placed over each bay, left to right.")]
@@ -47,7 +47,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
     [SerializeField] private ChargedSlashFX chargedSlashPrefab; // animated slash VFX prefab (preferred)
     [SerializeField] private Transform slashSpawnPoint;         // where the slash spawns (defaults to origin)
     [Tooltip("Only this card (by cardName) triggers the full-screen slash. Spaces/case are ignored.")]
-    [SerializeField] private string slashCardName = "Charged Slash";
+    [SerializeField] private string slashCardName = "Charged";
     [SerializeField] private CpuCycleMeter cpuMeter;
     [SerializeField] private OverloadReadout overloadReadout;   // "COPY #n/10" corruption counter
     [SerializeField] private CombatTargeting targeting;         // enemy picker for single-target chips
@@ -74,6 +74,8 @@ public class NeuralInterfaceHUD : MonoBehaviour
     int selectedChipIndex = -1;
     float nextNavigationTime;
     bool showControllerSelection;
+    bool transitionSuppressed;
+    bool externalInputBlocked;
 
     public bool IsBusy => busy;
     public bool IsControllerSelectionVisible => showControllerSelection;
@@ -86,13 +88,25 @@ public class NeuralInterfaceHUD : MonoBehaviour
     void OnDisable()
     {
         if (combat != null) combat.OnCombatChanged -= Refresh;
+        ClearControllerSelection();
         SetBusy(false);
     }
     void Start()     { if (installGroup) installGroup.alpha = 0f; Refresh(); }
 
     void Update()
     {
-        if (!controllerChipSelection || busy || rack.Count == 0 || Time.timeScale == 0f) return;
+        if (AreaTransition.IsPlaying)
+        {
+            if (!transitionSuppressed)
+            {
+                transitionSuppressed = true;
+                ClearControllerSelection();
+            }
+            return;
+        }
+        transitionSuppressed = false;
+
+        if (externalInputBlocked || !controllerChipSelection || busy || rack.Count == 0 || Time.timeScale == 0f) return;
         if (targeting != null && targeting.IsTargeting) return;
 
         int direction = ReadNavigationDirection();
@@ -128,7 +142,9 @@ public class NeuralInterfaceHUD : MonoBehaviour
         else SelectChip(Mathf.Clamp(selectedChipIndex < 0 ? 0 : selectedChipIndex, 0, rack.Count - 1));
 
         if (cpuMeter != null)
-            cpuMeter.Set(combat != null ? combat.Energy : maxCycles, maxCycles);
+            cpuMeter.Set(
+                combat != null ? combat.Energy : maxCycles,
+                combat != null ? combat.MaxEnergy : maxCycles);
 
         if (overloadReadout != null)
             overloadReadout.Set(combat != null ? combat.CorruptedInHand : 0);
@@ -177,8 +193,12 @@ public class NeuralInterfaceHUD : MonoBehaviour
         bool cannotPlay = combat != null ? !combat.CanPlayCard(view.card) : view.card.isGlitch;
         if (cannotPlay) { StartCoroutine(Deny(view)); return; }
 
-        // Single-target chips with more than one enemy: let the player pick.
-        if (targeting != null && view.card.target == CardTarget.SingleEnemy && CountLivingEnemies() > 1)
+        // Echo inherits the previous chip's target rule. If that effect is a
+        // single-target attack, choose the enemy before installing Echo.
+        CardTarget effectiveTarget = combat != null
+            ? combat.GetEffectiveTarget(view.card)
+            : view.card.target;
+        if (targeting != null && effectiveTarget == CardTarget.SingleEnemy && CountLivingEnemies() > 1)
         {
             SetBusy(true);                                // lock the rack while choosing
             pendingTargetView = view;
@@ -204,6 +224,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
     {
         SetBusy(true);
         CardData card = view.card;               // cache — the view gets destroyed later
+        CardData effectCard = combat != null ? combat.GetEffectSource(card) : card;
         rack.Remove(view);
 
         // lift the chip out of its bay into the neural slot's coordinate space
@@ -241,7 +262,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
         // 5) EXECUTE — attack chips send Vestige in and resolve on the hit frame; others resolve in place
         ChargedSlashFX slashFx = null;
-        if (card != null && IsSlashCard(card))                 // full-screen slash only for ChargedSlash
+        if (effectCard != null && IsSlashCard(effectCard))      // Echo also inherits the copied slash VFX
         {
             if (chargedSlashPrefab != null)                    // preferred: animated slash VFX
                 slashFx = ChargedSlashFX.Play(chargedSlashPrefab,
@@ -249,7 +270,8 @@ public class NeuralInterfaceHUD : MonoBehaviour
             else if (screenSlash != null)
                 screenSlash.Slash();                           // fallback: old streak overlay
         }
-        if (vestige != null && target != null && CardDealsDamage(card))
+        bool dealsDamage = combat != null ? combat.WillDealDamage(card) : CardDealsDamage(effectCard);
+        if (vestige != null && target != null && dealsDamage)
         {
             yield return vestige.PlayAttack(target.transform,
                 () => { if (combat != null) combat.TryPlayCard(card, target); });
@@ -257,7 +279,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
         else
         {
             // self-cast (block/heal) keeps the flash — but the slash card shows its own VFX, no flash
-            if (visorFlash && !IsSlashCard(card))
+            if (visorFlash && !IsSlashCard(effectCard))
                 yield return visorFlash.FlashAndWait();
             if (combat != null) combat.TryPlayCard(card, target);
         }
@@ -293,6 +315,21 @@ public class NeuralInterfaceHUD : MonoBehaviour
             if (selected != null && selected.card != null)
                 CardTooltip.ShowAt(selected.card, TooltipScreenPosition(selected));
         }
+    }
+
+    public void ClearControllerSelection()
+    {
+        showControllerSelection = false;
+        selectedChipIndex = -1;
+        foreach (ChipView view in rack)
+            if (view != null) view.SetControllerSelected(false);
+        CardTooltip.Hide();
+    }
+
+    public void SetExternalInputBlocked(bool blocked)
+    {
+        externalInputBlocked = blocked;
+        if (blocked) ClearControllerSelection();
     }
 
     Vector2 TooltipScreenPosition(ChipView view)
@@ -415,7 +452,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
     /// <summary>Which enemy a single-target card hits. Override for click-to-target.</summary>
     protected virtual Enemy ResolveTarget(CardData card)
     {
-        if (combat == null || card.target != CardTarget.SingleEnemy) return null;
+        if (combat == null || combat.GetEffectiveTarget(card) != CardTarget.SingleEnemy) return null;
         foreach (var e in combat.Enemies) if (e != null && !e.IsDead) return e;
         return null;
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Focus
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Focus
-  description: Gain 2 Focus. Adds to every attack.
+  description: Gain 2 Focus. All attack cards deal +2 damage.
   art: {fileID: -2248273014285675650, guid: 8406eee6030978f469bf4dc08ba268c5, type: 3}
   tint: {r: 1, g: 0.8, b: 0.3, a: 1}
   energyCost: 1

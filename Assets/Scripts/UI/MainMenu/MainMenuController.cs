@@ -53,6 +53,7 @@ public class MainMenuController : MonoBehaviour
 
     void OnEnable()
     {
+        PlayTimeTracker.EnsureInstance().Pause();
         ResolveReferences();
 
         AddRuntimeListenerIfNeeded(newGameButton, OnNewGame);
@@ -83,6 +84,10 @@ public class MainMenuController : MonoBehaviour
 
     public void OnNewGame()
     {
+        LoadGameMenu.ClearPendingLoad();
+        SaveSystem.DeleteAll();
+        PlayTimeTracker.EnsureInstance().BeginNewRun();
+
         // Play the intro video first if set; otherwise jump straight to Area 1.
         string target = !string.IsNullOrEmpty(introSceneName) ? introSceneName : area1SceneName;
         if (string.IsNullOrEmpty(target))

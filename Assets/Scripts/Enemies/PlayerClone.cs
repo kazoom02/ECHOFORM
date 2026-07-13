@@ -26,7 +26,10 @@ public class PlayerClone : Enemy
 
     [Header("Clone turn")]
     [SerializeField] private int energyPerTurn = 3;
+    [SerializeField] private int maxEnergy = 5;
     [SerializeField] private int handSize = 5;
+    [Tooltip("Hard action limit for the boss. Keep at 1 so it plays only one chip per turn.")]
+    [Min(1)] [SerializeField] private int movesPerTurn = 1;
     [Tooltip("Pause between each card the Clone plays, so its turn reads clearly.")]
     [SerializeField] private float playInterval = 0.5f;
 
@@ -54,6 +57,12 @@ public class PlayerClone : Enemy
     [Tooltip("Fallback wait if the death clip cannot be found in the controller.")]
     [SerializeField] private float deathDuration = 0.75f;
 
+    [Header("SFX")]
+    [Tooltip("The Clone reuses the player's one-shot SFX player.")]
+    [SerializeField] private SfxPlayer sfx;
+    [Tooltip("The same death sound used by the player.")]
+    [SerializeField] private AudioClip deathSfx;
+
     public int Shields { get; private set; }
     public int Focus { get; private set; }
     public int Energy { get; private set; }
@@ -70,6 +79,7 @@ public class PlayerClone : Enemy
         base.Awake();
         if (animator == null) animator = GetComponent<Animator>();
         if (melee == null)    melee = GetComponent<EnemyMeleeAnimator>();
+        if (sfx == null)      sfx = GetComponent<SfxPlayer>();
         if (deck == null && deckOverride.Count > 0) deck = new Deck(deckOverride);
     }
 
@@ -77,6 +87,7 @@ public class PlayerClone : Enemy
     public void InitDeck(IEnumerable<CardData> playerDeck)
     {
         if (playerDeck != null) deck = new Deck(playerDeck);
+        lastPlayed = null;
     }
 
     public override void RollIntent()
@@ -111,14 +122,15 @@ public class PlayerClone : Enemy
         deck.DrawUpTo(handSize);
         OnStateChanged?.Invoke();
 
-        while (true)
+        for (int move = 0; move < movesPerTurn; move++)
         {
             CardData card = ChooseCard();
             if (card == null) break;   // nothing affordable / playable left
 
             Energy -= card.energyCost;
 
-            bool isAttack = card.HasEffect(CardEffectType.DealDamage);
+            CardData effectSource = GetEffectSource(card);
+            bool isAttack = effectSource != null && effectSource.HasEffect(CardEffectType.DealDamage);
 
             if (isAttack && melee != null)
             {
@@ -134,7 +146,8 @@ public class PlayerClone : Enemy
                 Play(idleState);
             }
 
-            lastPlayed = card;
+            if (!card.HasEffect(CardEffectType.DuplicateCard))
+                lastPlayed = card;
             deck.ResolvePlayed(card);
             OnStateChanged?.Invoke();
 
@@ -151,6 +164,10 @@ public class PlayerClone : Enemy
     {
         if (deathPlayed) yield break;
         deathPlayed = true;
+
+        // Detached playback lets the full clip finish even when combat removes
+        // the Clone immediately after its death animation completes.
+        if (sfx != null) sfx.PlayDetached(deathSfx);
 
         if (animator == null) animator = GetComponent<Animator>();
 
@@ -197,12 +214,21 @@ public class PlayerClone : Enemy
     // Pick a random affordable, non-glitch card; never gain shields when already capped.
     private CardData ChooseCard()
     {
-        var playable = deck.Hand.Where(c =>
-            c != null && !c.isGlitch && c.energyCost <= Energy &&
-            !(c.HasEffect(CardEffectType.GainShield) && Shields >= maxShields)
-        ).ToList();
+        var playable = deck.Hand.Where(CanChooseCard).ToList();
         if (playable.Count == 0) return null;
         return playable[Random.Range(0, playable.Count)];
+    }
+
+    private bool CanChooseCard(CardData card)
+    {
+        if (card == null || card.isGlitch || card.energyCost > Energy) return false;
+        if (card.HasEffect(CardEffectType.DuplicateCard) && lastPlayed == null) return false;
+
+        CardData effectSource = GetEffectSource(card);
+        if (effectSource == null) return false;
+        if (effectSource.HasEffect(CardEffectType.GainEnergy)) return false;
+        if (effectSource.HasEffect(CardEffectType.GainShield) && Shields >= maxShields) return false;
+        return true;
     }
 
     // Card effects from the Clone's perspective: damage -> player, everything else -> self.
@@ -223,12 +249,20 @@ public class PlayerClone : Enemy
                 case CardEffectType.Heal:       CurrentHP = Mathf.Min(MaxHP, CurrentHP + Mathf.Max(0, effect.amount)); break;
                 case CardEffectType.GainFocus:  Focus += effect.amount; break;
                 case CardEffectType.DrawCards:  deck.Draw(effect.amount); break;
-                case CardEffectType.GainEnergy: Energy += effect.amount; break;
+                case CardEffectType.GainEnergy: Energy = Mathf.Clamp(Energy + effect.amount, 0, maxEnergy); break;
 
                 case CardEffectType.DuplicateCard:
-                    if (lastPlayed != null) { deck.AddToHand(lastPlayed); log?.Invoke($"{DisplayName} echoes {lastPlayed.cardName}."); }
+                    if (lastPlayed != null)
+                    {
+                        CardData echoedCard = lastPlayed;
+                        log?.Invoke($"{DisplayName} instantly echoes {echoedCard.cardName}.");
+                        ResolveCard(echoedCard, player, log);
+                    }
                     break;
             }
         }
     }
+
+    private CardData GetEffectSource(CardData card) =>
+        card != null && card.HasEffect(CardEffectType.DuplicateCard) ? lastPlayed : card;
 }

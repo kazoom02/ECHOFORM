@@ -26,6 +26,7 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField] private float fadeInSeconds = 0.5f;
 
     private AudioSource src;
+    private bool playbackDeferred;
 
     void Awake()
     {
@@ -38,11 +39,24 @@ public class MusicPlayer : MonoBehaviour
 
     void OnEnable()
     {
+        if (playbackDeferred)
+        {
+            if (src != null) src.Stop();
+            return;
+        }
+
+        PlayTrack();
+    }
+
+    private void PlayTrack()
+    {
         if (track == null)
         {
             Debug.LogWarning("[MusicPlayer] No track assigned.", this);
             return;
         }
+
+        StopAllCoroutines();
         src.clip = track;
         src.loop = loop;
         src.Play();
@@ -60,7 +74,22 @@ public class MusicPlayer : MonoBehaviour
     public void SetTrack(AudioClip clip)
     {
         track = clip;
-        if (isActiveAndEnabled) OnEnable();
+        if (isActiveAndEnabled && !playbackDeferred) PlayTrack();
+    }
+
+    public void DeferPlayback()
+    {
+        playbackDeferred = true;
+        StopAllCoroutines();
+        if (src == null) src = GetComponent<AudioSource>();
+        src.Stop();
+    }
+
+    public void PlayDeferred()
+    {
+        if (!playbackDeferred) return;
+        playbackDeferred = false;
+        if (isActiveAndEnabled) PlayTrack();
     }
 
     private IEnumerator FadeIn()

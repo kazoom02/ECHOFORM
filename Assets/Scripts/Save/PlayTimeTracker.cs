@@ -24,10 +24,27 @@ public class PlayTimeTracker : MonoBehaviour
 {
     public static PlayTimeTracker Instance { get; private set; }
 
-    [SerializeField] private bool countOnStart = true;
+    [SerializeField] private bool countOnStart = false;
 
     public float TotalSeconds { get; private set; }
     public bool IsCounting { get; private set; }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Bootstrap()
+    {
+        EnsureInstance();
+    }
+
+    public static PlayTimeTracker EnsureInstance()
+    {
+        if (Instance != null) return Instance;
+
+        PlayTimeTracker existing = FindAnyObjectByType<PlayTimeTracker>();
+        if (existing != null) return existing;
+
+        GameObject trackerObject = new GameObject("PlayTimeTracker");
+        return trackerObject.AddComponent<PlayTimeTracker>();
+    }
 
     void Awake()
     {

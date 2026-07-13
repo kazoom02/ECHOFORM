@@ -42,12 +42,37 @@ public class WalkOffOnVictory : MonoBehaviour
     [SerializeField] private bool faceByFlipX = true;
 
     private Rigidbody2D body;
+    private VestigeCombatAnimator combatAnimator;
     private bool started;
+
+    public void Configure(CombatManager combatManager, Transform characterToMove, Transform destination)
+    {
+        if (isActiveAndEnabled && combat != null)
+            combat.OnStateChanged -= OnCombatState;
+
+        combat = combatManager;
+        character = characterToMove != null ? characterToMove : transform;
+        exitTarget = destination;
+        CacheCharacterComponents();
+
+        if (isActiveAndEnabled && combat != null)
+        {
+            combat.OnStateChanged -= OnCombatState;
+            combat.OnStateChanged += OnCombatState;
+            StartCoroutine(CheckExistingVictoryNextFrame());
+        }
+    }
 
     void Awake()
     {
         if (character == null) character = transform;
+        CacheCharacterComponents();
+    }
+
+    private void CacheCharacterComponents()
+    {
         body = character.GetComponent<Rigidbody2D>();
+        combatAnimator = character.GetComponent<VestigeCombatAnimator>();
         if (animator == null)       animator = character.GetComponentInChildren<Animator>();
         if (spriteRenderer == null) spriteRenderer = character.GetComponentInChildren<SpriteRenderer>();
     }
@@ -56,10 +81,19 @@ public class WalkOffOnVictory : MonoBehaviour
     {
         if (combat != null)
         {
+            combat.OnStateChanged -= OnCombatState;
             combat.OnStateChanged += OnCombatState;
-            // In case combat was already won before this object activated.
-            if (combat.State == CombatState.Win) TryStart();
+            // Area activation also replaces the previous area's Win state with
+            // a fresh encounter. Wait one frame before treating an existing Win
+            // as this area's victory, regardless of component callback order.
+            StartCoroutine(CheckExistingVictoryNextFrame());
         }
+    }
+
+    private IEnumerator CheckExistingVictoryNextFrame()
+    {
+        yield return null;
+        if (combat != null && combat.State == CombatState.Win) TryStart();
     }
 
     void OnDisable()
@@ -90,12 +124,19 @@ public class WalkOffOnVictory : MonoBehaviour
     {
         if (started) return;
         started = true;
+        Debug.Log($"[WalkOffOnVictory] {character.name} is walking to {exitTarget?.name ?? "the exit"}.", this);
         StartCoroutine(WalkRoutine());
     }
 
     private IEnumerator WalkRoutine()
     {
         if (startDelay > 0f) yield return new WaitForSeconds(startDelay);
+
+        // The final hit can set CombatState.Win before Vestige has finished the
+        // attack/return animation. Wait for that choreography to release the
+        // Animator so its final Idle call cannot overwrite this victory walk.
+        while (combatAnimator != null && combatAnimator.IsAnimating)
+            yield return null;
 
         if (exitTarget == null)
         {
@@ -111,6 +152,7 @@ public class WalkOffOnVictory : MonoBehaviour
         var step = new WaitForFixedUpdate();
         while (Vector2.Distance(character.position, exitTarget.position) > arriveDistance)
         {
+            EnsureWalkState();
             Vector2 next = Vector2.MoveTowards(character.position, exitTarget.position,
                                                walkSpeed * Time.fixedDeltaTime);
             if (body != null) body.MovePosition(next);   // MovePosition so 2D triggers fire
@@ -125,6 +167,13 @@ public class WalkOffOnVictory : MonoBehaviour
     private void Play(string state)
     {
         if (animator != null && !string.IsNullOrEmpty(state)) animator.Play(state);
+    }
+
+    private void EnsureWalkState()
+    {
+        if (animator == null || string.IsNullOrEmpty(walkState)) return;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(walkState))
+            animator.Play(walkState, 0, 0f);
     }
 
     private void Face(float dir)
