@@ -7,15 +7,8 @@ using UnityEngine.InputSystem;
 
 // =====================================================
 // ECHOFORM — CardTooltip
-// A floating "what does this chip do?" panel shown while the
-// player hovers a chip in the Neural rack. It builds its own
-// UI at runtime (canvas + panel + text), so there is NOTHING
-// to wire in the Inspector — just call the statics:
-//
-//   CardTooltip.Show(cardData);   // on pointer enter
-//   CardTooltip.Hide();           // on pointer exit
-//
-// The panel follows the cursor and clamps itself on-screen.
+// Cria e apresenta uma descrição flutuante da carta sob o cursor,
+// mantendo o painel dentro dos limites do ecrã.
 // =====================================================
 
 public class CardTooltip : MonoBehaviour
@@ -32,7 +25,6 @@ public class CardTooltip : MonoBehaviour
     const float PanelWidth = 300f;
     const float CursorPad  = 18f;
 
-    // ------------------------------------------------------------ public API
     public static void Show(CardData card)
     {
         if (card == null) return;
@@ -52,7 +44,6 @@ public class CardTooltip : MonoBehaviour
         if (instance != null) instance.HideInternal();
     }
 
-    // ------------------------------------------------------------ bootstrap
     static void Ensure()
     {
         if (instance != null) return;
@@ -65,16 +56,15 @@ public class CardTooltip : MonoBehaviour
 
     void Build()
     {
-        // top-level overlay canvas, drawn above everything, ignores clicks
+
         canvas = gameObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 32000;
 
-        // panel
         var panelGO = new GameObject("Panel");
         panelGO.transform.SetParent(transform, false);
         panel = panelGO.AddComponent<RectTransform>();
-        panel.pivot = new Vector2(0f, 1f);              // anchor by top-left corner
+        panel.pivot = new Vector2(0f, 1f);
         panel.sizeDelta = new Vector2(PanelWidth, 0f);
 
         var bg = panelGO.AddComponent<Image>();
@@ -117,7 +107,6 @@ public class CardTooltip : MonoBehaviour
         return t;
     }
 
-    // ------------------------------------------------------------ show / hide
     void ShowInternal(CardData card, Vector2 screenPosition, bool followMouse)
     {
         followCursor = followMouse;
@@ -130,7 +119,7 @@ public class CardTooltip : MonoBehaviour
             : (string.IsNullOrEmpty(card.description) ? "No effect." : card.description);
 
         cg.alpha = 1f;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(panel);   // size now, so the first frame clamps correctly
+        LayoutRebuilder.ForceRebuildLayoutImmediate(panel);
         PlaceNear(screenPosition);
     }
 
@@ -145,18 +134,16 @@ public class CardTooltip : MonoBehaviour
         if (followCursor) PlaceNear(MousePos());
     }
 
-    // place the panel next to a screen position, then nudge it back on-screen
     void PlaceNear(Vector2 screenPosition)
     {
         float w = panel.rect.width;
         float h = panel.rect.height;
 
-        // default: up-right of the position (pivot is top-left)
         float x = screenPosition.x + CursorPad;
         float y = screenPosition.y - CursorPad;
 
-        if (x + w > Screen.width)  x = screenPosition.x - CursorPad - w;   // flip to the left near the right edge
-        if (y - h < 0f)            y = screenPosition.y + CursorPad + h;   // flip above near the bottom edge
+        if (x + w > Screen.width)  x = screenPosition.x - CursorPad - w;
+        if (y - h < 0f)            y = screenPosition.y + CursorPad + h;
 
         x = Mathf.Clamp(x, 0f, Mathf.Max(0f, Screen.width  - w));
         y = Mathf.Clamp(y, h, Screen.height);

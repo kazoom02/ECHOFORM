@@ -7,18 +7,8 @@ using UnityEngine.SceneManagement;
 
 // =====================================================
 // ECHOFORM — AreaTransition
-// Plays a transition video IN-SCENE (no scene load) to cover the cut
-// from one area to the next. Flow when you call Play():
-//   1. Fade a fullscreen overlay (the video) in.
-//   2. Play the clip through.
-//   3. While the screen is covered, swap Area1 -> Area2
-//      (and optionally teleport the player/camera).
-//   4. Fade the overlay out to reveal Area2.
-//
-// Setup: a VideoPlayer (Render Mode = Render Texture) pointing at a
-// RenderTexture, shown on a fullscreen RawImage whose CanvasGroup is
-// wired below. Call Play() from your "slimes cleared + walked off"
-// trigger. See the header notes in chat for exact wiring.
+// Reproduz um vídeo de transição dentro da cena e, enquanto o ecrã está
+// coberto, troca a área ativa e reposiciona o jogador e a câmara.
 // =====================================================
 
 public class AreaTransition : MonoBehaviour
@@ -70,8 +60,7 @@ public class AreaTransition : MonoBehaviour
 
     void Awake()
     {
-        // Never play on scene load — otherwise the clip's audio plays in the
-        // background before the transition is triggered. Start silent + hidden.
+
         if (videoPlayer != null)
         {
             videoPlayer.playOnAwake = false;
@@ -84,10 +73,6 @@ public class AreaTransition : MonoBehaviour
             overlay.gameObject.SetActive(false);
         }
 
-        // Draw the video on top WITHOUT modifying the parent/shared canvas.
-        // (Flipping a shared canvas's render mode shoves the rest of the UI —
-        // e.g. the health frame — off-screen.) A nested Canvas on the overlay's
-        // OWN object with overrideSorting lifts only the video.
         if (forceOverlayOnTop && overlay != null)
         {
             Canvas oc = overlay.GetComponent<Canvas>();
@@ -99,10 +84,6 @@ public class AreaTransition : MonoBehaviour
         EnsureVideoWiring();
     }
 
-    // Guarantees the video is actually visible: RawImage -> VideoPlayer's
-    // RenderTexture, VideoPlayer in Render-Texture mode, RawImage stretched
-    // fullscreen and opaque. Fixes the usual "transition happens but no video"
-    // wiring mistakes without touching the scene.
     private void EnsureVideoWiring()
     {
         if (videoPlayer == null) return;
@@ -121,8 +102,8 @@ public class AreaTransition : MonoBehaviour
         if (videoImage != null)
         {
             videoImage.texture = videoPlayer.targetTexture;
-            videoImage.color = Color.white;                 // not tinted transparent
-            RectTransform rt = videoImage.rectTransform;    // stretch fullscreen
+            videoImage.color = Color.white;
+            RectTransform rt = videoImage.rectTransform;
             rt.anchorMin = Vector2.zero;
             rt.anchorMax = Vector2.one;
             rt.offsetMin = Vector2.zero;
@@ -134,7 +115,6 @@ public class AreaTransition : MonoBehaviour
         }
     }
 
-    // Call this to start the transition. Safe to spam — ignores re-entry.
     public void Play()
     {
         Begin(null, true);
@@ -145,8 +125,7 @@ public class AreaTransition : MonoBehaviour
         Begin(clip, false);
     }
 
-    /// <summary>Play a full-screen clip without swapping areas, then load another scene.</summary>
-    public void PlayClipWithoutSwap(VideoClip clip, string nextScene)
+        public void PlayClipWithoutSwap(VideoClip clip, string nextScene)
     {
         sceneToLoadAfterPlayback = nextScene;
         Begin(clip, false);
@@ -171,7 +150,6 @@ public class AreaTransition : MonoBehaviour
     {
         onTransitionStarted?.Invoke();
 
-        // 1) Cover the screen with the video overlay.
         if (overlay != null)
         {
             overlay.gameObject.SetActive(true);
@@ -179,7 +157,6 @@ public class AreaTransition : MonoBehaviour
             yield return Fade(0f, 1f);
         }
 
-        // 2) Play the clip; swap the areas one frame in (screen already covered).
         if (videoPlayer != null)
         {
             bool done = false;
@@ -192,7 +169,7 @@ public class AreaTransition : MonoBehaviour
             videoPlayer.loopPointReached += OnEnd;
             videoPlayer.Play();
 
-            yield return null;   // let the first frame appear before we cut
+            yield return null;
             DoSwap();
 
             while (!done) yield return null;
@@ -200,10 +177,9 @@ public class AreaTransition : MonoBehaviour
         }
         else
         {
-            DoSwap();   // no clip assigned — still do the swap
+            DoSwap();
         }
 
-        // 3) Reveal Area2.
         if (overlay != null)
         {
             yield return Fade(1f, 0f);
@@ -257,8 +233,6 @@ public class AreaTransition : MonoBehaviour
                 objectToTeleport.position = directTeleportPosition;
         }
 
-        // SetActive completes the new area's Awake/OnEnable callbacks before
-        // returning, so its scene-owned enemies are ready to enter combat now.
         if (areaToShow != null)
         {
             AreaEncounter nextEncounter = areaToShow.GetComponent<AreaEncounter>();
@@ -278,7 +252,7 @@ public class AreaTransition : MonoBehaviour
         float t = 0f;
         while (t < fadeDuration)
         {
-            t += Time.unscaledDeltaTime;   // works even if you pause/time-scale
+            t += Time.unscaledDeltaTime;
             overlay.alpha = Mathf.Lerp(from, to, t / fadeDuration);
             yield return null;
         }

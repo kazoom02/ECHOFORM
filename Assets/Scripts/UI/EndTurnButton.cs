@@ -6,8 +6,12 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 #endif
 
-// Ends the player's turn. If CPU remains, asks for confirmation first so
-// controller shortcuts and mouse clicks cannot accidentally waste pips.
+// =====================================================
+// ECHOFORM — EndTurnButton
+// Gere o botão de fim de turno e pede confirmação quando o jogador ainda
+// dispõe de ciclos de CPU que seriam desperdiçados.
+// =====================================================
+
 [RequireComponent(typeof(Button))]
 public class EndTurnButton : MonoBehaviour
 {

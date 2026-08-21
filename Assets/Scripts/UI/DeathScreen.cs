@@ -4,17 +4,8 @@ using UnityEngine.SceneManagement;
 
 // =====================================================
 // ECHOFORM — DeathScreen
-// Watches a CombatManager; when it reaches Lose (Vestige dies), it waits a
-// beat so the death animation can play, then FADES a "You died" panel to
-// black. The Next button loads the Main Menu.
-//
-// Mirrors WalkOffOnVictory: it self-subscribes to OnStateChanged, so nothing
-// needs wiring on CombatManager. Assign the CombatManager, the panel root and
-// the Main Menu scene name; hook the Next button's OnClick to OnNextPressed().
-//
-// The fade uses a CanvasGroup on the panel. Put a full-screen black Image plus
-// the "You Died" text inside the panel, add a CanvasGroup to the panel, and it
-// all fades in together. Uses unscaled time so it works even if the game pauses.
+// Deteta a derrota no combate, aguarda pela animação de morte, apresenta
+// o ecrã de fim de jogo e permite regressar ao menu principal.
 // =====================================================
 
 public class DeathScreen : MonoBehaviour
@@ -24,9 +15,9 @@ public class DeathScreen : MonoBehaviour
     [SerializeField] private CombatManager combat;
 
     [Header("UI")]
-    [Tooltip("The 'You died' panel (black background + text). Hidden on Awake, shown on death.")]
+    [Tooltip("The 'You died' panel")]
     [SerializeField] private GameObject root;
-    [Tooltip("CanvasGroup on the panel — its alpha is faded 0 -> 1. Auto-found on root if left empty.")]
+    [Tooltip("CanvasGroup on the panel. Auto-found on root if left empty.")]
     [SerializeField] private CanvasGroup fadeGroup;
     [Tooltip("Seconds to wait after death before the fade starts, so the death animation can play.")]
     [SerializeField] private float showDelay = 1.5f;
@@ -54,7 +45,7 @@ public class DeathScreen : MonoBehaviour
         if (combat != null)
         {
             combat.OnStateChanged += OnCombatState;
-            if (combat.State == CombatState.Lose) Trigger();   // already lost before this activated
+            if (combat.State == CombatState.Lose) Trigger();
         }
     }
 
@@ -83,7 +74,7 @@ public class DeathScreen : MonoBehaviour
         root.SetActive(true);
 
         if (fadeGroup == null)
-            yield break;                                   // no CanvasGroup: just pops on
+            yield break;
 
         float t = 0f;
         fadeGroup.alpha = 0f;
@@ -96,7 +87,6 @@ public class DeathScreen : MonoBehaviour
         fadeGroup.alpha = 1f;
     }
 
-    // Hook this to the Next button's OnClick (also callable from code).
     public void OnNextPressed()
     {
         if (string.IsNullOrEmpty(mainMenuScene))
@@ -104,7 +94,7 @@ public class DeathScreen : MonoBehaviour
             Debug.LogError("[Echoform] DeathScreen: no Main Menu scene set.");
             return;
         }
-        Time.timeScale = 1f;   // in case anything paused on death
+        Time.timeScale = 1f;
         SceneManager.LoadScene(mainMenuScene);
     }
 }

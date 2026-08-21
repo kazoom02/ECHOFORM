@@ -3,10 +3,8 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — Deck
-// Plain C# helper (not a MonoBehaviour) that manages the
-// draw pile, hand, discard and exhaust piles. Auto-reshuffles
-// discard into draw when empty. Supports generated mechanic chips
-// (AddToHand) and Loom "Glitch" corruption (AddToDiscard).
+// Gere as pilhas de compra, mão, descarte e exílio do baralho, incluindo
+// a compra, o baralhamento e a introdução de cartas geradas ou corrompidas.
 // =====================================================
 
 public class Deck
@@ -30,7 +28,7 @@ public class Deck
         {
             if (DrawPile.Count == 0)
             {
-                if (DiscardPile.Count == 0) break;   // truly out of cards
+                if (DiscardPile.Count == 0) break;
                 DrawPile.AddRange(DiscardPile);
                 DiscardPile.Clear();
                 Shuffle(DrawPile);
@@ -43,8 +41,7 @@ public class Deck
         OnChanged?.Invoke();
     }
 
-    /// <summary>Move a played card to discard or exhaust depending on its flag.</summary>
-    public void ResolvePlayed(CardData card)
+        public void ResolvePlayed(CardData card)
     {
         Hand.Remove(card);
         if (card.exhaustOnPlay) ExhaustPile.Add(card);
@@ -54,11 +51,10 @@ public class Deck
 
     public void DiscardHand(CardData retainedCard = null)
     {
-        // Corruption stays stuck in neural memory. A generated mechanic chip can
-        // also remain installed so it is available on the following turn.
+
         for (int i = Hand.Count - 1; i >= 0; i--)
         {
-            if (Hand[i] != null && Hand[i].isGlitch) continue;   // corrupted stays
+            if (Hand[i] != null && Hand[i].isGlitch) continue;
             if (retainedCard != null && Hand[i] == retainedCard) continue;
             DiscardPile.Add(Hand[i]);
             Hand.RemoveAt(i);
@@ -66,15 +62,13 @@ public class Deck
         OnChanged?.Invoke();
     }
 
-    /// <summary>Draw until the hand is refilled to the cap, leaving stuck corruption in place.</summary>
-    public void DrawUpTo(int handCap)
+        public void DrawUpTo(int handCap)
     {
         int need = handCap - Hand.Count;
         if (need > 0) Draw(need);
     }
 
-    /// <summary>Loom corruption: overwrite a random CLEAN slot with a glitch chip. Permanent until purged. Returns the hand slot, or -1 if nothing changed.</summary>
-    public int CorruptHand(CardData glitch, int handCap, CardData protectedCard = null)
+        public int CorruptHand(CardData glitch, int handCap, CardData protectedCard = null)
     {
         if (glitch == null) return -1;
 
@@ -83,16 +77,15 @@ public class Deck
             if ((Hand[i] == null || !Hand[i].isGlitch) && Hand[i] != protectedCard)
                 cleanSlots.Add(i);
 
-        if (cleanSlots.Count == 0) return -1;              // already fully corrupted
+        if (cleanSlots.Count == 0) return -1;
         int slot = cleanSlots[Random.Range(0, cleanSlots.Count)];
-        DiscardPile.Add(Hand[slot]);                        // displaced memory recirculates
-        Hand[slot] = glitch;                                // corruption takes the slot
+        DiscardPile.Add(Hand[slot]);
+        Hand[slot] = glitch;
         OnChanged?.Invoke();
         return slot;
     }
 
-    /// <summary>Counterplay: purge one corrupted chip from hand for the rest of combat. Returns true if one was removed.</summary>
-    public bool PurgeOneCorrupted()
+        public bool PurgeOneCorrupted()
     {
         for (int i = 0; i < Hand.Count; i++)
             if (Hand[i] != null && Hand[i].isGlitch)
@@ -105,22 +98,19 @@ public class Deck
         return false;
     }
 
-    /// <summary>Drop a generated mechanic chip straight into the hand.</summary>
-    public void AddToHand(CardData card)
+        public void AddToHand(CardData card)
     {
         Hand.Add(card);
         OnChanged?.Invoke();
     }
 
-    /// <summary>Consume a generated mechanic chip without putting it into the reusable deck.</summary>
-    public void ConsumeGenerated(CardData card)
+        public void ConsumeGenerated(CardData card)
     {
         Hand.Remove(card);
         OnChanged?.Invoke();
     }
 
-    /// <summary>Loom corruption: shove a Glitch card into the discard so it recirculates.</summary>
-    public void AddToDiscard(CardData card)
+        public void AddToDiscard(CardData card)
     {
         DiscardPile.Add(card);
         OnChanged?.Invoke();

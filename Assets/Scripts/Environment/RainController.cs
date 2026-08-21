@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-/// <summary>
-/// Creates a lightweight 2D rain effect at runtime. The emitter is placed on the
-/// ground line and spawns drops above itself across a configurable box area.
-/// Keeping the Particle System runtime-generated makes the effect easy to attach
-/// to an area without storing a large Particle System block in the scene file.
-/// </summary>
+// =====================================================
+// ECHOFORM — RainController
+// Cria e configura em tempo de execução um sistema de partículas de chuva
+// com intensidade, vento, aspeto e som ambiente ajustáveis.
+// =====================================================
+
 [DisallowMultipleComponent]
 public class RainController : MonoBehaviour
 {
@@ -36,8 +36,7 @@ public class RainController : MonoBehaviour
     [SerializeField] private ParticleSystem splashSystem;
     [SerializeField] private float splashesPerSecond = 40f;
 
-    /// <summary>World-space height where optional splash particles land.</summary>
-    public float SurfaceY { get; set; }
+        public float SurfaceY { get; set; }
 
     public float Intensity => isActiveAndEnabled ? intensity : 0f;
 
@@ -80,8 +79,7 @@ public class RainController : MonoBehaviour
             Destroy(runtimeMaterial);
     }
 
-    /// <summary>Sets rain strength at runtime (0 = clear, 1 = downpour).</summary>
-    public void SetIntensity(float value)
+        public void SetIntensity(float value)
     {
         intensity = Mathf.Clamp01(value);
 
@@ -184,9 +182,7 @@ public class RainController : MonoBehaviour
         var velocity = rainSystem.velocityOverLifetime;
         velocity.enabled = true;
         velocity.space = ParticleSystemSimulationSpace.World;
-        // Unity requires X, Y, and Z velocity curves to use one shared mode.
-        // Keep all three in Constant mode to avoid an invalid intermediate state
-        // while the module is configured one axis at a time.
+
         velocity.x = new ParticleSystem.MinMaxCurve(wind);
         velocity.y = new ParticleSystem.MinMaxCurve(-fallSpeed);
         velocity.z = new ParticleSystem.MinMaxCurve(0f);

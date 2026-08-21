@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-// The Merger has exactly three stages. Two surviving T1s become a T2,
-// and two surviving T2s become a T3. T3 is the final form.
+// =====================================================
+// ECHOFORM — Merger
+// Implementa o inimigo Merger, os seus três níveis de evolução e a fusão
+// de pares, atualizando atributos, apresentação e efeitos sonoros.
+// =====================================================
+
 public enum MergerTier
 {
     Tier1 = 0,
@@ -57,7 +61,6 @@ public class Merger : Enemy
     [SerializeField] private AudioClip deathSfx;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
-    // Set by CombatManager when this merger is scheduled to fuse.
     public bool IsFusing { get; set; }
 
     public MergerTier Tier => tier;
@@ -101,13 +104,10 @@ public class Merger : Enemy
         RollIntent();
     }
 
-    /// <summary>Sets up a merger created by the fusion phase.</summary>
-    public void Configure(MergerTier newTier, int hp)
+        public void Configure(MergerTier newTier, int hp)
     {
         tier = newTier;
 
-        // Carry surviving HP forward, but stabilize a newly fused body so the
-        // final tier cannot arrive almost dead after the player chipped its parts.
         int tierMaximum = MaxHpForTier(newTier);
         int minimumFusionHP = Mathf.CeilToInt(tierMaximum * fusionMinimumHealthPercent);
         int fusedHP = Mathf.Max(hp, minimumFusionHP);
@@ -130,8 +130,7 @@ public class Merger : Enemy
     public void PlayDeathSfx() =>
         SfxPlayer.PlayAt(deathSfx, sfxGroup, transform.position);
 
-    /// <summary>Returns the next tier, capped at the final T3 form.</summary>
-    public static MergerTier FusedTier(MergerTier a, MergerTier b)
+        public static MergerTier FusedTier(MergerTier a, MergerTier b)
     {
         int highestTier = Mathf.Max((int)a, (int)b);
         return (MergerTier)Mathf.Min(highestTier + 1, (int)MergerTier.Tier3);
@@ -192,11 +191,8 @@ public class Merger : Enemy
             _ => tier1Scale
         };
 
-        // Preserve the prefab's authored facing (its X scale may be negative).
         transform.localScale = authoredScale * scaleMultiplier;
 
-        // The Merger grows, but its world-space health UI remains readable and
-        // exactly the same size as it was at Tier 1.
         if (fixedScaleHealthBar != null && scaleMultiplier > 0f)
             fixedScaleHealthBar.localScale = authoredHealthBarScale / scaleMultiplier;
     }

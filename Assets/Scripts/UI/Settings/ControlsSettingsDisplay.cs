@@ -7,6 +7,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 #endif
 
+// =====================================================
+// ECHOFORM — ControlsSettingsDisplay
+// Deteta o último dispositivo utilizado e apresenta os comandos adequados
+// para teclado e rato, comando Xbox ou comando PlayStation.
+// =====================================================
+
 public enum ControlsDeviceFamily
 {
     KeyboardMouse,
@@ -14,8 +20,6 @@ public enum ControlsDeviceFamily
     PlayStation
 }
 
-// Tracks the last device that produced a button press even while the controls
-// page is hidden, so opening Settings with Escape/Options selects the right UI.
 public static class ControlsDeviceTracker
 {
     public static ControlsDeviceFamily Current { get; private set; } = ControlsDeviceFamily.KeyboardMouse;
@@ -54,7 +58,6 @@ public static class ControlsDeviceTracker
             description.Contains("wireless controller"))
             return ControlsDeviceFamily.PlayStation;
 
-        // Most generic PC gamepads expose the same south/east/north layout as Xbox.
         return ControlsDeviceFamily.Xbox;
     }
 #endif
@@ -146,8 +149,6 @@ public class ControlsSettingsDisplay : MonoBehaviour
 
         styleTemplate = content.GetComponentInChildren<TMP_Text>(true);
 
-        // The scene originally contained copied video-setting rows. Preserve
-        // them in the scene file but hide them at runtime for this controls page.
         for (int i = 0; i < content.childCount; i++)
             content.GetChild(i).gameObject.SetActive(false);
 

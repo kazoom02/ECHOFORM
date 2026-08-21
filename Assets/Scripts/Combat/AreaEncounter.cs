@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Defines the enemies for one in-scene area. The shared CombatManager still
-// owns the turn loop and EnemyRow. CombatManager starts the initially active
-// area, and AreaTransition starts each subsequent area after activating it.
+// =====================================================
+// ECHOFORM — AreaEncounter
+// Configura os inimigos e o ponto de controlo de cada área e inicia
+// o encontro correspondente no gestor de combate partilhado.
+// =====================================================
+
 public class AreaEncounter : MonoBehaviour
 {
     private const string Area1ObjectName = "Area1";
@@ -61,8 +64,7 @@ public class AreaEncounter : MonoBehaviour
 
     private void EnsureArea2VictoryExit()
     {
-        // The original Area 1 square is a scene root and otherwise remains
-        // armed by the shared CombatManager while testing Area 2 directly.
+
         EnsureArea1ExitGate();
 
         if (combat == null)
@@ -92,8 +94,6 @@ public class AreaEncounter : MonoBehaviour
             exit = exitObject.transform;
             exit.SetParent(transform, false);
 
-            // Area layouts overlap in world space, so mirror the existing Area 1
-            // exit boundary when available. The local fallback is Area 2's right edge.
             ExitTrigger template = FindExitTemplate();
             BoxCollider2D box = exitObject.AddComponent<BoxCollider2D>();
             box.isTrigger = true;

@@ -7,8 +7,12 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 #endif
 
-// Opens the in-game settings panel from keyboard/controller input.
-// Keep this on an always-active object, not on the panel it hides.
+// =====================================================
+// ECHOFORM — InGameSettingsPanelController
+// Abre e fecha as definições durante o jogo, gere a pausa e a navegação
+// e confirma a gravação antes do regresso ao menu principal.
+// =====================================================
+
 public class InGameSettingsPanelController : MonoBehaviour
 {
     [SerializeField] private GameObject settingsPanel;

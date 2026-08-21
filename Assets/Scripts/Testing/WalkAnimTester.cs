@@ -3,22 +3,9 @@ using UnityEngine.Playables;
 using UnityEngine.Animations;
 
 // =====================================================
-// ECHOFORM — WalkAnimTester  (TEMPORARY / debug only)
-// A throwaway toggle button to preview the WALK animation.
-// Walking loops, so this is a start/stop toggle (unlike the
-// one-shot AttackAnimTester).
-//
-// SETUP:
-//   1. Add this component to the character GameObject
-//      (the one with the Animator). It can sit alongside
-//      AttackAnimTester on the same object.
-//   2. Drag the Walking clip into "Walk Clip".
-//   3. Press Play → click "▶ Start Walk" (or press W) to loop
-//      it; click again / press W to stop and return to Idle.
-//
-// Plays the clip through a PlayableGraph, so it ignores your
-// Animator Controller. Delete before shipping. StartWalk() /
-// StopWalk() are public so you can hook them to UI Buttons.
+// ECHOFORM — WalkAnimTester
+// Ferramenta de teste que inicia e interrompe em repetição uma animação
+// de caminhada através de um PlayableGraph.
 // =====================================================
 
 [RequireComponent(typeof(Animator))]
@@ -47,7 +34,6 @@ public class WalkAnimTester : MonoBehaviour
         if (wKeyAlsoToggles && WPressedThisFrame())
             Toggle();
 
-        // Manual loop so it works even if the clip has Loop Time disabled.
         if (walking && walkClip != null && clipPlayable.IsValid())
         {
             double t = clipPlayable.GetTime();
@@ -62,7 +48,7 @@ public class WalkAnimTester : MonoBehaviour
 
         var style = new GUIStyle(GUI.skin.button) { fontSize = 20 };
         string label = walkClip == null ? "Assign a clip!" : (walking ? "■ Stop Walk" : "▶ Start Walk");
-        // sits just below AttackAnimTester's button (which is at y=20)
+
         if (GUI.Button(new Rect(20, 90, 230, 60), label, style))
             Toggle();
     }
@@ -99,7 +85,6 @@ public class WalkAnimTester : MonoBehaviour
         StopGraph();
         walking = false;
 
-        // Return to the Animator Controller (back to Idle).
         if (animator.runtimeAnimatorController != null)
             animator.Rebind();
     }
@@ -115,7 +100,6 @@ public class WalkAnimTester : MonoBehaviour
         StopWalk();
     }
 
-    // Input-backend agnostic (new Input System, legacy, or both).
     private static bool WPressedThisFrame()
     {
 #if ENABLE_INPUT_SYSTEM

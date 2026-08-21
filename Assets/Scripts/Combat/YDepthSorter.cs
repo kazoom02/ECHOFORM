@@ -2,16 +2,8 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — YDepthSorter
-// Drives a SpriteRenderer's sortingOrder from world Y so
-// things lower on screen draw IN FRONT — the same basis
-// CombatManager.RepositionEnemies uses for slimes
-// (sortingOrder = -y * 100). Put this on Vestige so that as
-// he walks into the row he passes in front of nearer slimes
-// and behind farther ones, instead of clipping through them.
-//
-// orderBias nudges ties: give Vestige a small positive bias
-// so when he stands at a slime's exact depth to attack it,
-// he renders just in front of it.
+// Calcula a ordem de desenho de um SpriteRenderer a partir da posição
+// vertical no mundo, garantindo a sobreposição correta das personagens.
 // =====================================================
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -32,7 +24,6 @@ public class YDepthSorter : MonoBehaviour
         if (source == null) source = transform;
     }
 
-    // LateUpdate: run after movement so the order reflects the final position.
     void LateUpdate()
     {
         if (sr == null) return;

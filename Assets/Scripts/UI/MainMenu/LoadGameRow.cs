@@ -5,12 +5,8 @@ using TMPro;
 
 // =====================================================
 // ECHOFORM — LoadGameRow
-// One clickable entry in the Load Game list. Put this on a
-// Button prefab with three TMP_Text children:
-//   nameLabel     -> the save's name
-//   playtimeLabel -> how long the player has played (e.g. "2h 15m")
-//   dateLabel     -> the date the save was created
-// LoadGameMenu spawns one per save and binds it.
+// Representa uma entrada selecionável do menu de carregamento e apresenta
+// o nome, o tempo de jogo e a data da gravação.
 // =====================================================
 
 [RequireComponent(typeof(Button))]
@@ -32,7 +28,7 @@ public class LoadGameRow : MonoBehaviour
 
     public void Bind(SaveSlot slot, Action<SaveSlot> onClick)
     {
-        if (button == null) button = GetComponent<Button>(); // in case Awake hasn't run yet
+        if (button == null) button = GetComponent<Button>();
         if (slot == null || slot.data == null) return;
 
         this.slot = slot;

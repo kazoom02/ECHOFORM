@@ -3,17 +3,8 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — WalkOffOnVictory
-// When its CombatManager reaches Win (all monsters dead), the character
-// auto-walks toward an off-screen target. It physically passes through
-// the ExitTrigger on the way, which fires the AreaTransition.
-//
-// Animation matches VestigeCombatAnimator: it drives the Animator with
-// Animator.Play(stateName) using the "Walk" / "Idle" states — no bool
-// parameters or transitions to wire, the states just need to exist.
-//
-// Put one per area (e.g. under the Area GameObject so it only runs while
-// that area is active). Assign that area's CombatManager and an
-// exitTarget placed past the ExitTrigger, off-camera.
+// Faz a personagem caminhar automaticamente até à saída após uma vitória,
+// permitindo que atravesse o gatilho responsável pela transição de área.
 // =====================================================
 
 public class WalkOffOnVictory : MonoBehaviour
@@ -34,7 +25,7 @@ public class WalkOffOnVictory : MonoBehaviour
 
     [Header("Animation (Animator.Play — same as VestigeCombatAnimator)")]
     [SerializeField] private Animator animator;
-    [SerializeField] private SpriteRenderer spriteRenderer;   // for facing (optional)
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [Tooltip("Animator state names — must exist in the character's controller.")]
     [SerializeField] private string walkState = "Walk";
     [SerializeField] private string idleState = "Idle";
@@ -83,9 +74,7 @@ public class WalkOffOnVictory : MonoBehaviour
         {
             combat.OnStateChanged -= OnCombatState;
             combat.OnStateChanged += OnCombatState;
-            // Area activation also replaces the previous area's Win state with
-            // a fresh encounter. Wait one frame before treating an existing Win
-            // as this area's victory, regardless of component callback order.
+
             StartCoroutine(CheckExistingVictoryNextFrame());
         }
     }
@@ -100,14 +89,9 @@ public class WalkOffOnVictory : MonoBehaviour
     {
         if (combat != null) combat.OnStateChanged -= OnCombatState;
 
-        // If this area is deactivated mid-walk (the swap), don't leave the
-        // shared character stuck in the Walk state.
         if (started) StopAndIdle();
     }
 
-    // Stop walking immediately and drop to Idle. Hook this to the
-    // AreaTransition's "On Swap" event so the character is idle the moment
-    // the next area appears.
     public void StopAndIdle()
     {
         StopAllCoroutines();
@@ -132,9 +116,6 @@ public class WalkOffOnVictory : MonoBehaviour
     {
         if (startDelay > 0f) yield return new WaitForSeconds(startDelay);
 
-        // The final hit can set CombatState.Win before Vestige has finished the
-        // attack/return animation. Wait for that choreography to release the
-        // Animator so its final Idle call cannot overwrite this victory walk.
         while (combatAnimator != null && combatAnimator.IsAnimating)
             yield return null;
 
@@ -155,7 +136,7 @@ public class WalkOffOnVictory : MonoBehaviour
             EnsureWalkState();
             Vector2 next = Vector2.MoveTowards(character.position, exitTarget.position,
                                                walkSpeed * Time.fixedDeltaTime);
-            if (body != null) body.MovePosition(next);   // MovePosition so 2D triggers fire
+            if (body != null) body.MovePosition(next);
             else character.position = next;
             yield return step;
         }
@@ -163,7 +144,6 @@ public class WalkOffOnVictory : MonoBehaviour
         Play(idleState);
     }
 
-    // Same approach as VestigeCombatAnimator: play a state directly by name.
     private void Play(string state)
     {
         if (animator != null && !string.IsNullOrEmpty(state)) animator.Play(state);
@@ -181,7 +161,7 @@ public class WalkOffOnVictory : MonoBehaviour
         if (dir == 0f) return;
         if (faceByFlipX && spriteRenderer != null)
         {
-            spriteRenderer.flipX = dir < 0f;             // assumes the art faces right
+            spriteRenderer.flipX = dir < 0f;
         }
         else
         {

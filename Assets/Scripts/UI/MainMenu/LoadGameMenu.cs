@@ -6,17 +6,8 @@ using TMPro;
 
 // =====================================================
 // ECHOFORM — LoadGameMenu
-// Lists every saved game from SaveSystem. If there are none,
-// it shows the "No games saved" label instead of a list.
-// Clicking a save loads its scene; the chosen SaveData is
-// stashed in SaveSystem-side PendingLoad so the gameplay
-// scene can restore from it.
-//
-// Inspector wiring:
-//   listContent   -> the Content transform of a ScrollView (or any
-//                    vertical layout group) that rows are spawned into
-//   rowPrefab     -> a Button prefab with a TMP_Text child label
-//   noSavesLabel  -> a GameObject with the "No games saved" text
+// Preenche o menu de carregamento com as gravações disponíveis e restaura
+// a partida selecionada na cena correspondente.
 // =====================================================
 
 public class LoadGameMenu : MonoBehaviour
@@ -28,12 +19,11 @@ public class LoadGameMenu : MonoBehaviour
     [SerializeField] private ScrollRect scrollRect;
 
     [Header("Empty state")]
-    [SerializeField] private GameObject noSavesLabel;   // "No games saved"
+    [SerializeField] private GameObject noSavesLabel;
 
     private readonly List<GameObject> spawnedRows = new List<GameObject>();
 
-    /// <summary>Set by a save row just before the scene loads, so gameplay can restore it.</summary>
-    public static SaveData PendingLoad { get; private set; }
+        public static SaveData PendingLoad { get; private set; }
 
     public static SaveData ConsumePendingLoad()
     {
@@ -66,7 +56,7 @@ public class LoadGameMenu : MonoBehaviour
         {
             if (rowPrefab == null || listContent == null) break;
             LoadGameRow row = Instantiate(rowPrefab, listContent);
-            row.gameObject.SetActive(true);   // ensure visible even if the prefab was saved inactive
+            row.gameObject.SetActive(true);
             row.Bind(slot, LoadSlot);
             spawnedRows.Add(row.gameObject);
         }
@@ -75,12 +65,11 @@ public class LoadGameMenu : MonoBehaviour
         UiSelectionHelper.SelectFirst(listContent != null ? listContent.gameObject : gameObject);
     }
 
-    /// <summary>Snap the list back to the top after it's rebuilt.</summary>
-    private void ScrollToTop()
+        private void ScrollToTop()
     {
         if (scrollRect == null) return;
-        Canvas.ForceUpdateCanvases();                 // make sure the layout is built first
-        scrollRect.verticalNormalizedPosition = 1f;   // 1 = top, 0 = bottom
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 1f;
     }
 
     private void LoadSlot(SaveSlot slot)

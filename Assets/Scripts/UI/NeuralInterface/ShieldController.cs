@@ -4,15 +4,8 @@ using UnityEngine.UI;
 
 // =====================================================
 // ECHOFORM — ShieldController
-// Player shields shown as up to N slots (max 4). Each shield
-// negates one full enemy hit. When the player gains a shield
-// the matching slot swaps to the "active" sprite (ShieldActivated);
-// empty slots show the inactive sprite or hide. Binds to the
-// PlayerCombatant and refreshes on OnStateChanged.
-//
-// Setup: make one Image per shield slot, drop this on a HUD
-// object, drag the slots into the array (index 0 fills first),
-// and assign Active Sprite (+ optional Inactive Sprite).
+// Apresenta os escudos do jogador em espaços individuais e atualiza o
+// estado visual de cada espaço quando os escudos são ganhos ou consumidos.
 // =====================================================
 
 public class ShieldController : MonoBehaviour
@@ -73,7 +66,7 @@ public class ShieldController : MonoBehaviour
             else
             {
                 if (inactiveSprite != null) { img.sprite = inactiveSprite; img.enabled = true; }
-                else img.enabled = false;   // no inactive art -> just hide the slot
+                else img.enabled = false;
             }
         }
     }

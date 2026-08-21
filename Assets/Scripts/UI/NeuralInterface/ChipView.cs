@@ -5,10 +5,8 @@ using TMPro;
 
 // =====================================================
 // ECHOFORM — ChipView
-// One memory-chip card sitting in the Neural rack.
-// Binds a CardData to the visuals and raises Clicked when
-// the player taps it. The glow Image should use the WHITE
-// glow sprite (Chip_Glow_White.png) so CardData.tint colors it.
+// Associa os dados de uma carta à apresentação de um chip na interface
+// e processa a seleção, o foco e a interação do ponteiro.
 // =====================================================
 
 [DisallowMultipleComponent]
@@ -18,16 +16,16 @@ public class ChipView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public CardData card;
 
     [Header("Visuals")]
-    [SerializeField] private Image baseImage;    // ChipCard_Base (the frame body)
-    [SerializeField] private Image artImage;    // Chip_Icon
-    [SerializeField] private Image glowImage;    // Chip_Glow (use the WHITE sprite so tint shows)
+    [SerializeField] private Image baseImage;
+    [SerializeField] private Image artImage;
+    [SerializeField] private Image glowImage;
     [SerializeField] private TMP_Text nameLabel;
     [SerializeField] private TMP_Text costLabel;
-    [SerializeField] private CanvasGroup group;  // whole-chip fade (optional)
+    [SerializeField] private CanvasGroup group;
 
     [Header("Corruption")]
-    [SerializeField] private Sprite normalFrame;   // = ChipCard_Base
-    [SerializeField] private Sprite glitchFrame;    // = ChipCard_Glitch (shown when card.isGlitch)
+    [SerializeField] private Sprite normalFrame;
+    [SerializeField] private Sprite glitchFrame;
 
     [Header("Controller selection")]
     [SerializeField] private Color controllerHighlightColor = new Color(0.25f, 1f, 1f, 1f);
@@ -39,8 +37,7 @@ public class ChipView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public RectTransform Rect => (RectTransform)transform;
     public CanvasGroup Group => group;
 
-    /// <summary>Raised when the player clicks this chip. The HUD listens.</summary>
-    public System.Action<ChipView> Clicked;
+        public System.Action<ChipView> Clicked;
     public System.Action<ChipView> Hovered;
 
     RectTransform controllerHighlight;
@@ -56,17 +53,16 @@ public class ChipView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         card = c;
         bool glitch = c.isGlitch;
-        bool isCopy = glitch && c.art != null;   // a corrupted duplicate keeps the source chip's art
+        bool isCopy = glitch && c.art != null;
 
-        // Corruption wears the glitch frame; a copy still shows the chip it was cloned from through it.
         if (baseImage && (normalFrame || glitchFrame))
             baseImage.sprite = glitch && glitchFrame ? glitchFrame : normalFrame;
 
         if (artImage)
         {
-            artImage.enabled = c.art != null;                       // copies show source art; generic glitch has none
+            artImage.enabled = c.art != null;
             artImage.sprite  = c.art;
-            artImage.color   = glitch ? CorruptRed : Color.white;   // redden a corrupted copy
+            artImage.color   = glitch ? CorruptRed : Color.white;
         }
         if (glowImage) { glowImage.enabled = !glitch; glowImage.color = c.tint; }
         if (nameLabel) { nameLabel.gameObject.SetActive(!glitch || isCopy); nameLabel.text = c.cardName; }
@@ -75,7 +71,6 @@ public class ChipView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void OnPointerClick(PointerEventData eventData) => Clicked?.Invoke(this);
 
-    // Hover: show a tooltip and move the selection rectangle under the mouse.
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (card != null) CardTooltip.Show(card);
@@ -89,7 +84,6 @@ public class ChipView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         SetPointerHovered(false);
     }
 
-    // Make sure the tooltip never lingers if this chip is played/destroyed while hovered.
     void OnDisable()
     {
         CardTooltip.Hide();

@@ -7,15 +7,8 @@ using UnityEngine.InputSystem;
 
 // =====================================================
 // ECHOFORM — MainMenuController
-// The title screen router.
-//   New Game  -> loads Area 1 (the FirstArea scene)
-//   Load Game -> opens the load panel (lists saves, or "No games saved")
-//   Settings  -> opens the settings panel
-//   Quit      -> exits the game
-//
-// Wire the four buttons and the two panels in the Inspector.
-// The root menu buttons live under 'mainPanel' so they can be
-// hidden while a sub-panel is open.
+// Controla a navegação do menu principal entre novo jogo, carregamento,
+// definições e saída da aplicação.
 // =====================================================
 
 public class MainMenuController : MonoBehaviour
@@ -28,9 +21,9 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private string introSceneName = "Intro";
 
     [Header("Panels")]
-    [SerializeField] private GameObject mainPanel;      // holds the four buttons
-    [SerializeField] private GameObject loadPanel;      // has a LoadGameMenu
-    [SerializeField] private GameObject settingsPanel;  // has a SettingsMenu
+    [SerializeField] private GameObject mainPanel;
+    [SerializeField] private GameObject loadPanel;
+    [SerializeField] private GameObject settingsPanel;
 
     [Header("Buttons")]
     [SerializeField] private Button newGameButton;
@@ -80,15 +73,12 @@ public class MainMenuController : MonoBehaviour
             ShowMain();
     }
 
-    // ---- Button actions (also assignable from the Inspector OnClick) ----
-
     public void OnNewGame()
     {
         LoadGameMenu.ClearPendingLoad();
         SaveSystem.DeleteAll();
         PlayTimeTracker.EnsureInstance().BeginNewRun();
 
-        // Play the intro video first if set; otherwise jump straight to Area 1.
         string target = !string.IsNullOrEmpty(introSceneName) ? introSceneName : area1SceneName;
         if (string.IsNullOrEmpty(target))
         {
@@ -101,7 +91,7 @@ public class MainMenuController : MonoBehaviour
     public void OnLoadGame()
     {
         SetPanel(loadPanel);
-        if (loadGameMenu != null) loadGameMenu.Refresh(); // rebuild the list each time it opens
+        if (loadGameMenu != null) loadGameMenu.Refresh();
     }
 
     public void OnSettings() => SetPanel(settingsPanel);
@@ -116,10 +106,7 @@ public class MainMenuController : MonoBehaviour
 #endif
     }
 
-    // ---- Panel switching ----
-
-    /// <summary>Called by the Back button on the sub-panels.</summary>
-    public void ShowMain() => SetPanel(mainPanel);
+        public void ShowMain() => SetPanel(mainPanel);
 
     private void SetPanel(GameObject panel)
     {

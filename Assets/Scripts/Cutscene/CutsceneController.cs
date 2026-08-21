@@ -10,18 +10,8 @@ using UnityEngine.InputSystem;
 
 // =====================================================
 // ECHOFORM — CutsceneController
-// Plays a sequence of videos. Over each video one or more
-// text "pages" are shown. The player advances with the
-// on-screen Continue button, the gamepad south button
-// (A on Xbox / Cross on PlayStation), or Space/Enter.
-//
-//   Advance rules:
-//     - more pages left on this video?  -> show next page
-//     - otherwise more videos left?     -> play next video (page 0)
-//     - otherwise                       -> load 'nextScene'
-//
-// Build the scene with Tools > ECHOFORM > Build Scenematic Scene,
-// then assign your 8 clips + their text pages on this component.
+// Reproduz uma sequência de vídeos com páginas de texto, processa os
+// comandos de avanço e carrega a cena seguinte no fim.
 // =====================================================
 
 public class CutsceneController : MonoBehaviour
@@ -84,9 +74,6 @@ public class CutsceneController : MonoBehaviour
         AutoAdvancePages();
     }
 
-    // Spreads a clip's text pages evenly across the video's length so they all
-    // appear before it ends. Only walks the pages forward — the video's end event
-    // handles moving on to the next clip. Manual advances still take priority.
     private void AutoAdvancePages()
     {
         if (videoPlayer == null || !videoPlayer.isPlaying) return;
@@ -96,7 +83,7 @@ public class CutsceneController : MonoBehaviour
         if (pageCount <= 1) return;
 
         double length = videoPlayer.length;
-        if (length <= 0.0) return;                 // not known until the clip is prepared
+        if (length <= 0.0) return;
 
         double perPage = length / pageCount;
         int target = pageIndex;
@@ -110,12 +97,11 @@ public class CutsceneController : MonoBehaviour
         }
     }
 
-    // True on the frame the player presses a "confirm/continue" input.
     private bool ConfirmPressed()
     {
 #if ENABLE_INPUT_SYSTEM
         Gamepad pad = Gamepad.current;
-        if (pad != null && pad.buttonSouth.wasPressedThisFrame) return true; // A (Xbox) / Cross (PS)
+        if (pad != null && pad.buttonSouth.wasPressedThisFrame) return true;
 
         Keyboard kb = Keyboard.current;
         if (kb != null && (kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame)) return true;
@@ -137,7 +123,7 @@ public class CutsceneController : MonoBehaviour
         {
             videoPlayer.Stop();
             videoPlayer.clip = seg.clip;
-            videoPlayer.isLooping = false;   // play once, then hold the last frame until the player advances
+            videoPlayer.isLooping = false;
             videoPlayer.Play();
         }
 
@@ -151,8 +137,6 @@ public class CutsceneController : MonoBehaviour
         if (captionText != null) captionText.text = page;
     }
 
-    // Fires when a (non-looping) video reaches its end. Auto-advances only when the
-    // last text page for this clip is already showing, so short clips never skip unread text.
     private void OnVideoEnd(VideoPlayer source)
     {
         if (finished) return;
@@ -162,14 +146,12 @@ public class CutsceneController : MonoBehaviour
         if (onLastPage) Advance();
     }
 
-    /// <summary>Advance the sequence. Also hooked to the Continue button's OnClick.</summary>
-    public void Advance()
+        public void Advance()
     {
         if (finished) return;
 
         Segment seg = segments[segmentIndex];
 
-        // Another text page on the current video?
         if (seg.pages != null && pageIndex + 1 < seg.pages.Length)
         {
             pageIndex++;
@@ -177,7 +159,6 @@ public class CutsceneController : MonoBehaviour
             return;
         }
 
-        // Another video in the sequence?
         if (segmentIndex + 1 < segments.Length)
         {
             PlaySegment(segmentIndex + 1);

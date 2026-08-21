@@ -5,19 +5,8 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — PlayerClone
-// Area 3 boss: a literal copy of the player. CombatManager hands it a fresh
-// copy of the player's deck at combat start. On its turn it draws a hand and
-// plays cards until it runs out of energy — DealDamage hits Vestige, while
-// GainBlock / GainShield / Heal / GainFocus / DrawCards / GainEnergy /
-// DuplicateCard apply to the Clone itself. A true mirror match.
-//
-// Animation follows the same Animator.Play(stateName) convention as
-// VestigeCombatAnimator: the CloneController just needs states named to match
-// the fields below (Idle / Attack / Walk). Idle plays by default; Attack fires
-// when the Clone plays a damage card.
-//
-// Drop it into an Area 3 scene and add it to the CombatManager's Starting
-// Enemies. Set its Max HP in the Inspector (defaults to 90).
+// Implementa o clone do jogador, que copia o baralho e executa cartas
+// durante o próprio turno, com atributos e animações de combate próprios.
 // =====================================================
 
 public class PlayerClone : Enemy
@@ -75,7 +64,7 @@ public class PlayerClone : Enemy
 
     protected override void Awake()
     {
-        if (maxHP <= 10) maxHP = 90;          // boss default if left at the base value
+        if (maxHP <= 10) maxHP = 90;
         base.Awake();
         if (animator == null) animator = GetComponent<Animator>();
         if (melee == null)    melee = GetComponent<EnemyMeleeAnimator>();
@@ -83,8 +72,7 @@ public class PlayerClone : Enemy
         if (deck == null && deckOverride.Count > 0) deck = new Deck(deckOverride);
     }
 
-    /// <summary>Give the Clone a fresh copy of the player's deck. Called by CombatManager at combat start.</summary>
-    public void InitDeck(IEnumerable<CardData> playerDeck)
+        public void InitDeck(IEnumerable<CardData> playerDeck)
     {
         if (playerDeck != null) deck = new Deck(playerDeck);
         lastPlayed = null;
@@ -92,11 +80,10 @@ public class PlayerClone : Enemy
 
     public override void RollIntent()
     {
-        intentType = IntentType.Attack;   // it always acts on its turn
-        intentValue = 0;                  // variable — it plays a whole hand
+        intentType = IntentType.Attack;
+        intentValue = 0;
     }
 
-    // Player attacks the Clone: a shield eats one whole hit, else normal block-then-HP.
     public override DamageResult TakeDamage(int amount)
     {
         amount = Mathf.Max(0, amount);
@@ -106,18 +93,17 @@ public class PlayerClone : Enemy
         {
             Shields--;
             OnStateChanged?.Invoke();
-            return DamageResult.Survived;   // shield absorbs the whole hit, then breaks
+            return DamageResult.Survived;
         }
         return base.TakeDamage(amount);
     }
 
-    /// <summary>Run the Clone's whole turn: reset block, draw a hand, play cards vs the player.</summary>
-    public IEnumerator TakeTurn(PlayerCombatant player, System.Action<string> log)
+        public IEnumerator TakeTurn(PlayerCombatant player, System.Action<string> log)
     {
         if (IsDead) yield break;
         if (deck == null) { log?.Invoke($"{DisplayName} has no deck."); yield break; }
 
-        Block = 0;                    // block is fresh each of the Clone's own turns
+        Block = 0;
         Energy = energyPerTurn;
         deck.DrawUpTo(handSize);
         OnStateChanged?.Invoke();
@@ -125,7 +111,7 @@ public class PlayerClone : Enemy
         for (int move = 0; move < movesPerTurn; move++)
         {
             CardData card = ChooseCard();
-            if (card == null) break;   // nothing affordable / playable left
+            if (card == null) break;
 
             Energy -= card.energyCost;
 
@@ -134,13 +120,12 @@ public class PlayerClone : Enemy
 
             if (isAttack && melee != null)
             {
-                // reuse the enemy walk-in / attack / walk-back choreography;
-                // the card resolves on the hit frame
+
                 yield return melee.PlayAttack(player.transform, () => ResolveCard(card, player, log));
             }
             else
             {
-                if (isAttack) Play(attackState);   // no melee animator: swing in place
+                if (isAttack) Play(attackState);
                 ResolveCard(card, player, log);
                 if (isAttack && attackHold > 0f) yield return new WaitForSeconds(attackHold);
                 Play(idleState);
@@ -151,7 +136,7 @@ public class PlayerClone : Enemy
             deck.ResolvePlayed(card);
             OnStateChanged?.Invoke();
 
-            if (player.IsDead) yield break;                          // killed Vestige — stop instantly
+            if (player.IsDead) yield break;
             if (playInterval > 0f) yield return new WaitForSeconds(playInterval);
         }
 
@@ -165,8 +150,6 @@ public class PlayerClone : Enemy
         if (deathPlayed) yield break;
         deathPlayed = true;
 
-        // Detached playback lets the full clip finish even when combat removes
-        // the Clone immediately after its death animation completes.
         if (sfx != null) sfx.PlayDetached(deathSfx);
 
         if (animator == null) animator = GetComponent<Animator>();
@@ -191,7 +174,6 @@ public class PlayerClone : Enemy
         }
     }
 
-    // Same approach as VestigeCombatAnimator: play a state directly by name.
     private void Play(string state)
     {
         if (animator != null && !string.IsNullOrEmpty(state)) animator.Play(state);
@@ -211,7 +193,6 @@ public class PlayerClone : Enemy
         return Mathf.Max(0.05f, fallback);
     }
 
-    // Pick a random affordable, non-glitch card; never gain shields when already capped.
     private CardData ChooseCard()
     {
         var playable = deck.Hand.Where(CanChooseCard).ToList();
@@ -231,7 +212,6 @@ public class PlayerClone : Enemy
         return true;
     }
 
-    // Card effects from the Clone's perspective: damage -> player, everything else -> self.
     private void ResolveCard(CardData card, PlayerCombatant player, System.Action<string> log)
     {
         foreach (var effect in card.effects)

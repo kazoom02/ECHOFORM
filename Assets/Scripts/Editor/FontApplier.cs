@@ -5,25 +5,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // =====================================================
-// ECHOFORM — FontApplier  (Editor tool)
-// Tools ▸ ECHOFORM ▸ Apply Fonts
-// Assigns the display font (Chakra Petch) to every TMP text,
-// and the mono/terminal font (Share Tech Mono) to system-
-// readout texts (matched by GameObject name). Runs across all
-// open scenes AND every prefab under Assets, and sets the TMP
-// project default so new text uses the display font too.
-//
-// Setting .font (not the material directly) makes TMP swap the
-// font's material for us — no garbled atlas mismatches.
+// ECHOFORM — FontApplier
+// Ferramenta do Editor que aplica as fontes do projeto aos textos TMP
+// das cenas e dos prefabs e atualiza a fonte predefinida.
 // =====================================================
 
 public static class FontApplier
 {
-    // Move these if your SDF assets live elsewhere.
+
     const string DisplayPath = "Assets/TextMesh Pro/Fonts/ChakraPetch-Regular SDF.asset";
     const string MonoPath    = "Assets/TextMesh Pro/Fonts/ShareTechMono-Regular SDF.asset";
 
-    // GameObjects whose name contains any of these get the MONO (terminal) font.
     static readonly string[] MonoKeywords =
         { "install", "copy", "overload", "cpu", "cycle", "cost", "log", "readout", "terminal", "data", "count" };
 
@@ -41,7 +33,6 @@ public static class FontApplier
 
         int count = 0;
 
-        // ---- open scenes ----
         for (int s = 0; s < SceneManager.sceneCount; s++)
         {
             var scene = SceneManager.GetSceneAt(s);
@@ -51,7 +42,6 @@ public static class FontApplier
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        // ---- prefabs under Assets (skip the TMP package examples) ----
         foreach (var guid in AssetDatabase.FindAssets("t:Prefab"))
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
@@ -63,7 +53,6 @@ public static class FontApplier
             PrefabUtility.UnloadPrefabContents(root);
         }
 
-        // ---- TMP project default (new text objects) ----
         var settings = TMP_Settings.instance;
         if (settings != null)
         {
@@ -85,7 +74,7 @@ public static class FontApplier
             TMP_FontAsset chosen = IsMono(t.gameObject.name) ? mono : display;
             if (t.font != chosen)
             {
-                t.font = chosen;                // also swaps to the font's material
+                t.font = chosen;
                 EditorUtility.SetDirty(t);
                 n++;
             }

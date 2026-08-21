@@ -4,10 +4,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 #endif
 
-/// <summary>
-/// Animates scene-owned credits UI. All presentation and text live in the
-/// Credits scene; this component only moves/fades the assigned RectTransform.
-/// </summary>
+// =====================================================
+// ECHOFORM — CreditsScreen
+// Anima a passagem vertical e o esbatimento dos créditos, permite saltar
+// a sequência e regressa ao menu principal quando esta termina.
+// =====================================================
+
 public sealed class CreditsScreen : MonoBehaviour
 {
     [Header("Scene References")]
@@ -76,9 +78,6 @@ public sealed class CreditsScreen : MonoBehaviour
         if (creditsText != null)
         {
             Vector2 position = creditsText.anchoredPosition;
-            // Resolve the smaller value as the bottom and the larger value as
-            // the top, then always travel upward even if Inspector values are
-            // accidentally entered in reverse.
             float resolvedTop = Mathf.Max(topY, bottomY);
             float resolvedBottom = Mathf.Min(topY, bottomY);
             position.y = Mathf.LerpUnclamped(resolvedBottom, resolvedTop, SmoothStep(progress));

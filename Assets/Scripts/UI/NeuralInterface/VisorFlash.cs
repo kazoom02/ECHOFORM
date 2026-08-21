@@ -4,15 +4,14 @@ using UnityEngine.UI;
 
 // =====================================================
 // ECHOFORM — VisorFlash
-// Flashes Vestige's visor cyan when a memory installs.
-// Put an Image over the visor (or a full-screen overlay
-// Image) and assign it. Call Flash() to trigger.
+// Faz a viseira do Vestige emitir um breve clarão ciano quando uma memória
+// é instalada.
 // =====================================================
 
 public class VisorFlash : MonoBehaviour
 {
-    [SerializeField] private Image visor;                                   // image tinted during the flash
-    [SerializeField] private Color flashColor = new Color(0.04f, 1f, 1f);   // cyan
+    [SerializeField] private Image visor;
+    [SerializeField] private Color flashColor = new Color(0.04f, 1f, 1f);
     [SerializeField] private float peakAlpha = 0.9f;
     [SerializeField] private float flashIn  = 0.05f;
     [SerializeField] private float flashOut = 0.28f;

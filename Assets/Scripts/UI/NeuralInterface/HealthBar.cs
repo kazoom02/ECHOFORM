@@ -4,25 +4,17 @@ using TMPro;
 
 // =====================================================
 // ECHOFORM — HealthBar
-// One bar for both sides. Drop it under a PlayerCombatant
-// or an Enemy and it auto-finds the combatant in its parents
-// and subscribes to OnStateChanged — no per-instance wiring,
-// so every split child gets its own bar for free.
-//
-// Setup: fill = an Image with Image Type = Filled, Fill Method
-// = Horizontal (use InstallBar_Fill). Optional: a block Image
-// (drawn as an extra segment) and TMP labels for HP / block.
-// For spawned enemies where the bar is created separately,
-// call Bind(enemy) / Bind(player) explicitly instead.
+// Apresenta a vida e o bloqueio do jogador ou de um inimigo e atualiza
+// automaticamente os valores quando o estado do combatente se altera.
 // =====================================================
 
 public class HealthBar : MonoBehaviour
 {
     [Header("Visuals")]
-    [SerializeField] private Image fill;          // Image Type = Filled, Horizontal
-    [SerializeField] private Image blockFill;     // optional: shown when Block > 0
-    [SerializeField] private TMP_Text hpLabel;    // optional: "24/24"
-    [SerializeField] private TMP_Text blockLabel; // optional: block value; hidden at 0
+    [SerializeField] private Image fill;
+    [SerializeField] private Image blockFill;
+    [SerializeField] private TMP_Text hpLabel;
+    [SerializeField] private TMP_Text blockLabel;
 
     [Header("Feel")]
     [Tooltip("How fast the fill chases the real value. 0 = snap instantly.")]
@@ -36,10 +28,9 @@ public class HealthBar : MonoBehaviour
     [Tooltip("If on, find a PlayerCombatant or Enemy in this object's parents on Awake.")]
     [SerializeField] private bool autoBind = true;
 
-    // pull the live values without caring which type we bound to
     System.Func<int> getHP, getMax, getBlock;
     System.Action unsubscribe;
-    float shown = 1f;   // the fraction currently displayed (for lerp)
+    float shown = 1f;
 
     void Awake()
     {
@@ -79,7 +70,6 @@ public class HealthBar : MonoBehaviour
 
     void OnDestroy() => Unbind();
 
-    // Snap the displayed fill to the true value with no animation (on bind).
     void SnapAndRefresh()
     {
         shown = TargetFraction();
@@ -93,8 +83,6 @@ public class HealthBar : MonoBehaviour
         return Mathf.Clamp01(getHP() / (float)max);
     }
 
-    // Called on every OnStateChanged: update text + block instantly; the
-    // fill itself eases toward the value in Update for a smooth drain.
     void Refresh()
     {
         if (getMax == null) return;

@@ -2,6 +2,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// =====================================================
+// ECHOFORM — UiSelectionHelper
+// Disponibiliza funções comuns para selecionar e restaurar o primeiro
+// elemento interativo válido de um painel da interface.
+// =====================================================
+
 public static class UiSelectionHelper
 {
     public static void SelectFirst(GameObject root, GameObject preferred = null)

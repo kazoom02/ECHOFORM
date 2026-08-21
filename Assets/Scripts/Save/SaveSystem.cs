@@ -5,26 +5,20 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — SaveSystem
-// Lightweight foundation for save slots. Right now it just
-// lists and loads slots stored as JSON in persistentDataPath;
-// there are no saves yet, so LoadGameMenu will correctly show
-// "No games saved" until you call SaveSystem.Save(...).
-//
-// Later, fill SaveData with real run state (deck, HP, fight
-// index, etc.) and call SaveSystem.Save() from your combat/run
-// code. The menu layer doesn't need to change.
+// Guarda, enumera, carrega e elimina o progresso da partida em ficheiros
+// JSON, incluindo a gestão da gravação atualmente selecionada.
 // =====================================================
 
 [Serializable]
 public class SaveData
 {
     public int saveVersion = 1;
-    public string slotName = "New Run";   // shown in the Load menu
-    public string sceneName = "FirstArea"; // scene to resume into
-    public string createdAtIso = "";       // when the run was first created (ISO 8601)
-    public string savedAtIso = "";         // when it was last saved (ISO 8601)
-    public float playSeconds = 0f;         // total time played, in seconds
-    public int fightIndex = 0;             // example run state — expand freely
+    public string slotName = "New Run";
+    public string sceneName = "FirstArea";
+    public string createdAtIso = "";
+    public string savedAtIso = "";
+    public float playSeconds = 0f;
+    public int fightIndex = 0;
     public bool hasPlayerState = false;
     public int playerHP = 0;
     public int playerShields = 0;
@@ -40,8 +34,7 @@ public class SaveData
     public DateTime SavedAt =>
         DateTime.TryParse(savedAtIso, out var dt) ? dt : DateTime.MinValue;
 
-    /// <summary>Playtime formatted like "2h 15m" or "8m 03s".</summary>
-    public string PlayTimeText
+        public string PlayTimeText
     {
         get
         {
@@ -53,7 +46,6 @@ public class SaveData
     }
 }
 
-/// <summary>One save file on disk: its data plus the file path it came from.</summary>
 public class SaveSlot
 {
     public string filePath;
@@ -70,8 +62,7 @@ public static class SaveSystem
 
     private static string SaveDir => Path.Combine(Application.persistentDataPath, Folder);
 
-    /// <summary>All saved games on disk, newest first. Empty list = no saves.</summary>
-    public static List<SaveSlot> ListSaves()
+        public static List<SaveSlot> ListSaves()
     {
         var slots = new List<SaveSlot>();
         if (!Directory.Exists(SaveDir)) return slots;
@@ -92,14 +83,13 @@ public static class SaveSystem
             }
         }
 
-        slots.Sort((a, b) => b.data.SavedAt.CompareTo(a.data.SavedAt)); // newest first
+        slots.Sort((a, b) => b.data.SavedAt.CompareTo(a.data.SavedAt));
         return slots;
     }
 
     public static bool HasAnySave() => ListSaves().Count > 0;
 
-    /// <summary>Write a save. Pass a stable id (e.g. "slot1" or a run guid) to overwrite a slot.</summary>
-    public static void Save(SaveData data, string saveId = null)
+        public static void Save(SaveData data, string saveId = null)
     {
         if (data == null) throw new ArgumentNullException(nameof(data));
 
@@ -115,18 +105,14 @@ public static class SaveSystem
             if (previous != null) data.createdAtIso = previous.createdAtIso;
         }
 
-        if (string.IsNullOrEmpty(data.createdAtIso)) data.createdAtIso = now; // set once, on first save
+        if (string.IsNullOrEmpty(data.createdAtIso)) data.createdAtIso = now;
         data.savedAtIso = now;
 
         File.WriteAllText(path, JsonUtility.ToJson(data, true));
         Debug.Log($"[Echoform] Saved '{data.slotName}' to {path}");
     }
 
-    /// <summary>
-    /// ECHOFORM has one active run. Every Area overwrites this same file, and
-    /// legacy/test slots are removed so Load Game always shows one row.
-    /// </summary>
-    public static void SaveCurrentRun(SaveData data)
+        public static void SaveCurrentRun(SaveData data)
     {
         data.slotName = $"Area {Mathf.Max(0, data.fightIndex) + 1}";
         Save(data, CurrentRunId);
@@ -137,8 +123,7 @@ public static class SaveSystem
                 Delete(file);
     }
 
-    /// <summary>Read a save back from its file path (from a SaveSlot). Null if it fails.</summary>
-    public static SaveData Load(string filePath)
+        public static SaveData Load(string filePath)
     {
         try
         {

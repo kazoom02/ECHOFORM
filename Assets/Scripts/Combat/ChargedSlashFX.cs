@@ -4,14 +4,8 @@ using UnityEngine.Audio;
 
 // =====================================================
 // ECHOFORM — ChargedSlashFX
-// Fire-and-forget controller for the charged katana slash VFX.
-// Sits on the slash prefab (Sprite Renderer + Animator running
-// the non-looping ChargedSlash clip). It plays once, then
-// destroys itself when the clip ends — no manual cleanup.
-//
-// Spawn it from combat code with the static Play() helper:
-//   ChargedSlashFX.Play(slashPrefab, hitPos, flipX: facingLeft);
-// With Fit To Camera on, it auto-scales to fill the screen.
+// Controla o efeito visual do golpe carregado, ajusta-o à câmara,
+// reproduz o som associado e destrói-o no fim da animação.
 // =====================================================
 
 [RequireComponent(typeof(Animator))]
@@ -53,7 +47,6 @@ public class ChargedSlashFX : MonoBehaviour
         if (overrideSortingOrder && sr != null)
             sr.sortingOrder = sortingOrder;
 
-        // charged slash SFX — detached so it finishes even after this VFX self-destructs
         SfxPlayer.PlayAt(slashSfx, sfxGroup, transform.position, sfxVolume);
     }
 
@@ -63,9 +56,6 @@ public class ChargedSlashFX : MonoBehaviour
         StartCoroutine(DestroyWhenDone());
     }
 
-    // Scale the slash so it covers the whole camera view, then center it.
-    // Runs one frame late so the Animator has assigned the first sprite
-    // (all frames share the same size, so any frame gives correct bounds).
     private IEnumerator FitToCameraRoutine()
     {
         yield return null;
@@ -73,7 +63,7 @@ public class ChargedSlashFX : MonoBehaviour
         Camera cam = fitCamera != null ? fitCamera : Camera.main;
         if (cam == null || sr == null || sr.sprite == null) yield break;
 
-        Vector2 sprite = sr.sprite.bounds.size;          // world units at scale 1
+        Vector2 sprite = sr.sprite.bounds.size;
         if (sprite.x <= 0f || sprite.y <= 0f) yield break;
 
         float worldH, worldW;
@@ -93,13 +83,13 @@ public class ChargedSlashFX : MonoBehaviour
         float signX = Mathf.Sign(transform.localScale.x == 0f ? 1f : transform.localScale.x);
         transform.localScale = new Vector3(s * signX, s, 1f);
 
-        Vector3 c = cam.transform.position;              // center on the view
+        Vector3 c = cam.transform.position;
         transform.position = new Vector3(c.x, c.y, transform.position.z);
     }
 
     private IEnumerator DestroyWhenDone()
     {
-        // Wait one frame so the Animator reports a valid current state.
+
         yield return null;
 
         float life = fallbackLifetime;
@@ -120,14 +110,6 @@ public class ChargedSlashFX : MonoBehaviour
         while (this != null) yield return null;
     }
 
-    // -----------------------------------------------------
-    // Spawn a slash instance. Returns the spawned component so the
-    // caller can tweak it further if needed.
-    //   position : world-space anchor (ignored if Fit To Camera is on)
-    //   flipX    : mirror horizontally
-    //   scale    : uniform scale multiplier (ignored if Fit To Camera is on)
-    //   parent   : optional parent transform (null = world root)
-    // -----------------------------------------------------
     public static ChargedSlashFX Play(
         ChargedSlashFX prefab,
         Vector3 position,

@@ -2,7 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Area 3 clone shield UI. Swaps the shield icon sprite and shows a stack count for 2+ shields.
+// =====================================================
+// ECHOFORM — CloneShieldDisplay
+// Apresenta na interface a quantidade de escudos do clone e atualiza
+// o ícone e o valor sempre que o estado do inimigo se altera.
+// =====================================================
+
 public class CloneShieldDisplay : MonoBehaviour
 {
     [Header("Binding")]

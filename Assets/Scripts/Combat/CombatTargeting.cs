@@ -6,16 +6,13 @@ using UnityEngine.InputSystem;
 
 // =====================================================
 // ECHOFORM — CombatTargeting
-// Runs the "pick an enemy" step for single-target chips.
-// While active it raycasts the mouse against enemy colliders,
-// shows the hover border, and reports the click. Right-click
-// or Escape cancels. Works with either the legacy Input
-// Manager or the new Input System package.
+// Gere a seleção de inimigos para cartas de alvo único através do rato,
+// teclado ou comando, incluindo realce, confirmação e cancelamento.
 // =====================================================
 
 public class CombatTargeting : MonoBehaviour
 {
-    [SerializeField] private Camera cam;   // defaults to Camera.main
+    [SerializeField] private Camera cam;
 
     public bool IsTargeting { get; private set; }
 
@@ -31,8 +28,7 @@ public class CombatTargeting : MonoBehaviour
         if (cam == null) cam = Camera.main;
     }
 
-    /// <summary>Enter targeting mode. onPicked fires with the chosen enemy; onCancel if the player backs out.</summary>
-    public void Begin(Action<Enemy> picked, Action cancelled = null)
+        public void Begin(Action<Enemy> picked, Action cancelled = null)
     {
         onPicked = picked;
         onCancel = cancelled;
@@ -47,7 +43,6 @@ public class CombatTargeting : MonoBehaviour
         if (!IsTargeting) return;
         if (cam == null) cam = Camera.main;
 
-        // cancel with right-click or Escape
         if (CancelPressed())
         {
             var cancel = onCancel;
@@ -60,7 +55,6 @@ public class CombatTargeting : MonoBehaviour
         if (direction != 0)
             CycleControllerTarget(direction);
 
-        // hover: raycast the mouse into the 2D world when the mouse is being used
         if (cam != null && MouseMovedOrClicked())
         {
             EnemySelectable sel = null;
@@ -73,7 +67,6 @@ public class CombatTargeting : MonoBehaviour
             SelectControllerTarget(sel);
         }
 
-        // confirm with left-click or gamepad south button on a highlighted enemy
         if (hovered != null && ConfirmPressed())
         {
             Enemy picked = hovered.Enemy;
@@ -83,9 +76,7 @@ public class CombatTargeting : MonoBehaviour
         }
     }
 
-    /// <summary>Cancel targeting from outside (e.g. the player clicked a different chip).
-    /// Fires the same onCancel callback as a right-click / Escape.</summary>
-    public void Cancel()
+        public void Cancel()
     {
         if (!IsTargeting) return;
         var cancel = onCancel;
@@ -170,7 +161,6 @@ public class CombatTargeting : MonoBehaviour
         return result < 0 ? result + count : result;
     }
 
-    // ---- input abstraction (works with either backend) ----
     bool MouseMovedOrClicked()
     {
         Vector3 current = MouseScreenPos();

@@ -1,20 +1,17 @@
 using UnityEngine;
 
 // =====================================================
-// ECHOFORM — Enemy (abstract base)
-// Shared state for every creature: HP, block, and a
-// telegraphed intent (what it will do on its turn).
-// TakeDamage() returns the OVERKILL — damage left over
-// after the enemy died — which is what makes the slime's
-// "clean cut" carry-through possible.
+// ECHOFORM — Enemy
+// Define a base comum dos inimigos, incluindo vida, bloqueio, intenção
+// de turno e cálculo do dano excedente após um golpe fatal.
 // =====================================================
 
 public enum IntentType { Attack, Fuse, Idle }
 
 public struct DamageResult
 {
-    public bool killed;     // did this hit reduce HP to 0?
-    public int overkill;    // leftover damage after the kill (>= 0)
+    public bool killed;
+    public int overkill;
 
     public static DamageResult Survived => new DamageResult { killed = false, overkill = 0 };
 }
@@ -32,7 +29,6 @@ public abstract class Enemy : MonoBehaviour
     public IntentType intentType = IntentType.Attack;
     public int intentValue = 3;
 
-    // A freshly spawned / freshly fused enemy sits out one enemy turn.
     public bool SpawnedThisTurn { get; set; }
 
     [Header("Placement")]
@@ -43,10 +39,8 @@ public abstract class Enemy : MonoBehaviour
 
     public bool IsDead => CurrentHP <= 0;
 
-    /// <summary>Display name for logs / UI.</summary>
-    public abstract string DisplayName { get; }
+        public abstract string DisplayName { get; }
 
-    // Fired on any state change so views can refresh.
     public System.Action OnStateChanged;
 
     protected virtual void Awake()
@@ -54,19 +48,14 @@ public abstract class Enemy : MonoBehaviour
         if (CurrentHP == 0) CurrentHP = maxHP;
     }
 
-    /// <summary>Configure HP directly (used when spawning split children / fusions).</summary>
-    public void InitHealth(int currentHp, int maximumHp)
+        public void InitHealth(int currentHp, int maximumHp)
     {
         maxHP = Mathf.Max(1, maximumHp);
         CurrentHP = Mathf.Clamp(currentHp, 0, maxHP);
         OnStateChanged?.Invoke();
     }
 
-    /// <summary>
-    /// Apply damage (block first, then HP). Returns whether it died and how
-    /// much damage spilled past the kill so callers can carry it through.
-    /// </summary>
-    public virtual DamageResult TakeDamage(int amount)
+        public virtual DamageResult TakeDamage(int amount)
     {
         amount = Mathf.Max(0, amount);
 
@@ -87,6 +76,5 @@ public abstract class Enemy : MonoBehaviour
         return new DamageResult { killed = true, overkill = overkill };
     }
 
-    /// <summary>Roll the intent shown to the player for next turn. Overridden per type.</summary>
-    public abstract void RollIntent();
+        public abstract void RollIntent();
 }

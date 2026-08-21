@@ -5,12 +5,8 @@ using UnityEngine.SceneManagement;
 
 // =====================================================
 // ECHOFORM — IntroVideoController
-// Plays the lore intro video, then loads Area 1.
-//   - Skip button (kept): player can jump to the game early.
-//   - Auto-advance: when the video reaches its end, it loads
-//     the next scene on its own — no click needed.
-// Put this in the Intro scene alongside a VideoPlayer and a
-// Skip UI Button. Add the Intro scene to Build Settings.
+// Reproduz o vídeo de introdução, permite ignorá-lo e carrega a primeira
+// área quando a reprodução termina.
 // =====================================================
 
 public class IntroVideoController : MonoBehaviour
@@ -23,7 +19,7 @@ public class IntroVideoController : MonoBehaviour
     [Header("Skip")]
     [SerializeField] private Button skipButton;
 
-    private bool advancing;   // guards against loading twice
+    private bool advancing;
 
     void Start()
     {
@@ -34,8 +30,8 @@ public class IntroVideoController : MonoBehaviour
             return;
         }
 
-        videoPlayer.isLooping = false;                 // must not loop, or it never ends
-        videoPlayer.loopPointReached += OnVideoFinished; // fires when the clip finishes
+        videoPlayer.isLooping = false;
+        videoPlayer.loopPointReached += OnVideoFinished;
         videoPlayer.Play();
 
         if (skipButton != null) skipButton.onClick.AddListener(Skip);
@@ -47,14 +43,13 @@ public class IntroVideoController : MonoBehaviour
         if (skipButton != null) skipButton.onClick.RemoveListener(Skip);
     }
 
-    /// <summary>Skip button handler (also assignable from the Inspector OnClick).</summary>
     public void Skip() => Advance();
 
     private void OnVideoFinished(VideoPlayer vp) => Advance();
 
     private void Advance()
     {
-        if (advancing) return;   // e.g. skip pressed on the final frame
+        if (advancing) return;
         advancing = true;
         SceneManager.LoadScene(nextSceneName);
     }

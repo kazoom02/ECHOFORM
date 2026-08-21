@@ -3,12 +3,8 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — VestigeCombatAnimator
-// Melee choreography for an attack chip:
-//   walk to the target  ->  play the attack animation  ->
-//   deal damage on the hit frame  ->  walk back to idle.
-// Uses Animator.Play(stateName), so you only need the three
-// states to exist in Vestige's Animator Controller — no
-// parameters or transitions to wire.
+// Executa a coreografia dos ataques do Vestige: aproximação ao alvo,
+// animação do golpe, aplicação do dano e regresso à posição inicial.
 // =====================================================
 
 public class VestigeCombatAnimator : MonoBehaviour
@@ -17,7 +13,7 @@ public class VestigeCombatAnimator : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] private Animator animator;
-    [SerializeField] private SpriteRenderer spriteRenderer;   // used for facing (optional)
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Animator state names (must exist in the controller)")]
     [SerializeField] private string idleState   = "Idle";
@@ -26,7 +22,7 @@ public class VestigeCombatAnimator : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed    = 6f;
-    [SerializeField] private float stopDistance = 1.5f;   // how far short of the target to stop
+    [SerializeField] private float stopDistance = 1.5f;
     [SerializeField] private bool  returnToStart = true;
 
     [Header("Attack timing")]
@@ -56,8 +52,7 @@ public class VestigeCombatAnimator : MonoBehaviour
         if (sfx == null)            sfx = GetComponent<SfxPlayer>();
     }
 
-    /// <summary>Walk to target, attack, fire onHit on the hit frame, then return. Yield this from a coroutine.</summary>
-    public IEnumerator PlayAttack(Transform target, System.Action onHit)
+        public IEnumerator PlayAttack(Transform target, System.Action onHit)
     {
         if (target == null) { onHit?.Invoke(); yield break; }
 
@@ -69,13 +64,8 @@ public class VestigeCombatAnimator : MonoBehaviour
         if (dir == 0f) dir = 1f;
         Face(dir);
 
-        // Walk to the target's DEPTH (its Y), not just its X. Combined with a
-        // YDepthSorter on Vestige, arriving at the slime's Y makes him weave
-        // into the row — in front of nearer slimes, behind farther ones —
-        // instead of sliding through them on a fixed layer.
         Vector3 dest = new Vector3(target.position.x - dir * stopDistance, target.position.y, transform.position.z);
 
-        // walk in
         Play(walkState);
         while (Mathf.Abs(transform.position.x - dest.x) > 0.05f)
         {
@@ -83,15 +73,13 @@ public class VestigeCombatAnimator : MonoBehaviour
             yield return null;
         }
 
-        // attack
         Play(attackState);
         if (sfx != null) sfx.Play(attackSfx);
         if (hitTime > 0f) yield return new WaitForSeconds(hitTime);
-        onHit?.Invoke();                                   // <-- damage lands here
+        onHit?.Invoke();
         float rest = attackLength - hitTime;
         if (rest > 0f) yield return new WaitForSeconds(rest);
 
-        // walk back
         if (returnToStart)
         {
             float backDir = Mathf.Sign(start.x - transform.position.x);
@@ -103,7 +91,7 @@ public class VestigeCombatAnimator : MonoBehaviour
                 yield return null;
             }
             transform.position = start;
-            Face(dir);   // face back toward the enemies
+            Face(dir);
         }
 
         Play(idleState);
@@ -115,14 +103,12 @@ public class VestigeCombatAnimator : MonoBehaviour
         if (animator != null && !string.IsNullOrEmpty(state)) animator.Play(state);
     }
 
-    /// <summary>Play Vestige's death animation + sound. Called by CombatManager when the
-    /// player loses (HP hits 0 or memory overload).</summary>
-    public void PlayDeath()
+        public void PlayDeath()
     {
         IsAnimating = false;
-        StopAllCoroutines();                 // cancel any in-progress attack/walk choreography
-        Play(deathState);                    // "Death" state in the MainCharacter controller
-        if (sfx != null) sfx.PlayDetached(deathSfx);   // detached so it finishes across a Lose transition
+        StopAllCoroutines();
+        Play(deathState);
+        if (sfx != null) sfx.PlayDetached(deathSfx);
     }
 
     private void OnDisable()
@@ -135,7 +121,7 @@ public class VestigeCombatAnimator : MonoBehaviour
         if (dir == 0f) return;
         if (faceByFlipX && spriteRenderer != null)
         {
-            spriteRenderer.flipX = dir < 0f;             // assumes the art faces right
+            spriteRenderer.flipX = dir < 0f;
         }
         else
         {

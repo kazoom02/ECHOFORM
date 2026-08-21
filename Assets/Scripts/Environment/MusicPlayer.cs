@@ -4,13 +4,8 @@ using UnityEngine.Audio;
 
 // =====================================================
 // ECHOFORM — MusicPlayer
-// Plays one looping music track while its GameObject is active, and
-// stops when the object is deactivated. That single rule covers both:
-//   - Separate scenes  (Main Menu, Credits): plays on scene load.
-//   - In-scene areas    (Area1/2/3 toggled by AreaTransition): the
-//     activated area's track starts, the deactivated area's stops.
-//
-// Route it to the Music mixer group so your Music volume slider controls it.
+// Reproduz em repetição a música associada a uma cena ou área enquanto
+// o respetivo objeto está ativo, com encaminhamento e entrada gradual.
 // =====================================================
 
 [RequireComponent(typeof(AudioSource))]
@@ -70,7 +65,6 @@ public class MusicPlayer : MonoBehaviour
         if (src != null) src.Stop();
     }
 
-    // Swap to a different track at runtime (optional helper).
     public void SetTrack(AudioClip clip)
     {
         track = clip;

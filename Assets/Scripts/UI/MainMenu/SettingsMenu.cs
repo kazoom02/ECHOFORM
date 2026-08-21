@@ -6,15 +6,8 @@ using UnityEngine.InputSystem;
 
 // =====================================================
 // ECHOFORM — SettingsMenu
-// Basic settings panel: master volume + fullscreen, persisted
-// with PlayerPrefs and applied on load. Deliberately small —
-// add graphics/quality/controls rows here later as the game
-// grows. The Back button should call MainMenuController.ShowMain().
-//
-// Inspector wiring (all optional — only what you add works):
-//   volumeSlider   -> a Slider (0..1)
-//   fullscreenToggle -> a Toggle
-//   backButton     -> Button that returns to the main panel
+// Controla as opções simples de volume geral e ecrã inteiro do menu
+// principal e guarda os valores nas preferências do jogador.
 // =====================================================
 
 public class SettingsMenu : MonoBehaviour
@@ -28,11 +21,11 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Button backButton;
 
     [Header("Navigation")]
-    [SerializeField] private MainMenuController menu;   // for the Back button
+    [SerializeField] private MainMenuController menu;
 
     void Awake()
     {
-        // Apply saved settings once at startup (safe even if this panel is hidden).
+
         ApplyVolume(PlayerPrefs.GetFloat(VolumeKey, 1f));
         ApplyFullscreen(PlayerPrefs.GetInt(FullscreenKey, Screen.fullScreen ? 1 : 0) == 1);
     }

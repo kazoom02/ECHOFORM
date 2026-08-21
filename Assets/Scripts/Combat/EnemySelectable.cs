@@ -2,16 +2,14 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — EnemySelectable
-// Marks an enemy as clickable during target selection and
-// toggles its hover border. Needs a Collider2D so the
-// targeting raycast can hit it. Put a border child (the
-// TargetReticle sprite), hidden by default, in `highlight`.
+// Associa um inimigo ao respetivo colisor e controla o realce visual
+// apresentado durante a seleção de alvos.
 // =====================================================
 
 [RequireComponent(typeof(Collider2D))]
 public class EnemySelectable : MonoBehaviour
 {
-    [SerializeField] private GameObject highlight;   // border child (TargetReticle), off by default
+    [SerializeField] private GameObject highlight;
 
     public Enemy Enemy { get; private set; }
 

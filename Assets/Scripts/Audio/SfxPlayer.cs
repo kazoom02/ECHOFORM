@@ -3,19 +3,8 @@ using UnityEngine.Audio;
 
 // =====================================================
 // ECHOFORM — SfxPlayer
-// One-shot sound effects, routed to the SFX mixer group so the
-// SFX volume slider (SFXVol) controls them. Put it on any object
-// that needs to make noise (Vestige, a slime).
-//
-// Two ways to fire it:
-//   1) From code:            sfx.Play(slashClip);
-//   2) From an Animation Event: add an event on the clip frame,
-//      choose PlayClip, and drag the AudioClip into the slot.
-//
-// Uses PlayOneShot so rapid/overlapping hits don't cut each other.
-// PlayDetached / PlayAt play on a throwaway object so the clip
-// finishes even if the emitter is destroyed (slime split, a VFX
-// prefab that self-destructs like the charged slash).
+// Reproduz efeitos sonoros pontuais através do misturador de áudio e permite
+// que continuem a tocar mesmo após a destruição do objeto emissor.
 // =====================================================
 
 [RequireComponent(typeof(AudioSource))]
@@ -44,32 +33,23 @@ public class SfxPlayer : MonoBehaviour
         if (sfxGroup != null) src.outputAudioMixerGroup = sfxGroup;
     }
 
-    /// <summary>Play a specific clip. Callable from code or an Animation Event (Object param).</summary>
-    public void Play(AudioClip clip)
+        public void Play(AudioClip clip)
     {
         if (clip == null || src == null) return;
         src.pitch = 1f + Random.Range(-pitchJitter, pitchJitter);
         src.PlayOneShot(clip, volume);
     }
 
-    /// <summary>Animation-Event-friendly alias (some Unity versions prefer this name in the dropdown).</summary>
-    public void PlayClip(AudioClip clip) => Play(clip);
+        public void PlayClip(AudioClip clip) => Play(clip);
 
-    /// <summary>Parameterless — plays the default clip.</summary>
-    public void Play()
+        public void Play()
     {
         if (defaultClip != null) Play(defaultClip);
     }
 
-    /// <summary>Play on a throwaway object that outlives this emitter (uses this player's group/volume).</summary>
-    public void PlayDetached(AudioClip clip) => PlayAt(clip, sfxGroup, transform.position, volume);
+        public void PlayDetached(AudioClip clip) => PlayAt(clip, sfxGroup, transform.position, volume);
 
-    /// <summary>
-    /// Static: play a clip on a throwaway GameObject that self-destroys when the
-    /// clip ends, routed to the given mixer group. Use when the caller has no
-    /// SfxPlayer of its own or is about to be destroyed (e.g. a VFX prefab).
-    /// </summary>
-    public static void PlayAt(AudioClip clip, AudioMixerGroup group, Vector3 pos, float volume = 1f)
+        public static void PlayAt(AudioClip clip, AudioMixerGroup group, Vector3 pos, float volume = 1f)
     {
         if (clip == null) return;
         var go = new GameObject("SFX_" + clip.name);

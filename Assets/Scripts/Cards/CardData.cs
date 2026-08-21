@@ -3,29 +3,27 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — CardData
-// A ScriptableObject so cards are authored in the Inspector,
-// not in code. Each card is a list of actions (deal damage,
-// gain block, heal, buff, draw, duplicate...) plus a target
-// rule. Right-click in Project ▸ Create ▸ Echoform ▸ Card.
+// Define os dados, os alvos, os efeitos e a apresentação das cartas
+// criadas como ScriptableObjects no Editor do Unity.
 // =====================================================
 
 public enum CardTarget
 {
-    SingleEnemy,   // player picks one enemy (Strike)
-    AllEnemies,    // hits the whole row (Cleave)
-    Self           // buffs / block / heal
+    SingleEnemy,
+    AllEnemies,
+    Self
 }
 
 public enum CardEffectType
 {
-    DealDamage,     // damage to the target(s); scaled by player Focus
-    GainBlock,      // block for the player this turn
-    Heal,           // restore player HP
-    GainFocus,      // +Focus (Strength) — adds to every future attack
-    DrawCards,      // draw N extra cards
-    GainEnergy,     // refund / add energy this turn
-    DuplicateCard,  // Echo — immediately repeat the last card's effects
-    GainShield      // +N discrete shields; each negates one full enemy hit
+    DealDamage,
+    GainBlock,
+    Heal,
+    GainFocus,
+    DrawCards,
+    GainEnergy,
+    DuplicateCard,
+    GainShield
 }
 
 [System.Serializable]

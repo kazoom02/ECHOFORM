@@ -6,13 +6,8 @@ using TMPro;
 
 // =====================================================
 // ECHOFORM — AudioSettingsMenu
-// Master / Music / SFX / Scenematics volume sliders. Applies live (no Apply/Revert),
-// persists to PlayerPrefs, and reapplies on launch. Drives an AudioMixer
-// through exposed parameters (MasterVol / MusicVol / SFXVol / ScenematicsVol). If no mixer
-// is assigned, Master falls back to AudioListener.volume so it still works.
-//
-// Build it with Tools > ECHOFORM > Build Audio Settings, or wire the
-// sliders/root/mixer by hand in the Inspector.
+// Controla e guarda os volumes geral, da música, dos efeitos e das cenas,
+// aplicando as alterações em tempo real através do misturador de áudio.
 // =====================================================
 
 public class AudioSettingsMenu : MonoBehaviour
@@ -62,7 +57,7 @@ public class AudioSettingsMenu : MonoBehaviour
 
     void Awake()
     {
-        // Apply saved levels at startup even if this panel is hidden.
+
         ApplyMaster(PlayerPrefs.GetFloat(KMaster, Default));
         ApplyMusic (PlayerPrefs.GetFloat(KMusic,  Default));
         ApplySFX   (PlayerPrefs.GetFloat(KSFX,    Default));
@@ -109,7 +104,6 @@ public class AudioSettingsMenu : MonoBehaviour
         s.onValueChanged.AddListener(cb);
     }
 
-    // Shows this slide and hides any sibling *VerticalSlide (tab exclusivity).
     public void Show()
     {
         if (root == null) return;
@@ -138,7 +132,6 @@ public class AudioSettingsMenu : MonoBehaviour
     private void ApplySFX   (float v) { SetMixer(sfxParam,   v); }
     private void ApplyScenematic(float v) { SetMixer(scenematicParam, v); }
 
-    // 0..1 -> decibels; 0 maps to -80 dB (effectively silent).
     private bool SetMixer(string param, float v01)
     {
         if (mixer == null || string.IsNullOrEmpty(param)) return false;

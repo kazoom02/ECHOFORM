@@ -1,13 +1,9 @@
 using UnityEngine;
 
 // =====================================================
-// ECHOFORM — DevSaveSeeder (development tool)
-// Creates fake saves so you can see and style the Load Game
-// list without playing through the game. Put this on any
-// GameObject, then use the component's right-click (⋮) context
-// menu in the Inspector — works in Edit mode, no Play needed.
-//
-// Delete this script before shipping.
+// ECHOFORM — DevSaveSeeder
+// Ferramenta de desenvolvimento que cria e elimina gravações de teste
+// para permitir validar a apresentação do menu de carregamento.
 // =====================================================
 
 public class DevSaveSeeder : MonoBehaviour
@@ -18,42 +14,42 @@ public class DevSaveSeeder : MonoBehaviour
         SaveSystem.Save(new SaveData {
             slotName = "Vestige — Fight I",
             sceneName = "FirstArea",
-            playSeconds = 512f,     // 8m 32s
+            playSeconds = 512f,
             fightIndex = 0, playerHP = 40,
         }, "slot1");
 
         SaveSystem.Save(new SaveData {
             slotName = "Vestige — Fight I (Clean Cut)",
             sceneName = "FirstArea",
-            playSeconds = 205f,     // 3m 25s
+            playSeconds = 205f,
             fightIndex = 0, playerHP = 46,
         }, "slot2");
 
         SaveSystem.Save(new SaveData {
             slotName = "Vestige — The Merger Race",
             sceneName = "FirstArea",
-            playSeconds = 3915f,    // ~1h 05m
+            playSeconds = 3915f,
             fightIndex = 1, playerHP = 28,
         }, "slot3");
 
         SaveSystem.Save(new SaveData {
             slotName = "Vestige — Swarm Overload",
             sceneName = "FirstArea",
-            playSeconds = 5460f,    // ~1h 31m
+            playSeconds = 5460f,
             fightIndex = 1, playerHP = 20,
         }, "slot4");
 
         SaveSystem.Save(new SaveData {
             slotName = "Vestige — Boss: The Prime",
             sceneName = "FirstArea",
-            playSeconds = 8130f,    // ~2h 15m
+            playSeconds = 8130f,
             fightIndex = 2, playerHP = 12,
         }, "slot5");
 
         SaveSystem.Save(new SaveData {
             slotName = "Vestige — The Loom's Core",
             sceneName = "FirstArea",
-            playSeconds = 10980f,   // ~3h 03m
+            playSeconds = 10980f,
             fightIndex = 3, playerHP = 8,
         }, "slot6");
 

@@ -3,16 +3,8 @@ using UnityEngine;
 
 // =====================================================
 // ECHOFORM — EnemyMeleeAnimator
-// Enemy-side mirror of VestigeCombatAnimator: on its turn the
-// creature walks across to the player, deals its damage on the
-// hit frame, then walks back to its slot. CombatManager yields
-// this during the attack phase; any enemy WITHOUT this component
-// just deals damage in place (unchanged behaviour).
-//
-// Uses Animator.Play(stateName), so each tier's controller only
-// needs "Idle" and "Walk" states (an "Attack" state is optional).
-// Because the walk moves to the player's Y, pair it with a
-// YDepthSorter on the prefab so the walker sorts correctly.
+// Executa a coreografia de ataque corpo a corpo dos inimigos: aproximação,
+// golpe no jogador e regresso à posição inicial.
 // =====================================================
 
 public class EnemyMeleeAnimator : MonoBehaviour
@@ -29,7 +21,7 @@ public class EnemyMeleeAnimator : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed    = 4f;
-    [SerializeField] private float stopDistance = 1.2f;   // how far short of the player to stop
+    [SerializeField] private float stopDistance = 1.2f;
     [SerializeField] private bool  returnToStart = true;
     [Tooltip("If on, the enemy walks to the target's Y for depth sorting. Turn off for enemies that should stay on their lane.")]
     [SerializeField] private bool matchTargetY = true;
@@ -76,8 +68,7 @@ public class EnemyMeleeAnimator : MonoBehaviour
         if (sfx == null)            sfx = GetComponent<SfxPlayer>();
     }
 
-    /// <summary>Walk to the target, fire onHit on the hit frame, walk back. Yield this from a coroutine.</summary>
-    public IEnumerator PlayAttack(Transform target, System.Action onHit)
+        public IEnumerator PlayAttack(Transform target, System.Action onHit)
     {
         if (target == null) { onHit?.Invoke(); yield break; }
 
@@ -87,7 +78,6 @@ public class EnemyMeleeAnimator : MonoBehaviour
         if (dir == 0f) dir = 1f;
         Face(dir);
 
-        // Some enemies move to the player's depth for sorting; lane-based enemies keep their own Y.
         float destY = matchTargetY ? target.position.y : start.y;
         float effectiveStopDistance = GetStopDistance(target);
         Vector3 dest = new Vector3(target.position.x - dir * effectiveStopDistance, destY, transform.position.z);
@@ -116,8 +106,8 @@ public class EnemyMeleeAnimator : MonoBehaviour
         if (!string.IsNullOrEmpty(attackState)) Play(attackState);
         if (sfx != null && attackSfx != null) sfx.Play(attackSfx);
         if (hitTime > 0f) yield return new WaitForSeconds(hitTime);
-        SpawnHitEffect(target);                            // electric zap on the hit frame
-        onHit?.Invoke();                                   // <-- damage lands here
+        SpawnHitEffect(target);
+        onHit?.Invoke();
         float rest = attackLength - hitTime;
         if (rest > 0f) yield return new WaitForSeconds(rest);
 
@@ -142,7 +132,7 @@ public class EnemyMeleeAnimator : MonoBehaviour
             transform.position = start;
         }
 
-        Face(Mathf.Sign(target.position.x - transform.position.x));   // face the player again
+        Face(Mathf.Sign(target.position.x - transform.position.x));
         Play(idleState);
     }
 
@@ -155,9 +145,6 @@ public class EnemyMeleeAnimator : MonoBehaviour
 
         ParticleSystem fx = Instantiate(hitEffectPrefab, at, Quaternion.identity);
 
-        // Force it in front of the character sprites (the Renderer module's
-        // Sorting Layer / Order in Layer, set here so you don't have to dig
-        // into the particle Inspector).
         var r = fx.GetComponent<ParticleSystemRenderer>();
         if (r != null)
         {
@@ -168,7 +155,6 @@ public class EnemyMeleeAnimator : MonoBehaviour
 
         fx.Play();
 
-        // self-clean once it has finished, even if Stop Action isn't set to Destroy
         float life = fx.main.duration + fx.main.startLifetime.constantMax;
         Destroy(fx.gameObject, life);
     }

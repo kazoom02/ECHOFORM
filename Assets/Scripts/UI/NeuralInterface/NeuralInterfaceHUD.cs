@@ -10,13 +10,8 @@ using UnityEngine.InputSystem;
 
 // =====================================================
 // ECHOFORM — NeuralInterfaceHUD
-// The bottom OS-style HUD. Syncs the chip rack + CPU cycles
-// from CombatManager, and on click runs the install sequence:
-//   eject  ->  slide into the Neural Slot  ->  INSTALLING MEMORY...
-//   ->  visor flash  ->  resolve the card (Vestige dashes & attacks).
-//
-// Assign `combat` to auto-sync hand + energy. Leave it empty to
-// test the animation standalone (onChipInstalled still fires).
+// Sincroniza a mão e a energia com a interface neural e coordena a seleção,
+// instalação, animação e execução dos efeitos das cartas.
 // =====================================================
 
 [System.Serializable] public class CardEvent : UnityEvent<CardData> { }
@@ -27,7 +22,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
     [Header("Combat")]
     [SerializeField] private CombatManager combat;
-    [SerializeField] private int maxCycles = 5;   // fallback when no CombatManager is assigned
+    [SerializeField] private int maxCycles = 5;
 
     [Header("Rack")]
     [Tooltip("Empty RectTransforms placed over each bay, left to right.")]
@@ -35,23 +30,23 @@ public class NeuralInterfaceHUD : MonoBehaviour
     [SerializeField] private ChipView chipPrefab;
 
     [Header("Neural slot")]
-    [SerializeField] private RectTransform neuralSlot;             // target the chip slides into
-    [SerializeField] private Vector3 installedScale = Vector3.one; // chip scale once seated
-    [SerializeField] private CanvasGroup installGroup;            // wraps label + bar; alpha 0 at rest
-    [SerializeField] private TMP_Text installLabel;               // "INSTALLING MEMORY..."
-    [SerializeField] private Image installBar;                    // Image Type = Filled, Horizontal
+    [SerializeField] private RectTransform neuralSlot;
+    [SerializeField] private Vector3 installedScale = Vector3.one;
+    [SerializeField] private CanvasGroup installGroup;
+    [SerializeField] private TMP_Text installLabel;
+    [SerializeField] private Image installBar;
 
     [Header("FX")]
     [SerializeField] private VisorFlash visorFlash;
-    [SerializeField] private ScreenSlash screenSlash;           // full-screen cyan slash (fallback streak)
-    [SerializeField] private ChargedSlashFX chargedSlashPrefab; // animated slash VFX prefab (preferred)
-    [SerializeField] private Transform slashSpawnPoint;         // where the slash spawns (defaults to origin)
+    [SerializeField] private ScreenSlash screenSlash;
+    [SerializeField] private ChargedSlashFX chargedSlashPrefab;
+    [SerializeField] private Transform slashSpawnPoint;
     [Tooltip("Only this card (by cardName) triggers the full-screen slash. Spaces/case are ignored.")]
     [SerializeField] private string slashCardName = "Charged";
     [SerializeField] private CpuCycleMeter cpuMeter;
-    [SerializeField] private OverloadReadout overloadReadout;   // "COPY #n/10" corruption counter
-    [SerializeField] private CombatTargeting targeting;         // enemy picker for single-target chips
-    [SerializeField] private VestigeCombatAnimator vestige;     // walk-in melee for attack chips
+    [SerializeField] private OverloadReadout overloadReadout;
+    [SerializeField] private CombatTargeting targeting;
+    [SerializeField] private VestigeCombatAnimator vestige;
 
     [Header("Timing (seconds)")]
     [SerializeField] private float ejectHeight = 60f;
@@ -70,7 +65,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
 
     readonly List<ChipView> rack = new List<ChipView>();
     bool busy;
-    ChipView pendingTargetView;   // chip waiting for an enemy pick (null when not targeting)
+    ChipView pendingTargetView;
     int selectedChipIndex = -1;
     float nextNavigationTime;
     bool showControllerSelection;
@@ -83,7 +78,6 @@ public class NeuralInterfaceHUD : MonoBehaviour
     public string ConfirmButtonName => GetConfirmButtonName(CurrentController);
     public System.Action<bool> OnBusyChanged;
 
-    // ---------------------------------------------------------------- lifecycle
     void OnEnable()  { if (combat != null) combat.OnCombatChanged += Refresh; }
     void OnDisable()
     {
@@ -123,7 +117,6 @@ public class NeuralInterfaceHUD : MonoBehaviour
         }
     }
 
-    // ---------------------------------------------------------------- rack sync
     public void Refresh()
     {
         foreach (var v in rack) if (v) Destroy(v.gameObject);
@@ -161,7 +154,6 @@ public class NeuralInterfaceHUD : MonoBehaviour
         rack.Add(v);
     }
 
-    // ---------------------------------------------------------------- play flow
     void OnChipHovered(ChipView view)
     {
         int chipIndex = rack.IndexOf(view);
@@ -177,34 +169,28 @@ public class NeuralInterfaceHUD : MonoBehaviour
         int chipIndex = rack.IndexOf(view);
         if (chipIndex >= 0) SelectChip(chipIndex);
 
-        // Already waiting to pick an enemy for a card? Any chip click backs out of that
-        // selection first, so a mis-tapped Attack never traps the player. Clicking the
-        // SAME chip just deselects; clicking a different one switches to it.
         if (targeting != null && targeting.IsTargeting)
         {
             ChipView previous = pendingTargetView;
-            targeting.Cancel();               // clears busy + pendingTargetView via the cancel callback
-            if (previous == view) return;     // tapped the pending chip again -> deselect only
+            targeting.Cancel();
+            if (previous == view) return;
         }
 
-        if (busy) return;                     // still locked by an install animation in progress
+        if (busy) return;
 
-        // deny (shake) unplayable chips up front: glitch, not enough energy, or shields full
         bool cannotPlay = combat != null ? !combat.CanPlayCard(view.card) : view.card.isGlitch;
         if (cannotPlay) { StartCoroutine(Deny(view)); return; }
 
-        // Echo inherits the previous chip's target rule. If that effect is a
-        // single-target attack, choose the enemy before installing Echo.
         CardTarget effectiveTarget = combat != null
             ? combat.GetEffectiveTarget(view.card)
             : view.card.target;
         if (targeting != null && effectiveTarget == CardTarget.SingleEnemy && CountLivingEnemies() > 1)
         {
-            SetBusy(true);                                // lock the rack while choosing
+            SetBusy(true);
             pendingTargetView = view;
             targeting.Begin(
                 picked => { pendingTargetView = null; StartCoroutine(InstallRoutine(view, picked)); },
-                ()     => { pendingTargetView = null; SetBusy(false); }   // cancelled — nothing happens
+                ()     => { pendingTargetView = null; SetBusy(false); }
             );
             return;
         }
@@ -223,26 +209,22 @@ public class NeuralInterfaceHUD : MonoBehaviour
     IEnumerator InstallRoutine(ChipView view, Enemy target)
     {
         SetBusy(true);
-        CardData card = view.card;               // cache — the view gets destroyed later
+        CardData card = view.card;
         CardData effectCard = combat != null ? combat.GetEffectSource(card) : card;
         rack.Remove(view);
 
-        // lift the chip out of its bay into the neural slot's coordinate space
         RectTransform layer = (RectTransform)neuralSlot.parent;
         RectTransform rt = view.Rect;
         rt.SetParent(layer, worldPositionStays: true);
         rt.SetAsLastSibling();
 
-        // 1) EJECT — pop upward out of the rack
         Vector2 from = rt.anchoredPosition;
         Vector2 up   = from + Vector2.up * ejectHeight;
         yield return Move(rt, from, up, ejectTime, EaseOut);
 
-        // 2) SLIDE — travel to the neural slot and scale to fit
         Vector2 slotPos = neuralSlot.anchoredPosition;
         yield return Move(rt, up, slotPos, slideTime, EaseInOut, rt.localScale, installedScale);
 
-        // 3) INSTALLING MEMORY... — fill the progress bar with animated dots
         if (installGroup) installGroup.alpha = 1f;
         float t = 0f, dotT = 0f; int dots = 0;
         while (t < installTime)
@@ -255,20 +237,18 @@ public class NeuralInterfaceHUD : MonoBehaviour
         }
         if (installBar) installBar.fillAmount = 1f;
 
-        // 4) hand off the chip: hide the install UI and clear it from the slot
         if (installGroup) installGroup.alpha = 0f;
         if (view) Destroy(view.gameObject);
-        onChipInstalled?.Invoke(card);                     // SFX / extra fx hook
+        onChipInstalled?.Invoke(card);
 
-        // 5) EXECUTE — attack chips send Vestige in and resolve on the hit frame; others resolve in place
         ChargedSlashFX slashFx = null;
-        if (effectCard != null && IsSlashCard(effectCard))      // Echo also inherits the copied slash VFX
+        if (effectCard != null && IsSlashCard(effectCard))
         {
-            if (chargedSlashPrefab != null)                    // preferred: animated slash VFX
+            if (chargedSlashPrefab != null)
                 slashFx = ChargedSlashFX.Play(chargedSlashPrefab,
                     slashSpawnPoint != null ? slashSpawnPoint.position : Vector3.zero);
             else if (screenSlash != null)
-                screenSlash.Slash();                           // fallback: old streak overlay
+                screenSlash.Slash();
         }
         bool dealsDamage = combat != null ? combat.WillDealDamage(card) : CardDealsDamage(effectCard);
         if (vestige != null && target != null && dealsDamage)
@@ -278,7 +258,7 @@ public class NeuralInterfaceHUD : MonoBehaviour
         }
         else
         {
-            // self-cast (block/heal) keeps the flash — but the slash card shows its own VFX, no flash
+
             if (visorFlash && !IsSlashCard(effectCard))
                 yield return visorFlash.FlashAndWait();
             if (combat != null) combat.TryPlayCard(card, target);
@@ -438,9 +418,6 @@ public class NeuralInterfaceHUD : MonoBehaviour
         return false;
     }
 
-    // Matches the slash card ignoring spaces and case, so the asset's
-    // display name ("Charged Slash") and the file name ("ChargedSlash")
-    // both trigger the effect.
     bool IsSlashCard(CardData c)
     {
         if (c == null || string.IsNullOrEmpty(slashCardName)) return false;
@@ -449,15 +426,13 @@ public class NeuralInterfaceHUD : MonoBehaviour
         return a == b && a.Length > 0;
     }
 
-    /// <summary>Which enemy a single-target card hits. Override for click-to-target.</summary>
-    protected virtual Enemy ResolveTarget(CardData card)
+        protected virtual Enemy ResolveTarget(CardData card)
     {
         if (combat == null || combat.GetEffectiveTarget(card) != CardTarget.SingleEnemy) return null;
         foreach (var e in combat.Enemies) if (e != null && !e.IsDead) return e;
         return null;
     }
 
-    // little sideways shake when a chip can't be played
     IEnumerator Deny(ChipView view)
     {
         RectTransform rt = view.Rect;
@@ -467,7 +442,6 @@ public class NeuralInterfaceHUD : MonoBehaviour
         rt.anchoredPosition = home;
     }
 
-    // ---------------------------------------------------------------- tween utils
     delegate float Ease(float x);
     static float EaseOut(float x)   => 1f - (1f - x) * (1f - x);
     static float EaseInOut(float x) => x < 0.5f ? 2f * x * x : 1f - Mathf.Pow(-2f * x + 2f, 2f) / 2f;

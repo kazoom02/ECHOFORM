@@ -6,15 +6,8 @@ using TMPro;
 
 // =====================================================
 // ECHOFORM — VideoSettingsMenu
-// Video options: Display, Resolution, Window Mode, Refresh Rate.
-// Values are read from the actual system. Changes stage until
-// the player presses Apply; after applying, a 15s countdown asks
-// them to Keep the change or it auto-reverts (protects against a
-// resolution/mode that blackscreens the display). Kept settings
-// persist via PlayerPrefs and re-apply on next launch.
-//
-// Wire it up with Tools > ECHOFORM > Build Video Settings, or
-// assign the dropdowns/buttons/root by hand in the Inspector.
+// Gere as opções de ecrã, resolução, modo de janela e taxa de atualização,
+// permitindo aplicar, confirmar ou reverter alterações temporárias.
 // =====================================================
 
 public class VideoSettingsMenu : MonoBehaviour
@@ -22,7 +15,7 @@ public class VideoSettingsMenu : MonoBehaviour
     [Header("Root (shown/hidden by the Video button)")]
     [SerializeField] private GameObject root;
 
-    [Tooltip("Show the Video panel automatically whenever the Settings screen opens (ContentArea is enabled).")]
+    [Tooltip("Show the Video panel automatically whenever the Settings screen opens.")]
     [SerializeField] private bool openByDefault = true;
 
     [Header("Dropdowns")]
@@ -37,7 +30,6 @@ public class VideoSettingsMenu : MonoBehaviour
     [SerializeField] private TMP_Text statusLabel;
     [SerializeField] private float revertSeconds = 15f;
 
-    // PlayerPrefs keys
     private const string KW = "video_res_w";
     private const string KH = "video_res_h";
     private const string KRN = "video_refresh_num";
@@ -65,11 +57,9 @@ public class VideoSettingsMenu : MonoBehaviour
     private readonly List<List<RefreshRate>> refreshByRes = new List<List<RefreshRate>>();
     private readonly List<DisplayInfo> displays = new List<DisplayInfo>();
 
-    private VideoState confirmed;      // last kept state (revert target)
+    private VideoState confirmed;
     private bool awaitingConfirm;
     private Coroutine countdown;
-
-    // ---------------------------------------------------------------
 
     void Awake()
     {
@@ -83,17 +73,11 @@ public class VideoSettingsMenu : MonoBehaviour
         if (root != null) root.SetActive(false);
     }
 
-    // When the Settings screen opens, ContentArea is enabled and this fires —
-    // default the panel to the Video slide so it shows without a click.
     void OnEnable()
     {
         if (openByDefault) Show();
     }
 
-    // Leaving the panel (Back button, tab switch that disables ContentArea, or
-    // scene change) discards anything that wasn't kept: an applied-but-unconfirmed
-    // resolution is reverted to the last kept state, and un-applied dropdown edits
-    // are reset to what's actually active.
     void OnDisable()
     {
         if (awaitingConfirm) Revert();
@@ -107,7 +91,6 @@ public class VideoSettingsMenu : MonoBehaviour
         if (resolutionDropdown != null) resolutionDropdown.onValueChanged.RemoveListener(OnResolutionChanged);
     }
 
-    // Hooked to VideoSettingsButton.onClick.
     public void Show()
     {
         RebuildOptions();
@@ -116,8 +99,6 @@ public class VideoSettingsMenu : MonoBehaviour
 
         if (root == null) return;
 
-        // Tab exclusivity: hide any sibling *VerticalSlide (e.g. Audio) so only
-        // one settings panel shows at a time inside ContentArea.
         Transform siblings = root.transform.parent;
         if (siblings != null)
             for (int i = 0; i < siblings.childCount; i++)
@@ -133,16 +114,12 @@ public class VideoSettingsMenu : MonoBehaviour
 
     public void Hide()
     {
-        if (awaitingConfirm) Revert();   // don't leave an unconfirmed change hanging
+        if (awaitingConfirm) Revert();
         if (root != null) root.SetActive(false);
     }
 
-    // ---------------------------------------------------------------
-    // Option lists
-
     private void RebuildOptions()
     {
-        // Resolutions (distinct width x height) + refresh rates per resolution.
         resolutions.Clear();
         refreshByRes.Clear();
         foreach (Resolution r in Screen.resolutions)
@@ -164,12 +141,10 @@ public class VideoSettingsMenu : MonoBehaviour
             refreshByRes.Add(new List<RefreshRate> { Screen.currentResolution.refreshRateRatio });
         }
 
-        // Displays (monitors) via the windowing layout API.
         displays.Clear();
         Screen.GetDisplayLayout(displays);
         if (displays.Count == 0) displays.Add(Screen.mainWindowDisplayInfo);
 
-        // Fill dropdowns
         if (displayDropdown != null)
         {
             var opts = new List<string>();
@@ -189,7 +164,6 @@ public class VideoSettingsMenu : MonoBehaviour
         if (windowModeDropdown != null)
             SetOptions(windowModeDropdown, new List<string>(ModeLabels));
 
-        // Refresh rate list depends on the selected resolution; filled in RebuildRefreshRates.
     }
 
     private void RebuildRefreshRates(int resIndex)
@@ -207,9 +181,6 @@ public class VideoSettingsMenu : MonoBehaviour
     {
         RebuildRefreshRates(resIndex);
     }
-
-    // ---------------------------------------------------------------
-    // Reading current state into the dropdowns
 
     private void SyncDropdownsToCurrent()
     {
@@ -274,9 +245,6 @@ public class VideoSettingsMenu : MonoBehaviour
         };
     }
 
-    // ---------------------------------------------------------------
-    // Apply / Keep / Revert
-
     private void OnApplyOrKeep()
     {
         if (awaitingConfirm) Keep();
@@ -286,7 +254,7 @@ public class VideoSettingsMenu : MonoBehaviour
     private void OnRevertOrReset()
     {
         if (awaitingConfirm) Revert();
-        else SyncDropdownsToCurrent();   // discard un-applied edits
+        else SyncDropdownsToCurrent();
     }
 
     private void Apply()
@@ -350,9 +318,6 @@ public class VideoSettingsMenu : MonoBehaviour
         Revert();
     }
 
-    // ---------------------------------------------------------------
-    // Persistence
-
     private void Save(VideoState s)
     {
         PlayerPrefs.SetInt(KW, s.width);
@@ -381,12 +346,8 @@ public class VideoSettingsMenu : MonoBehaviour
             ? new RefreshRate { numerator = num, denominator = den }
             : Screen.currentResolution.refreshRateRatio;
 
-        // Displays may not be enumerated yet; MoveMainWindowTo is best-effort.
         Screen.SetResolution(s.width, s.height, s.mode, s.refresh);
     }
-
-    // ---------------------------------------------------------------
-    // Small helpers
 
     private static void SetOptions(TMP_Dropdown dd, List<string> options)
     {

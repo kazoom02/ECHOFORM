@@ -4,17 +4,8 @@ using UnityEngine.UI;
 
 // =====================================================
 // ECHOFORM — BatteryBar
-// Player health shown as N battery cells (default 4). HP is
-// split equally, so each cell = 100/N %% of max HP. A cell's
-// FILL overlay starts at 100%% and drains as the player takes
-// damage; cells empty from index 0 upward as HP drops. When a
-// cell reaches 0 its background sprite swaps to the "depleted"
-// sprite you pick per cell in the Inspector, and restores to
-// its normal frame if you heal past it.
-//
-// Setup: one Background + Fill Image per cell (the Fill must be
-// Image Type = Filled). Drop this on a HUD object, set
-// Batteries size = 4, wire each cell and its depleted sprite.
+// Representa a vida do jogador através de células de bateria, atualizando
+// o preenchimento e o aspeto de cada célula após dano ou cura.
 // =====================================================
 
 public class BatteryBar : MonoBehaviour
@@ -29,8 +20,8 @@ public class BatteryBar : MonoBehaviour
         [Tooltip("Background sprite shown once this cell is fully drained.")]
         public Sprite depletedSprite;
 
-        [NonSerialized] public Sprite normalSprite;   // captured at startup
-        [NonSerialized] public float shown;           // lerp state
+        [NonSerialized] public Sprite normalSprite;
+        [NonSerialized] public float shown;
     }
 
     [Header("Binding")]
@@ -53,7 +44,6 @@ public class BatteryBar : MonoBehaviour
         if (autoBind && player == null)
             player = FindFirstObjectByType<PlayerCombatant>();
 
-        // remember each cell's starting background sprite so we can restore it on heal
         if (batteries != null)
             foreach (var c in batteries)
                 if (c != null && c.background != null)
@@ -76,11 +66,10 @@ public class BatteryBar : MonoBehaviour
         unsubscribe = null;
     }
 
-    void OnChanged() { /* fills + swaps are applied each frame in Update */ }
+    void OnChanged() {  }
 
     int Count => batteries != null ? batteries.Length : 0;
 
-    // Fraction (0..1) this cell should show, given equal HP bands.
     float CellTarget(int i)
     {
         if (player == null || player.MaxHP <= 0) return 0f;
@@ -122,7 +111,7 @@ public class BatteryBar : MonoBehaviour
 
             if (c.background != null)
             {
-                // swap on the true target so it flips exactly at the band boundary
+
                 Sprite s = target <= 0.0001f ? c.depletedSprite : c.normalSprite;
                 if (s != null && c.background.sprite != s) c.background.sprite = s;
             }

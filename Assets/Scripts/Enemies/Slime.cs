@@ -5,19 +5,12 @@ using UnityEngine.Audio;
 
 // =====================================================
 // ECHOFORM — Slime
-// The theme's core enemy: killing it makes MORE of it.
-// A Large slime splits into 2 Medium, each Medium into
-// 2 Small, Small dies for good  (3 → 2×2 → 4×1 → gone).
-//
-// OVERKILL CARRY-THROUGH lives here: leftover damage from
-// the killing blow pours into the children one at a time.
-// Enough overkill and a child never spawns at all — a
-// "clean cut". This is the game's signature skill mechanic.
+// Implementa os vários níveis de Slime; ao morrer, cada Slime não pequeno
+// divide-se em dois inimigos menores com os respetivos visuais e animações.
 // =====================================================
 
 public enum SlimeTier { Small = 1, Medium = 2, Large = 3 }
 
-/// <summary>A pending child produced by a split (tier + the HP it should spawn with).</summary>
 public struct SlimeSpawn
 {
     public SlimeTier tier;
@@ -80,7 +73,7 @@ public class Slime : Enemy
 
     protected override void Awake()
     {
-        // Derive stats from tier unless the Inspector HP is being overridden.
+
         if (CurrentHP == 0)
         {
             if (!overrideTierHP) maxHP = MaxHpForTier(tier, isPrime);
@@ -90,21 +83,19 @@ public class Slime : Enemy
         RollIntent();
     }
 
-    /// <summary>Set up a slime spawned at runtime (child of a split).</summary>
-    public void Configure(SlimeTier newTier, int hp, bool prime = false)
+        public void Configure(SlimeTier newTier, int hp, bool prime = false)
     {
         tier = newTier;
         isPrime = prime;
         InitHealth(hp, MaxHpForTier(newTier, prime));
-        SpawnedThisTurn = true;   // fresh children sit out one turn
+        SpawnedThisTurn = true;
         ApplyTierVisual();
         RollIntent();
     }
 
-    /// <summary>Swap sprite + animator controller to match the current tier.</summary>
-    private void ApplyTierVisual()
+        private void ApplyTierVisual()
     {
-        // static sprite (fallback / used when there's no Animator)
+
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
@@ -118,7 +109,6 @@ public class Slime : Enemy
             if (s != null) spriteRenderer.sprite = s;
         }
 
-        // per-tier idle animation (overrides the static sprite while it plays)
         if (animator == null) animator = GetComponent<Animator>();
         if (animator != null)
         {
@@ -132,7 +122,6 @@ public class Slime : Enemy
             if (c != null) animator.runtimeAnimatorController = c;
         }
 
-        // per-tier world size (compensates for sprites authored at different resolutions)
         float sc = tier switch
         {
             SlimeTier.Large  => largeScale,
@@ -149,47 +138,34 @@ public class Slime : Enemy
         intentValue = AttackForTier(tier, isPrime);
     }
 
-    /// <summary>Play the divide sound (detached, so it survives this slime being removed).
-    /// Called by CombatManager at the actual split moment.</summary>
-    public void PlayDivideSfx()
+        public void PlayDivideSfx()
     {
         SfxPlayer.PlayAt(divideSfx, sfxGroup, transform.position);
     }
 
-    /// <summary>Play the dying animation + sound as a detached corpse, then destroy it. Called by
-    /// CombatManager when this slime dies producing no children (small slime / clean cut).</summary>
-    public void PlayDeath()
+        public void PlayDeath()
     {
-        transform.SetParent(null, true);                 // detach so the living row is not reshuffled around it
+        transform.SetParent(null, true);
 
         if (animator == null) animator = GetComponent<Animator>();
         if (animator != null && deathController != null)
-            animator.runtimeAnimatorController = deathController;   // default state = SlimeDying (non-looping)
+            animator.runtimeAnimatorController = deathController;
 
-        SfxPlayer.PlayAt(deathSfx, sfxGroup, transform.position);   // detached: outlives the corpse
+        SfxPlayer.PlayAt(deathSfx, sfxGroup, transform.position);
 
-        foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;  // no longer clickable
+        foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
 
         Destroy(gameObject, DeathDuration);
     }
 
-    /// <summary>
-    /// Decide which children this slime produces when it dies, given the
-    /// overkill damage carried in. Small slimes produce none. Overkill is
-    /// spent sequentially: a child whose full HP is covered is erased.
-    /// </summary>
-    public List<SlimeSpawn> PlanChildren(int overkill)
+        public List<SlimeSpawn> PlanChildren(int overkill)
     {
         var children = new List<SlimeSpawn>();
-        if (tier == SlimeTier.Small) return children;   // nothing smaller
+        if (tier == SlimeTier.Small) return children;
 
         SlimeTier childTier = tier - 1;
-        int childMax = MaxHpForTier(childTier, false);   // children are never Prime
+        int childMax = MaxHpForTier(childTier, false);
 
-        // Overkill carry-through DISABLED: a split always yields two full-HP
-        // children, no matter how much damage the killing blow left over.
-        // (overkill is ignored on purpose — one-shotting the parent no longer
-        //  wounds or erases the children.)
         const int childCount = 2;
 
         for (int i = 0; i < childCount; i++)
@@ -198,16 +174,11 @@ public class Slime : Enemy
         return children;
     }
 
-    /// <summary>
-    /// Visual split. Call from CombatManager after PlanChildren; it hands the
-    /// spawn list to <paramref name="onSpawn"/> at the animation's midpoint.
-    /// </summary>
-    public IEnumerator Split(List<SlimeSpawn> children, System.Action<List<SlimeSpawn>> onSpawn)
+        public IEnumerator Split(List<SlimeSpawn> children, System.Action<List<SlimeSpawn>> onSpawn)
     {
         Vector3 baseScale = transform.localScale;
         float t = 0f;
 
-        // squash outward
         while (t < splitDuration)
         {
             t += Time.deltaTime;
@@ -216,10 +187,8 @@ public class Slime : Enemy
             yield return null;
         }
 
-        onSpawn?.Invoke(children);   // CombatManager instantiates the children here
+        onSpawn?.Invoke(children);
     }
-
-    // ---- tier stat tables -------------------------------------------------
 
     public static int MaxHpForTier(SlimeTier tier, bool prime)
     {

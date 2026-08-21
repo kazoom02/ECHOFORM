@@ -2,7 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// First-pass Area 1 tutorial: a non-blocking card overlay that advances from real combat events.
+// =====================================================
+// ECHOFORM — AreaTutorialController
+// Conduz o tutorial da primeira área, acompanhando o estado do combate
+// e apresentando instruções e realces sobre os elementos relevantes.
+// =====================================================
+
 public class AreaTutorialController : MonoBehaviour
 {
     enum Step
